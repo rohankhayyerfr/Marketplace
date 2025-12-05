@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ویرایش پروفایل | شرکت نوین{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8" dir="rtl">
+    <div class="max-w-4xl mx-auto space-y-10">
+
+        <h1 class="text-3xl font-bold text-gray-900 text-right mb-6">
+            تنظیمات و ویرایش پروفایل
+        </h1>
+
+        {% if messages %}
+            {% for message in messages %}
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl relative text-right">
+                <span class="block sm:inline">{{ message }}</span>
+            </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="bg-white shadow-2xl rounded-xl p-8 space-y-6">
+            <h2 class="text-2xl font-semibold text-gray-800 border-b pb-4 mb-4">
+                اطلاعات شخصی و حساب
+            </h2>
+
+            <form method="POST" action="{% url 'accounts:edit_profile' %}">
+                {% csrf_token %}
+
+                <div class="space-y-6">
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="{{ user_form.first_name.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1 required">نام</label>
+                            <input type="text" name="{{ user_form.first_name.name }}" id="{{ user_form.first_name.id_for_label }}"
+                                   value="{{ user.first_name|default:'' }}"
+                                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-right"
+                                   placeholder="نام خود را وارد کنید">
+                            {% if user_form.first_name.errors %}
+                                <p class="text-red-500 text-xs mt-1">{{ user_form.first_name.errors.as_text }}</p>
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            <label for="{{ user_form.last_name.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1 required">نام خانوادگی</label>
+                            <input type="text" name="{{ user_form.last_name.name }}" id="{{ user_form.last_name.id_for_label }}"
+                                   value="{{ user.last_name|default:'' }}"
+                                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-right"
+                                   placeholder="نام خانوادگی را وارد کنید">
+                             {% if user_form.last_name.errors %}
+                                <p class="text-red-500 text-xs mt-1">{{ user_form.last_name.errors.as_text }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="{{ user_form.email.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1 required" >آدرس ایمیل</label>
+                            <input type="email" name="{{ user_form.email.name }}" id="{{ user_form.email.id_for_label }}"
+                                   value="{{ user.email|default:'' }}"
+                                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-right"
+                                   placeholder="example@domain.com" {% if user_form.email.field.required %}required{% endif %}>
+                            {% if user_form.email.errors %}
+                                <p class="text-red-500 text-xs mt-1">{{ user_form.email.errors.as_text }}</p>
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            <label for="{{ user_form.username.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1 required">نام کاربری</label>
+                            <input type="text" name="{{ user_form.username.name }}" id="{{ user_form.username.id_for_label }}"
+                                   value="{{ user.username }}"
+                                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm text-right"
+                                   placeholder="نام کاربری">
+
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-gray-100">
+                        <button type="submit" class="inline-flex justify-center py-3 px-6 border border-transparent shadow-sm text-base font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300">
+                            ذخیره تغییرات
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="bg-white shadow-2xl rounded-xl p-8 space-y-4">
+            <h2 class="text-2xl font-semibold text-gray-800 border-b pb-4 mb-4">
+                تنظیمات امنیتی
+            </h2>
+
+            <div class="flex justify-between items-center py-2">
+                <div>
+                    <p class="font-medium text-gray-900" disabled>تغییر رمز عبور</p>
+                    <p class="text-sm text-gray-500">جهت امنیت حساب خود، رمز عبور را به صورت دوره‌ای به‌روزرسانی کنید.</p>
+                </div>
+                <a href="#" class="px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-50 transition duration-150">
+                    تغییر رمز
+                </a>
+            </div>
+
+            <div class="flex justify-between items-center py-2 border-t border-gray-100">
+                <div>
+                    <p class="font-medium text-gray-900">احراز هویت دو مرحله‌ای (۲FA)</p>
+                    <p class="text-sm text-gray-500">با فعال‌سازی ۲FA، امنیت حساب خود را به شدت افزایش دهید.</p>
+                </div>
+                <button disabled class="px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-400 cursor-not-allowed">
+                    فعال‌سازی
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}داشبورد کاربری | شرکت نوین{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 flex" dir="rtl">
+
+    <button id="sidebar-toggle" class="fixed bottom-12 right-4 z-40 p-3 bg-indigo-600 text-white rounded-full shadow-lg md:hidden hover:bg-indigo-700 transition duration-300">
+        <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+        <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+    </button>
+
+    <div id="sidebar" class="fixed inset-y-0 right-0 w-64 bg-white shadow-2xl flex-shrink-0 border-l border-gray-200 z-30 transform translate-x-full md:relative md:translate-x-0 transition-transform duration-300 ease-in-out md:shadow-xl md:block">
+        <div class="p-6 h-full overflow-y-auto">
+            <h3 class="text-xl font-bold text-gray-900 mb-6 border-b pb-3 border-indigo-100">
+                پنل کاربری
+            </h3>
+
+            <ul class="space-y-3 text-right">
+{#                {% if sellerprofile and sellerprofile.is_verified %}#}
+{#                <li>#}
+{#                    <a href="{% url 'store:product_create' %}" class="w-full inline-flex items-center justify-end px-4 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-300 shadow-md">#}
+{#                        <span class="text-sm ml-2">اضافه کردن محصول جدید</span>#}
+{#                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>#}
+{#                    </a>#}
+{#                </li>#}
+{#                {% else %}#}
+{#                <li>#}
+{#                    <a href="{% url 'accounts:become_seller' %}" class="w-full inline-flex items-center justify-end px-4 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-300 shadow-md">#}
+{#                        <span class="text-sm ml-2">ثبت اطلاعات شرکتی</span>#}
+{#                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>#}
+{#                    </a>#}
+{#                </li>#}
+{#                {% endif %}#}
+                <li>
+                    <a href="{% url 'store:dashboard' %}" class="flex items-center justify-end px-3 py-2 text-indigo-700 bg-indigo-50 rounded-lg font-medium transition duration-150">
+                        <span class="text-sm ml-2">خلاصه فعالیت</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center justify-end px-3 py-2 text-gray-600 hover:text-indigo-700 hover:bg-indigo-50 rounded-lg transition duration-150">
+                        <span class="text-sm ml-2">سفارش‌ها و خریدها</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    </a>
+                </li>
+
+                <li class="pt-4 border-t mt-4 border-gray-100">
+                    <a href="{% url 'accounts:edit_profile' %}" class="flex items-center justify-end px-3 py-2 text-gray-600 hover:text-indigo-700 hover:bg-indigo-50 rounded-lg transition duration-150">
+                        <span class="text-sm ml-2">ویرایش پروفایل</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317C10.665 1.776 13.242 1.3 14.864 2.872l.445.445 4.195 4.195c1.572 1.622 1.1 4.2-.317 4.54L15.3 12.7l-1.4 1.4-1.4 1.4L10.325 17.683c-1.622 1.572-4.2 1.1-4.54-.317L5.6 17.6l-1.4-1.4-1.4-1.4L1.317 14.3C-.255 12.678 .222 10.1 1.54 9.76l4.2-1.04 4.58-4.58z"></path></svg>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'accounts:logout' %}" class="flex items-center justify-end px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg transition duration-150">
+                        <span class="text-sm ml-2">خروج</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="sidebar-backdrop" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden md:hidden"></div>
+
+    <main class="flex-1 overflow-y-auto">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+
+            <h1 class="text-3xl font-bold text-gray-900 mb-8">
+                خوش آمدید، {{ user.first_name|default:user.username }} 👋
+            </h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+
+                <div class="md:col-span-2 bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">اطلاعات کلی حساب</h2>
+
+                    <div class="flex items-start md:items-center mb-4 pb-4 border-b border-gray-100">
+                        
+                        <div class="flex-1 text-right">
+                            <p class="text-lg font-bold text-gray-900">{{ user.get_full_name|default:user.username }}</p>
+                            <p class="text-sm text-gray-500">{{ user.email }}</p>
+                            <p class="text-sm text-gray-500">تاریخ عضویت: {{ user.date_joined|date:"Y/m/d" }}</p>
+                        </div>
+                    </div>
+
+                    <a href="{% url 'accounts:edit_profile' %}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300">
+                        ویرایش پروفایل
+                    </a>
+                </div>
+
+        </div>
+    </main>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const backdrop = document.getElementById('sidebar-backdrop');
+        const menuIcon = document.getElementById('menu-icon');
+        const closeIcon = document.getElementById('close-icon');
+
+        // تابع برای باز و بسته کردن سایدبار
+        function toggleSidebar() {
+            const isHidden = sidebar.classList.contains('translate-x-full');
+
+            if (isHidden) {
+                // باز کردن سایدبار
+                sidebar.classList.remove('translate-x-full');
+                backdrop.classList.remove('hidden');
+                menuIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // جلوگیری از اسکرول بدنه
+            } else {
+                // بستن سایدبار
+                sidebar.classList.add('translate-x-full');
+                backdrop.classList.add('hidden');
+                menuIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // ۱. رویداد کلیک دکمه اصلی
+        sidebarToggle.addEventListener('click', toggleSidebar);
+
+        // ۲. رویداد کلیک روی پس‌زمینه (برای بستن)
+        backdrop.addEventListener('click', toggleSidebar);
+
+        // ۳. بستن سایدبار پس از کلیک روی یکی از لینک‌ها (در حالت موبایل)
+        document.querySelectorAll('#sidebar a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 768) { // 768px همان md در Tailwind است
+                    toggleSidebar();
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

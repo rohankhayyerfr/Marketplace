@@ -1,0 +1,372 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 min-h-screen" dir="rtl">
+    <div class="max-w-screen-xl mx-auto py-6 px-4 sm:px-6 lg:px-8 lg:py-10">
+
+        <nav class="hidden lg:flex items-center text-sm text-gray-500 mb-8">
+            <a href="/" class="hover:text-gray-900">صفحه اصلی</a>
+            <span class="mx-3">›</span>
+            <a href="{{ product.category.get_absolute_url }}" class="hover:text-gray-900">{{ product.category.name }}</a>
+            <span class="mx-3">›</span>
+            <span class="text-gray-900 font-medium">{{ product.name }}</span>
+        </nav>
+
+        <div class="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 shadow-2xl z-50 px-4 py-4">
+            <div class="flex items-center justify-between mb-3">
+                <div>
+                    <div id="mobile-price" class="text-2xl font-black text-gray-900">۲۵٬۹۹۰٬۰۰۰</div>
+                    <div class="text-sm text-gray-500">تومان</div>
+                </div>
+                <button class="bg-gray-900 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-lg add-to-cart-btn">
+                    افزودن به سبد خرید
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
+
+            <div class="hidden lg:block lg:col-span-12 xl:col-span-3 order-3">
+                <div class="bg-white rounded-3xl shadow-2xl border border-gray-200 p-8 sticky top-24">
+
+                    <div class="text-center mb-6 border-b border-gray-100 pb-6">
+                        <h4 class="text-base text-gray-500 mb-2">قیمت نهایی:</h4>
+                        <div id="final-price" class="text-4xl font-extrabold text-gray-900 leading-none">
+                            ۲۵٬۹۹۰٬۰۰۰
+                        </div>
+                        <div class="text-xl text-gray-600 mt-2">تومان</div>
+                    </div>
+
+                    <div class="flex items-center justify-center bg-green-50 text-green-700 px-5 py-4 rounded-xl text-center font-bold mb-8">
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <span class="text-base">موجود در انبار • ارسال فوری</span>
+                    </div>
+
+                    <div class="space-y-6">
+
+                        <div class="flex items-center justify-between border-t border-gray-100 pt-6">
+                            <span class="text-gray-700 font-medium text-lg">تعداد:</span>
+
+                            <div class="flex items-center border border-gray-300 rounded-xl overflow-hidden divide-x divide-x-reverse divide-gray-300">
+
+                                <button  type="button" onclick="changeQty(-1)" class="w-12 h-10 text-xl font-bold text-gray-700 hover:bg-gray-100 transition">
+                                    -
+                                </button>
+
+                                <input type="text" id="quantity" value="1"
+                                    class="w-16 h-10 text-center font-bold text-lg text-gray-900 focus:outline-none bg-white border-0"
+                                    readonly>
+
+                                <button  type="button" onclick="changeQty(1)" class="w-12 h-10 text-xl font-bold text-gray-700 hover:bg-gray-100 transition">
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+                        <button class="w-full py-5 bg-indigo-600 text-white text-xl font-bold rounded-2xl hover:bg-indigo-700 transition shadow-lg shadow-indigo-300/50 add-to-cart-btn">
+                            افزودن به سبد خرید
+                        </button>
+
+                        <p class="text-center text-sm text-gray-500 border-t border-gray-100 pt-4">
+                            کالای با گارانتی ۱۸ ماهه پارسیان
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5 xl:col-span-4 order-1 lg:order-1">
+            <div class="lg:sticky lg:top-24 space-y-4">
+                    <div class="lg:hidden relative rounded-2xl overflow-hidden shadow-xl">
+                        <img id="mobile-main-img" src="{{ product.main_image.url }}" alt="{{ product.name }}"
+                             class="w-full h-96 object-cover">
+{#                        <div class="absolute top-4 left-4 bg-red/70 text-white px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm">#}
+{#                            جدید ۲۰۲۴#}
+{#                        </div>#}
+                    </div>
+
+                    <div class="hidden lg:block relative rounded-3xl overflow-hidden shadow-xl bg-white">
+                        <img id="main-product-img" src="{{ product.main_image.url }}" alt="{{ product.name }}"
+                             class="w-full object-cover aspect-square transition-transform duration-700 hover:scale-105">
+{#                        <div class="absolute top-5 left-5 bg-red text-white text-xs font-medium px-4 py-2 rounded-full backdrop-blur-sm">#}
+{#                            جدیدترین مدل ۲۰۲۴#}
+{#                        </div>#}
+                    </div>
+
+                    <div class="hidden lg:grid lg:grid-cols-5 gap-3">
+                        {% if product.main_image %}
+                            <img src="{{ product.main_image.url }}" data-full="{{ product.main_image.url }}"
+                                 class="gallery-thumb aspect-square object-cover rounded-xl cursor-pointer border-2 border-gray-800 shadow-sm">
+                        {% endif %}
+                        {% for image in product.gallery.all %}
+                            <img src="{{ image.image.url }}" data-full="{{ image.image.url }}"
+                                 class="gallery-thumb aspect-square object-cover rounded-xl cursor-pointer border-2 border-gray-300 hover:border-gray-600 transition">
+                        {% endfor %}
+                    </div>
+
+                    <div class="lg:hidden flex justify-center gap-2 mt-4">
+                        <span class="w-2 h-2 bg-gray-800 rounded-full"></span>
+                        <span class="w-2 h-2 bg-gray-300 rounded-full"></span>
+                        <span class="w-2 h-2 bg-gray-300 rounded-full"></span>
+                        <span class="w-2 h-2 bg-gray-300 rounded-full"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7 xl:col-span-5 order-2 lg:order-2 space-y-8 pb-24 lg:pb-0">
+            <div class="lg:hidden">
+                    <h1 class="text-3xl font-black text-gray-900 leading-tight">
+                        {{ product.name }}
+                    </h1>
+                    <p class="text-lg text-gray-600 mt-3">
+                        Digital Edition • ریجن اروپا
+                    </p>
+                    <div class="flex items-center gap-4 mt-4 text-sm text-gray-600">
+                        <div class="flex items-center gap-2">
+                            <span class="text-yellow-500">★★★★★</span>
+                            <span>(۳۵۴)</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                            <span>موجود</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hidden lg:block">
+                    <h1 class="text-4xl lg:text-5xl font-black text-gray-900 leading-tight">
+                        {{ product.name }}
+                    </h1>
+                    <p class="text-xl text-gray-600 mt-4 font-medium">
+                        (###)
+                    </p>
+                    <div class="flex items-center gap-8 mt-8 text-gray-600">
+                        <div class="flex items-center gap-3">
+                            <div class="flex text-yellow-500 text-lg">★★★★★</div>
+                            <span class="text-sm">(۳۵۴ نظر)</span>
+                        </div>
+                        <div class="text-sm flex items-center gap-2">
+                            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                            موجود در انبار • ارسال فوری
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-gray-100">
+                    <h3 class="text-lg font-bold text-gray-800 mb-6 lg:hidden">ویژگی‌های کلیدی</h3>
+                    <div class="grid grid-cols-2 gap-6 lg:gap-8">
+                        {% for feature in product.features.all %}
+                        <div class="flex items-center gap-4">
+                            <div class="p-3 bg-gray-50 rounded-xl flex-shrink-0">
+                                <img src="{{ feature.icon.url }}" class="w-7 h-7 opacity-70">
+                            </div>
+                            <div>
+                                <p class="text-xs lg:text-sm text-gray-500">{{ feature.title }}</p>
+                                <p class="font-semibold text-gray-800 text-sm lg:text-base">{{ feature.description }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold text-gray-800">گزینه‌های موجود</h3>
+                    <div class="space-y-3">
+                        {% for variant in product.variants.all %}
+                        <label class="variant-btn block cursor-pointer p-5 lg:p-6 rounded-2xl border transition-all
+                            {% if variant.stock > 0 %}
+                                {% if forloop.first %}border-gray-800 bg-gray-50{% else %}border-gray-200 hover:border-gray-400 hover:bg-gray-50{% endif %}
+                            {% else %}
+                                border-gray-200 bg-gray-50/70 opacity-60
+                            {% endif %}">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <input type="radio" name="variant" value="{{ variant.id }}"
+                                           data-price="{{ variant.price }}" data-stock="{{ variant.stock }}"
+                                           class="w-5 h-5 text-gray-800"
+                                           {% if forloop.first %}checked{% endif %}
+                                           {% if variant.stock == 0 %}disabled{% endif %}>
+                                    <div>
+                                        <p class="font-semibold text-gray-900">{{ variant.title }}</p>
+                                        <p class="text-sm text-gray-500 mt-1">{{ variant.description }}</p>
+                                    </div>
+                                </div>
+                                {% if variant.stock > 0 %}
+                                    <div class="text-xl lg:text-2xl font-bold text-gray-900">
+                                        {{ variant.price|floatformat:0 }} <span class="text-sm font-normal text-gray-500">تومان</span>
+                                    </div>
+                                {% else %}
+                                    <span class="text-red-500 font-medium">ناموجود</span>
+                                {% endif %}
+                            </div>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="mt-20 bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden">
+            <div class="cursor-pointer select-none" onclick="toggleDescription()">
+                <div class="p-6 lg:p-12 border-b border-gray-100 hover:bg-gray-50 transition">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-2xl lg:text-3xl font-black text-gray-900">توضیحات کامل محصول</h2>
+                        <div class="flex items-center gap-3">
+                            <span id="desc-toggle-text" class="text-gray-600 font-medium">مشاهده</span>
+                            <svg id="desc-icon" class="w-6 h-6 text-gray-600 transition-transform duration-300 transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-6 text-gray-700 leading-relaxed text-base lg:text-lg">
+                        <p>{{ product.description|truncatechars:200 }}</p>
+                    </div>
+                </div>
+            </div>
+            <div id="full-description" class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                <div class="p-6 lg:p-12 text-gray-700 leading-9 text-base lg:text-lg space-y-8">
+                    <p>{{ product.description|linebreaks }}.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-10 lg:mt-20 bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden">
+            <div class="cursor-pointer select-none" onclick="toggleSpecs()">
+                <div class="p-6 lg:p-12 border-b border-gray-100 hover:bg-gray-50 transition">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-2xl lg:text-3xl font-black text-gray-900">مشخصات فنی</h2>
+                        <div class="flex items-center gap-3">
+                            <span id="specs-toggle-text" class="text-gray-600 font-medium">مشاهده</span>
+                            <svg id="specs-icon" class="w-6 h-6 text-gray-600 transition-transform duration-300 transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-6 mt-6 text-gray-700">
+                        {% for spec in product.specifications.all|slice:':3' %}
+                        <div><span class="text-gray-500 text-sm">{{ spec.title }}</span>
+                            <p class="font-semibold">{{ spec.value }}</p></div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div id="full-specs" class="max-h-0 overflow-hidden transition-all duration-500">
+                <div class="p-6 lg:p-12">
+                    {% for spec in product.specifications.all %}
+                       <span class="text-gray-500 text-sm">{{ spec.title }}</span>
+                        <p class="font-semibold">{{ spec.value }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-10 lg:mt-20 pb-32 lg:pb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">نظرات خریداران</h2>
+            <div class="space-y-6">
+                </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ... همون اسکریپت قبلی + این خط برای موبایل پرایس
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- بروزرسانی قیمت هنگام انتخاب واریانت ---
+    document.querySelectorAll('input[name="variant"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+            if (radio.checked) {
+                const price = radio.dataset.price;
+                document.getElementById('final-price').textContent = new Intl.NumberFormat('fa-IR').format(price);
+                document.getElementById('mobile-price').textContent = new Intl.NumberFormat('fa-IR').format(price);
+            }
+        });
+    });
+
+    // --- اطمینان از بسته بودن بخش‌ها ---
+    const descSection = document.getElementById('full-description');
+    const specsSection = document.getElementById('full-specs');
+    if (descSection) descSection.style.maxHeight = '0px';
+    if (specsSection) specsSection.style.maxHeight = '0px';
+
+    // --- Add to Cart ---
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const variantInput = document.querySelector('input[name="variant"]:checked');
+            if (!variantInput) {
+                alert('لطفاً یک گزینه را انتخاب کنید');
+                return;
+            }
+            const variantId = variantInput.value;
+
+            fetch('{% url "add_to_cart" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    product_id: '{{ product.id }}',
+                    variant_id: variantId,
+                    quantity: quantity
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('محصول به سبد خرید اضافه شد!');
+                console.log(data);
+            })
+            .catch(err => console.error(err));
+        });
+    });
+
+});
+
+// --- توابع Toggle برای توضیحات و مشخصات فنی ---
+function toggleSection(sectionId, iconId, textId) {
+    const section = document.getElementById(sectionId);
+    const icon = document.getElementById(iconId);
+    const toggleText = document.getElementById(textId);
+
+    const isClosed = section.style.maxHeight === '' || section.style.maxHeight === '0px';
+
+    if (isClosed) {
+        section.style.maxHeight = section.scrollHeight + "px";
+        icon.classList.add('rotate-180');
+        toggleText.textContent = 'بستن';
+    } else {
+        section.style.maxHeight = section.scrollHeight + "px";
+        setTimeout(() => {
+            section.style.maxHeight = '0px';
+        }, 10);
+        icon.classList.remove('rotate-180');
+        toggleText.textContent = 'مشاهده';
+    }
+}
+
+window.toggleDescription = function() {
+    toggleSection('full-description', 'desc-icon', 'desc-toggle-text');
+}
+
+window.toggleSpecs = function() {
+    toggleSection('full-specs', 'specs-icon', 'specs-toggle-text');
+}
+
+// --- تغییر تعداد ---
+function changeQty(amount) {
+    const qtyInput = document.getElementById('quantity');
+    let qty = parseInt(qtyInput.value);
+    qty += amount;
+    if (qty < 1) qty = 1;
+    qtyInput.value = qty;
+}
+
+
+</script>
+
+
+{% endblock %}

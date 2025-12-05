@@ -1,0 +1,292 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}فروشگاه نوین{% endblock %}</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    // تعریف فونت فارسی به عنوان یک فونت سفارشی
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', '"Noto Sans"', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Color Emoji"'],
+                    },
+                    // پالت رنگی indigo که در کدهای قبلی استفاده کردیم
+                    colors: {
+                        'indigo': {
+                            '50': '#f0f3ff',
+                            '100': '#e0e7ff',
+                            '200': '#c7d2fe',
+                            '300': '#a5b4fc',
+                            '400': '#818cf8',
+                            '500': '#6366f1',
+                            '600': '#4f46e5',
+                            '700': '#4338ca',
+                            '800': '#3730a3',
+                            '900': '#312e81',
+                            '950': '#1e1b4b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body class="bg-gray-50 text-gray-800 antialiased font-sans">
+
+
+
+    <header>
+    <nav class="bg-white shadow-xl fixed w-full z-30 top-0 border-b border-gray-100" dir="rtl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+
+                <a href="{% url 'store:home' %}" class="text-3xl font-black text-indigo-700 hover:text-indigo-900 transition duration-300 tracking-tighter">
+                    شرکت نوین
+                </a>
+
+                <div class="hidden md:flex items-center space-x-6 space-x-reverse h-full">
+
+                    <a href="{% url 'store:home' %}" class="text-gray-700 hover:text-indigo-600 font-medium transition duration-150 h-full flex items-center px-2">
+                        صفحه اصلی
+                    </a>
+
+                    <a href="{% url 'store:product_list' %}" class="text-gray-700 hover:text-indigo-600 font-medium transition duration-150 h-full flex items-center px-2">
+                        محصولات
+                    </a>
+
+                    <div class="relative group h-full flex items-center">
+                        <span class="text-gray-700 hover:text-indigo-600 font-bold transition duration-150 cursor-pointer h-full flex items-center px-2 border-b-4 border-transparent group-hover:border-indigo-600">
+                            دسته‌بندی‌ها
+                            <svg class="w-4 h-4 mr-1 text-gray-500 group-hover:text-indigo-600 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+
+                        <div class="absolute right-0 top-full pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 w-96 xl:w-[48rem]">
+                            <div class="bg-white shadow-2xl rounded-2xl border border-gray-100 p-8 grid grid-cols-2 gap-8">
+
+                                <div>
+                                    <p class="text-sm font-bold text-indigo-600 mb-4 border-b border-indigo-100 pb-2">دسته‌بندی‌های اصلی</p>
+                                    <ul class="space-y-3">
+                                        <li><a href="#" class="text-gray-700 hover:text-indigo-600 font-medium transition">کنسول‌های بازی (جدید)</a></li>
+                                        <li><a href="#" class="text-gray-700 hover:text-indigo-600 font-medium transition">لوازم جانبی حرفه‌ای</a></li>
+                                        <li><a href="#" class="text-gray-700 hover:text-indigo-600 font-medium transition">قطعات کامپیوتر</a></li>
+                                        <li><a href="#" class="text-gray-700 hover:text-indigo-600 font-medium transition">ساعت و گجت‌های هوشمند</a></li>
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <p class="text-sm font-bold text-indigo-600 mb-4 border-b border-indigo-100 pb-2">پیشنهادات و تخفیف‌ها</p>
+                                    <a href="{% url 'store:product_list' %}?discount=true" class="block bg-indigo-50 p-4 rounded-xl hover:bg-indigo-100 transition duration-200">
+                                        <p class="text-gray-900 font-bold mb-1">تخفیف ویژه کنسول PS5</p>
+                                        <p class="text-sm text-gray-600">تا ۴۰٪ تخفیف روی مدل‌های اسلیم</p>
+                                    </a>
+                                    <a href="{% url 'store:product_list' %}" class="mt-4 block text-center text-sm font-bold text-indigo-600 hover:text-indigo-800 transition">
+                                        مشاهده همه دسته‌بندی‌ها
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#about" class="text-gray-700 hover:text-indigo-600 font-medium transition duration-150 h-full flex items-center px-2">
+                        درباره ما
+                    </a>
+
+                </div>
+
+                <div class="flex items-center space-x-4 space-x-reverse">
+
+                    <button class="p-2 text-gray-600 hover:text-indigo-600 rounded-full transition duration-150 relative">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">3</span>
+                    </button>
+
+                    <div class="hidden md:flex">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'store:dashboard' %}"
+                               class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-indigo-700 transition duration-300 shadow-lg shadow-indigo-300/50 text-base">
+                                داشبورد
+                            </a>
+                        {% else %}
+                            <a href="{% url 'accounts:login' %}"
+                               class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-indigo-700 transition duration-300 shadow-lg shadow-indigo-300/50 text-base">
+                                شروع کنید / ورود
+                            </a>
+                        {% endif %}
+                    </div>
+
+                    <button id="mobile-menu-button" class="md:hidden text-gray-500 hover:text-indigo-600 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-xl py-1 border-t border-gray-100">
+            <div class="divide-y divide-gray-100">
+                <a href="{% url 'store:home' %}" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-indigo-50 hover:text-indigo-600 transition duration-150">صفحه اصلی</a>
+                <a href="{% url 'store:product_list' %}" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-indigo-50 hover:text-indigo-600 transition duration-150">همه ی محصولات</a>
+                <a href="#" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-indigo-50 hover:text-indigo-600 transition duration-150">دسته‌بندی‌ها</a>
+                <a href="#about" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-indigo-50 hover:text-indigo-600 transition duration-150">درباره ما</a>
+            </div>
+
+            <div class="px-4 pt-3 pb-3 border-t border-gray-100 mt-1">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'store:dashboard' %}"
+                       class="block w-full text-center bg-indigo-600 text-white px-4 py-3 rounded-xl font-bold hover:bg-indigo-700 transition duration-300 shadow-lg shadow-indigo-500/50 text-base">
+                        رفتن به داشبورد
+                    </a>
+                {% else %}
+                    <a href="{% url 'accounts:login' %}"
+                       class="block w-full text-center bg-indigo-600 text-white px-4 py-3 rounded-xl font-bold hover:bg-indigo-700 transition duration-300 shadow-lg shadow-indigo-500/50 text-base">
+                        شروع کنید / ورود
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+</header>
+
+    <div id="messages-container" class="fixed top-0 inset-x-0 z-50">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="p-4 mb-2 text-center text-sm font-medium {% if message.tags == 'success' %}bg-green-500 text-white{% elif message.tags == 'error' %}bg-red-600 text-white{% else %}bg-indigo-600 text-white{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <main>
+        {% block content %}
+            {% endblock %}
+    </main>
+    <footer class="bg-gray-900 pt-16 pb-8" dir="rtl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="flex flex-col lg:flex-row justify-between items-center bg-indigo-700 p-8 rounded-2xl shadow-2xl transform translate-y-6 lg:translate-y-10 mb-10 lg:mb-20">
+            <div class="text-white text-center lg:text-right mb-6 lg:mb-0">
+                <h3 class="text-3xl font-extrabold mb-1">
+                    همین حالا عضو خانواده نوین شوید!
+                </h3>
+                <p class="text-indigo-200 text-lg">
+                    با عضویت در خبرنامه، از تخفیف‌ها و محصولات جدید زودتر از همه باخبر شوید.
+                </p>
+            </div>
+
+            <form class="flex w-full lg:w-96">
+                <input type="email" placeholder="ایمیل خود را وارد کنید..."
+                       class="w-full px-4 py-3 rounded-r-xl border-none focus:ring-0 focus:outline-none text-gray-800" required>
+                <button type="submit"
+                        class="bg-indigo-900 text-white px-6 py-3 rounded-l-xl font-bold hover:bg-indigo-800 transition duration-300 whitespace-nowrap shadow-md">
+                    عضویت
+                </button>
+            </form>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 border-b border-gray-700 pb-12">
+
+            <div>
+                <a href="{% url 'store:home' %}" class="text-3xl font-black text-white tracking-tighter block mb-4">
+                    شرکت نوین
+                </a>
+                <p class="text-gray-400 text-sm mb-6">
+                    پیشرو در ارائه‌ی محصولات دیجیتال و فناوری‌های روز دنیا با گارانتی معتبر و پشتیبانی قوی.
+                </p>
+                <div class="flex space-x-3 space-x-reverse">
+                    <a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-150">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.013 4.85.07c1.47.07 2.112.302 2.652.502.54.2 1.05.47 1.54.77.49.3 1.03.65 1.5.94.47.3.93.57 1.34.86.41.29.83.58 1.25.9a1 1 0 011.08.38 1 1 0 01.38 1.08c-.29.42-.58.84-.9 1.25-.3.47-.65 1.03-.94 1.5-.3.49-.57 1-.77 1.54-.2.54-.43 1.18-.5 2.65-.05 1.27-.07 1.65-.07 4.85s.01 3.58.07 4.85c.07 1.47.3 2.11.5 2.65.2.54.47 1.05.77 1.54.3.49.65 1.03.94 1.5.3.47.57.93.86 1.34.29.41.58.83.9 1.25a1 1 0 01.38 1.08 1 1 0 01-1.08.38c-.42-.29-.84-.58-1.25-.9-.47-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86z"></path></svg>
+                    </a>
+                    </div>
+            </div>
+
+            <div>
+                <h4 class="text-lg font-bold text-white mb-4 border-b border-gray-700 pb-2">محصولات و خدمات</h4>
+                <ul class="space-y-3">
+                    <li><a href="{% url 'store:product_list' %}" class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">همه محصولات</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">دسته‌بندی‌های اصلی</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">پیشنهادات ویژه</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">فروش سازمانی</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-lg font-bold text-white mb-4 border-b border-gray-700 pb-2">راهنمای مشتریان</h4>
+                <ul class="space-y-3">
+                    <li><a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">سوالات متداول (FAQ)</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">شیوه های ارسال</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">قوانین و مقررات</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">رهگیری سفارش</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-lg font-bold text-white mb-4 border-b border-gray-700 pb-2">تماس با ما</h4>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex items-center space-x-2 space-x-reverse text-gray-400">
+                        <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498A1 1 0 0121 17.72V21a2 2 0 01-2 2h-1c-8.837 0-16-7.163-16-16v-1a2 2 0 012-2h1z"></path></svg>
+                        <span>۰۲۱ - ۸۸۸ ۸۸۸۸</span>
+                    </li>
+                    <li class="flex items-center space-x-2 space-x-reverse text-gray-400">
+                        <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.842 5.234a1 1 0 001.264 0L21 8m-2-3a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5z"></path></svg>
+                        <span>info@novin-co.com</span>
+                    </li>
+                    <li class="text-gray-400 leading-relaxed pt-3">
+                        تهران، خیابان ولیعصر، برج نوین، پلاک ۱۰۰
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="mt-8 pt-4 flex flex-col md:flex-row justify-between items-center text-center">
+
+            <p class="text-sm text-gray-500 order-2 md:order-1 mt-4 md:mt-0">
+                &copy; ۱۴۰۳ - تمامی حقوق مادی و معنوی متعلق به شرکت نوین می‌باشد.
+            </p>
+
+            <div class="flex space-x-4 space-x-reverse order-1 md:order-2">
+                <div class="w-16 h-16 bg-gray-800 rounded-lg flex items-center justify-center text-xs text-gray-400 border border-gray-700">نماد ۱</div>
+                <div class="w-16 h-16 bg-gray-800 rounded-lg flex items-center justify-center text-xs text-gray-400 border border-gray-700">نماد ۲</div>
+            </div>
+        </div>
+
+    </div>
+</footer>
+    <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        // بررسی می‌کنیم که هر دو عنصر در صفحه وجود داشته باشند
+        if (menuButton && mobileMenu) {
+            menuButton.addEventListener('click', () => {
+                // کلاس 'hidden' را جابه‌جا (Toggle) می‌کند
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    });
+</script>
+
+
+    {% block extra_js %}{% endblock %}
+
+</body>
+</html>

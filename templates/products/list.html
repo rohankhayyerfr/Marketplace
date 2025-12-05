@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}فهرست محصولات | شرکت نوین{% endblock %}
+
+{% block content %}
+<section id="all-products" class="py-20 bg-gray-50" dir="rtl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="mb-12 text-center lg:text-right">
+            <h2 class="text-4xl lg:text-5xl font-extrabold text-gray-900 mb-2">
+                محصولات نوین
+            </h2>
+            <p class="text-xl text-gray-600">جدیدترین و محبوب‌ترین محصولات را اینجا ببینید.</p>
+        </div>
+
+        <form method="get" class="mb-10 p-4 bg-white rounded-xl shadow-lg border border-gray-100">
+            <div class="flex flex-col sm:flex-row justify-between items-center mb-4">
+                <span class="text-sm font-medium text-gray-600 mb-4 sm:mb-0">
+                    ({{ product_count }}) محصول یافت شد
+                </span>
+
+                <select name="sort_by" onchange="this.form.submit()" class="p-3 border border-gray-300 rounded-xl text-base bg-white focus:ring-indigo-500 focus:border-indigo-500 w-full sm:w-60 cursor-pointer transition">
+                    <option value="popularity" {% if request.GET.sort_by == 'popularity' %}selected{% endif %}>مرتب‌سازی بر اساس محبوبیت</option>
+                    <option value="price_asc" {% if request.GET.sort_by == 'price_asc' %}selected{% endif %}>مرتب‌سازی بر اساس قیمت (ارزان به گران)</option>
+                    <option value="price_desc" {% if request.GET.sort_by == 'price_desc' %}selected{% endif %}>مرتب‌سازی بر اساس قیمت (گران به ارزان)</option>
+                    <option value="newest" {% if request.GET.sort_by == 'newest' %}selected{% endif %}>مرتب‌سازی بر اساس جدیدترین</option>
+                </select>
+                {% if request.GET.sort_by and not request.GET.search %}
+                    <input type="hidden" name="sort_by" value="{{ request.GET.sort_by }}">
+                {% endif %}
+
+            </div>
+
+            <div class="flex items-center mt-4">
+                <input type="text" name="search" placeholder="نام محصول یا برند مورد نظر خود را جستجو کنید..."
+                       value="{{ request.GET.search }}"
+                       class="flex-grow p-3 border border-gray-300 rounded-r-xl rounded-l-none text-base focus:ring-indigo-500 focus:border-indigo-500"
+                >
+                <button type="submit" class="bg-indigo-600 text-white p-3 rounded-l-xl rounded-r-none hover:bg-indigo-700 transition duration-300 flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <span class="mr-2 hidden sm:inline">جستجو</span>
+                </button>
+            </div>
+
+            {% if request.GET.sort_by and request.GET.sort_by != 'popularity' %}
+                <input type="hidden" name="sort_by" value="{{ request.GET.sort_by }}">
+            {% endif %}
+
+        </form>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
+
+            {% for product in products %}
+            <div class="bg-white rounded-3xl shadow-xl transition-all duration-300 transform hover:shadow-2xl overflow-hidden border border-gray-100">
+
+                <a href="{% url 'store:product_detail' product.id %}" class="block relative overflow-hidden group">
+
+                    {% if product.is_discounted %}
+                    <div class="absolute top-0 right-0 bg-red-600 text-white text-sm font-bold px-4 py-2 z-10 rounded-bl-2xl">
+                        {{ product.discount_percentage }}٪ تخفیف
+                    </div>
+                    {% endif %}
+
+                    <img src="{{ product.main_image.url }}"
+                         alt="{{ product.name }}"
+                         class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                         </a>
+
+                <div class="p-6 text-right">
+                    <h3 class="text-xl font-extrabold text-gray-900 mb-2 leading-snug">
+                        <a href="{% url 'store:product_detail' product.id %}" class="hover:text-indigo-600 transition duration-150">
+                            {{ product.name }}
+                        </a>
+                    </h3>
+
+                    <p class="text-sm text-gray-500 mb-5 h-10 overflow-hidden">
+                        {{ product.short_description|default:"توضیحاتی برای این محصول ثبت نشده است." }}
+                    </p>
+
+                    <div class="pt-4 border-t border-gray-100">
+                        {% if product.old_price %}
+                            <div class="text-3xl font-extrabold text-indigo-700 leading-none mb-1">
+                                {{ product.discounted_price|floatformat:0 }}
+                                <span class="text-lg font-normal text-indigo-500 mr-1">تومان</span>
+                            </div>
+                            <span class="text-base text-gray-400 line-through">
+                                {{ product.old_price|floatformat:0 }}
+                            </span>
+                        {% else %}
+                            <div class="text-3xl font-extrabold text-gray-900 leading-none">
+                                {{ product.price|floatformat:0 }}
+                                <span class="text-lg font-normal text-gray-500 mr-1">تومان</span>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mt-6">
+                        {% if product.has_variants %}
+                            <a href="{% url 'store:product_detail' product.id %}" class="w-full block py-3 bg-indigo-50 text-indigo-700 text-lg font-bold rounded-xl hover:bg-indigo-100 transition duration-300 text-center border-2 border-indigo-200">
+                                مشاهده جزئیات
+                            </a>
+                        {% else %}
+                            <form method="post" action="#">
+                                {% csrf_token %}
+                                <button type="submit" class="w-full py-3 bg-indigo-600 text-white text-lg font-bold rounded-xl hover:bg-indigo-700 transition duration-300 shadow-md shadow-indigo-400/50">
+                                    افزودن به سبد خرید
+                                </button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center py-12 text-gray-600 bg-white rounded-3xl shadow-xl border border-gray-100">
+                <p class="text-2xl font-semibold">متأسفانه محصولی با این مشخصات یافت نشد. 😔</p>
+                <p class="text-base mt-2">لطفاً فیلترهای خود را تغییر دهید یا بعداً مراجعه کنید.</p>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        {% if products.has_other_pages %}
+        <div class="mt-16 text-center">
+            {% if products.has_previous %}
+                <a href="?page={{ products.previous_page_number }}{% if request.GET.sort_by %}&sort_by={{ request.GET.sort_by }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" class="px-5 py-3 ml-3 border border-indigo-600 text-indigo-600 font-medium rounded-xl hover:bg-indigo-50 transition duration-300">
+                    صفحه قبلی
+                </a>
+            {% endif %}
+
+            {% for i in products.paginator.page_range %}
+                {% if products.number == i %}
+                    <span class="px-5 py-3 mx-1 bg-indigo-600 text-white font-bold rounded-xl">{{ i }}</span>
+                {% else %}
+                    <a href="?page={{ i }}{% if request.GET.sort_by %}&sort_by={{ request.GET.sort_by }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" class="px-5 py-3 mx-1 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-100 transition duration-300">
+                        {{ i }}
+                    </a>
+                {% endif %}
+            {% endfor %}
+
+            {% if products.has_next %}
+                <a href="?page={{ products.next_page_number }}{% if request.GET.sort_by %}&sort_by={{ request.GET.sort_by }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" class="px-5 py-3 mr-3 border border-indigo-600 text-indigo-600 font-medium rounded-xl hover:bg-indigo-50 transition duration-300">
+                    صفحه بعدی
+                </a>
+            {% endif %}
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}

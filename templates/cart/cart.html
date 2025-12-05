@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}سبد خرید شما | نوین{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 min-h-screen py-10 lg:py-20 pt-24" dir="rtl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <h1 class="text-4xl lg:text-5xl font-extrabold text-gray-900 mb-10 lg:mb-16 border-b border-gray-200 pb-4">
+            سبد خرید شما
+        </h1>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+
+            <div class="lg:col-span-2 space-y-6">
+                {% if cart and cart.items %}
+                {% for item in cart.items %}
+                <div class="bg-white rounded-3xl shadow-lg p-5 lg:p-8 border border-gray-100 flex items-center space-x-5 space-x-reverse">
+
+                    <a href="{% url 'store:product_detail' item.product.id %}" class="flex-shrink-0">
+                        <img src="{{ item.product.main_image.url }}" alt="{{ item.product.name }}"
+                             class="w-24 h-24 object-cover rounded-xl border border-gray-200">
+                    </a>
+
+                    <div class="flex-grow space-y-3">
+                        <a href="{% url 'store:product_detail' item.product.id %}">
+                            <h2 class="text-lg lg:text-xl font-bold text-gray-900 hover:text-indigo-600 transition">
+                                {{ item.product.name }}
+                            </h2>
+                        </a>
+                        <p class="text-sm text-gray-500">
+                            {% if item.variant %}
+                                گارانتی: {{ item.variant.title }}
+                            {% else %}
+                                موجود در انبار
+                            {% endif %}
+                        </p>
+
+                        <p class="text-base font-semibold text-gray-700">
+                            قیمت واحد: {{ item.unit_price|floatformat:0 }} ت.
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col items-end space-y-4">
+                        <div class="flex items-center border border-gray-300 rounded-xl overflow-hidden divide-x divide-x-reverse divide-gray-300">
+                            <button type="button" onclick="updateCart('{{ item.id }}', -1)" class="w-10 h-10 text-xl font-bold text-gray-700 hover:bg-gray-100 transition">-</button>
+                            <span class="w-12 text-center font-bold text-lg text-gray-900">{{ item.quantity }}</span>
+                            <button type="button" onclick="updateCart('{{ item.id }}', 1)" class="w-10 h-10 text-xl font-bold text-gray-700 hover:bg-gray-100 transition">+</button>
+                        </div>
+
+                        <button onclick="removeFromCart('{{ item.id }}')" class="flex items-center text-red-500 hover:text-red-700 transition text-sm">
+                            حذف
+                        </button>
+                    </div>
+
+                    <div class="flex-shrink-0 text-center w-32">
+                        <p class="text-xl lg:text-2xl font-extrabold text-indigo-700">
+                            {{ item.total_price|floatformat:0 }}
+                        </p>
+                        <span class="text-sm text-gray-500">تومان</span>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="bg-white rounded-3xl shadow-lg p-10 text-center border border-gray-200">
+                    <p class="text-2xl font-semibold text-gray-700">سبد خرید شما خالی است. 😥</p>
+                    <a href="{% url 'store:product_list' %}" class="mt-6 inline-block bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-700 transition">
+                        مشاهده محصولات
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="lg:col-span-1">
+                <div class="sticky top-24 bg-white rounded-3xl shadow-xl p-6 lg:p-8 border border-gray-200">
+                    <h2 class="text-2xl font-extrabold text-gray-900 mb-6 border-b border-gray-100 pb-4">خلاصه سفارش</h2>
+                    {% if cart %}
+                    <div class="space-y-4 text-lg">
+                        <div class="flex justify-between items-center text-gray-700">
+                            <span>مجموع قیمت کالاها:</span>
+                            <span class="font-bold" id="sub-total">{{ cart.sub_total|floatformat:0 }} ت.</span>
+                        </div>
+                        <div class="flex justify-between items-center text-green-600">
+                            <span>تخفیف اعمال شده:</span>
+                            <span class="font-bold" id="discount-amount">(-) {{ cart.discount|floatformat:0 }} ت.</span>
+                        </div>
+                        <div class="flex justify-between items-center text-gray-700 border-t border-gray-200 pt-4">
+                            <span>هزینه ارسال:</span>
+                            <span class="font-bold" id="shipping-fee">
+                                {% if cart.shipping_fee > 0 %} {{ cart.shipping_fee|floatformat:0 }} ت. {% else %} رایگان {% endif %}
+                            </span>
+                        </div>
+                        <div class="flex justify-between items-center text-2xl pt-4 border-t-2 border-indigo-100">
+                            <span class="font-extrabold text-gray-900">مبلغ قابل پرداخت:</span>
+                            <span class="font-extrabold text-indigo-700" id="final-total">{{ cart.final_total|floatformat:0 }} ت.</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+function updateCart(itemId, delta) {
+    fetch("{% url 'cart:update_item' %}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: new URLSearchParams({ item_id: itemId, delta: delta })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) location.reload();
+    });
+}
+
+function removeFromCart(itemId) {
+    if (!confirm('آیا مطمئن هستید که می‌خواهید این محصول را حذف کنید؟')) return;
+    fetch("{% url 'cart:remove_item' %}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: new URLSearchParams({ item_id: itemId })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) location.reload();
+    });
+}
+</script>
+{% endblock %}
