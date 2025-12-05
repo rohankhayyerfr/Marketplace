@@ -15,10 +15,4 @@ class Migration(migrations.Migration):
             model_name='sellerprofile',
             name='phone_number',
         ),
-        migrations.AddField(
-            model_name='sellerprofile',
-            name='phone',
-            field=models.CharField(default=django.utils.timezone.now, max_length=20),
-            preserve_default=False,
-        ),
     ]
