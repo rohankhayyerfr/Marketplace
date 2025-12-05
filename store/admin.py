@@ -40,7 +40,7 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(SellerProfile)
 class SellerProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'company_name', 'is_verified')
+    list_display = ('user', 'company_name', 'phone', 'is_verified')
     list_filter = ('is_verified',)
     search_fields = ('company_name','user__username')
 
