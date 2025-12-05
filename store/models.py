@@ -68,7 +68,7 @@ class SellerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='seller_profile')
     company_name = models.CharField(max_length=100)
     registration_number = models.CharField(max_length=100, blank=True)
-    phone = models.CharField(max_length=50)
+    phone = models.CharField(max_length=50, blank=True, null=True)
     is_verified = models.BooleanField(default=False)
     def __str__(self):
         return self.company_name
