@@ -1,86 +1,99 @@
-
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}شرکت نوین | پیشرو در صادرات میوه و محصولات فروشگاهی{% endblock %}
+
 {% block content %}
-<body class="bg-gray-50">
-    <main class="mt-4">
-
-        <section id="hero" class="py-20 bg-gradient-to-r from-indigo-50 to-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 items-center">
-                <div class="md:order-1 text-center md:text-right">
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight mb-4">
-                        آینده کسب و کار شما در دستان ماست.
-                    </h1>
-                    <p class="text-xl text-gray-600 mb-8">
-                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.
-                    </p>
-                    <a href="#contact" class="inline-block px-10 py-4 bg-indigo-600 text-white text-lg font-semibold rounded-full hover:bg-indigo-700 transition duration-300 transform hover:scale-105 shadow-xl">
-                        همین امروز شروع کنید
-                    </a>
-                </div>
-                <div class="md:order-2">
-                    <img src="https://via.placeholder.com/600x400/818CF8/FFFFFF?text=تصویر+اصلی" alt="تصویر اصلی محصول یا سرویس" class="rounded-xl shadow-2xl w-full h-auto object-cover">
-                </div>
-            </div>
-        </section>
-
-        <section id="features" class="py-20 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">چرا ما را انتخاب کنید؟</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-                    <div class="p-6 bg-gray-50 rounded-lg shadow-lg hover:shadow-xl transition duration-300 text-center">
-                        <div class="text-4xl text-indigo-600 mb-4">💡</div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-3">نوآوری مستمر</h3>
-                        <p class="text-gray-600">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است. متن ساختگی است.</p>
-                    </div>
-
-                    <div class="p-6 bg-gray-50 rounded-lg shadow-lg hover:shadow-xl transition duration-300 text-center">
-                        <div class="text-4xl text-indigo-600 mb-4">🚀</div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-3">سرعت بالا</h3>
-                        <p class="text-gray-600">چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است. متون بلکه روزنامه و مجله در ستون.</p>
-                    </div>
-
-                    <div class="p-6 bg-gray-50 rounded-lg shadow-lg hover:shadow-xl transition duration-300 text-center">
-                        <div class="text-4xl text-indigo-600 mb-4">🔒</div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-3">امنیت کامل</h3>
-                        <p class="text-gray-600">کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می‌طلبد.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="about" class="py-20 bg-gray-100">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 items-center">
-                <div>
-                    <img src="https://via.placeholder.com/600x400/4F46E5/FFFFFF?text=تصویر+تیم" alt="تصویر تیم یا فضای کار" class="rounded-xl shadow-2xl w-full h-auto object-cover">
-                </div>
-                <div class="text-right">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-4">داستان ما</h2>
-                    <p class="text-gray-600 leading-relaxed mb-4">
-                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می‌باشد.
-                    </p>
-                    <p class="text-gray-600 leading-relaxed">
-                        کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می‌طلبد، تا با نرم‌افزارها شناخت بیشتری را برای طراحان رایانه ای علی‌الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="py-20 bg-indigo-600">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-4xl font-extrabold text-white mb-4">آماده‌اید تا کسب و کار خود را متحول کنید؟</h2>
-                <p class="text-xl text-indigo-100 mb-8">
-                    با ما تماس بگیرید و مشاوره رایگان دریافت کنید.
+<main class="pt-20"> 
+    
+    <section id="hero" class="py-24 lg:py-32 bg-gradient-to-l from-indigo-50 to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
+            
+            <div class="md:order-1 text-center md:text-right">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight mb-4">
+                    طعم تازگی را جهانی کنید.
+                </h1>
+                <p class="text-xl text-gray-700 mb-8">
+                    شرکت نوین، دروازه صادرات محصولات کشاورزی و میوه‌های باکیفیت ایران به بازارهای بین‌المللی. محصولات فروشگاهی شما با اطمینان و سرعت به مقصد می‌رسند.
                 </p>
-                <a href="mailto:info@example.com" class="inline-block px-10 py-4 bg-white text-indigo-600 text-lg font-bold rounded-full hover:bg-gray-100 transition duration-300 transform hover:scale-105 shadow-xl">
-                    تماس بگیرید
+                <a href="{% url 'store:product_list' %}" class="inline-block px-10 py-4 bg-indigo-600 text-white text-lg font-bold rounded-xl hover:bg-indigo-700 transition duration-300 transform hover:scale-105 shadow-2xl shadow-indigo-400/50">
+                    مشاهده محصولات تازه
                 </a>
             </div>
-        </section>
+            
+            <div class="md:order-2 relative">
+                <img src="{% static 'images/fresh_fruit_export.jpg'%}"
+                     alt="صادرات میوه تازه" 
+                     class="rounded-3xl shadow-2xl w-full h-auto object-cover aspect-video border-4 border-white">
+                <div class="absolute top-0 left-0 bg-green-500 text-white text-sm font-bold px-4 py-2 rounded-tl-2xl rounded-br-2xl shadow-lg">
+                    حمل و نقل سریع
+                </div>
+            </div>
+        </div>
+    </section>
 
-    </main>
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-extrabold text-center text-gray-900 mb-16 border-b-4 border-indigo-100 inline-block pb-1">مزایای همکاری با نوین</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
 
+                <div class="p-8 bg-white rounded-3xl shadow-xl hover:shadow-2xl transition duration-300 border-t-4 border-indigo-600 text-center">
+                    <div class="text-5xl text-indigo-600 mb-5">🍊</div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">کنترل کیفیت و تازگی</h3>
+                    <p class="text-gray-600">تضمین بالاترین استانداردهای بهداشتی و تازگی محصولات از مزرعه تا قفسه فروشگاه مشتریان شما در بازارهای جهانی.</p>
+                </div>
+
+                <div class="p-8 bg-white rounded-3xl shadow-xl hover:shadow-2xl transition duration-300 border-t-4 border-indigo-600 text-center">
+                    <div class="text-5xl text-indigo-600 mb-5">🚢</div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">لجستیک تخصصی صادرات</h3>
+                    <p class="text-gray-600">استفاده از حمل و نقل یخچال‌دار و روش‌های پیشرفته بسته‌بندی برای حفظ کیفیت محصولات در طول مسیر.</p>
+                </div>
+
+                <div class="p-8 bg-white rounded-3xl shadow-xl hover:shadow-2xl transition duration-300 border-t-4 border-indigo-600 text-center">
+                    <div class="text-5xl text-indigo-600 mb-5">🌎</div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">دسترسی به بازار جهانی</h3>
+                    <p class="text-gray-600">فراهم کردن بستر فروش مستقیم محصولات شما به بازارهای بین‌المللی با تمرکز بر آسیا و اروپا.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
+            <div class="relative">
+                <img src="{% static 'images/packaging_and_storage.jpg' %}" 
+                     alt="تصویر بسته‌بندی و انبار" 
+                     class="rounded-3xl shadow-2xl w-full h-auto object-cover aspect-[4/3]">
+                <div class="absolute inset-0 bg-black/10 rounded-3xl"></div>
+            </div>
+            
+            <div class="text-right">
+                <h2 class="text-4xl font-extrabold text-gray-900 mb-4 border-b-4 border-indigo-300 inline-block pb-1">ماموریت تجاری ما</h2>
+                <p class="text-gray-700 leading-relaxed mb-4 text-lg">
+                    شرکت نوین با بیش از یک دهه تجربه در بازرگانی، پلی مطمئن بین تولیدکنندگان داخلی و مصرف‌کنندگان خارجی است. ماموریت ما تسهیل فرآیند پیچیده صادرات، از انبارش و بازرسی تا ترخیص گمرکی و تحویل نهایی است.
+                </p>
+                <p class="text-gray-700 leading-relaxed text-lg">
+                    ما نه تنها میوه و تره‌بار، بلکه طیف گسترده‌ای از محصولات فروشگاهی با پتانسیل صادراتی را در پلتفرم خود عرضه می‌کنیم. کیفیت، سرعت و اعتماد، سه رکن اصلی تجارت ما هستند.
+                </p>
+                <a href="#" class="mt-6 inline-block text-indigo-600 font-bold hover:text-indigo-800 transition">
+                    بیشتر درباره داستان نوین بخوانید
+                    <span class="mr-1">←</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 bg-indigo-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-extrabold text-white mb-4">می‌خواهید محصولات خود را به فروش برسانید؟</h2>
+            <p class="text-xl text-indigo-100 mb-8">
+                با تیم کارشناسان ما تماس بگیرید تا پتانسیل صادراتی کسب و کارتان را ارزیابی کنیم.
+            </p>
+            <a href="#" class="inline-block px-12 py-4 bg-white text-indigo-700 text-lg font-bold rounded-xl hover:bg-gray-100 transition duration-300 transform hover:scale-105 shadow-xl">
+                مشاوره رایگان بگیرید
+            </a>
+        </div>
+    </section>
+
+</main>
 {% endblock %}
-
-
-</body>

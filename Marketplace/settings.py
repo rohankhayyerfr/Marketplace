@@ -14,6 +14,7 @@ from pathlib import Path
 import dj_database_url
 import os
 
+from django import middleware
 from django.contrib import staticfiles
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,7 +30,7 @@ SECRET_KEY = 'django-insecure-((s7*xleir6t0sel8w($msw(m3+)xge7470=z09&n2*0ldkxzq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['marketplace-72x6.onrender.com']
+ALLOWED_HOSTS = ['marketplace-72x6.onrender.com', '127.0.0.1']
 
 
 # Application definition
@@ -55,7 +56,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 ROOT_URLCONF = 'Marketplace.urls'
 
 TEMPLATES = [
@@ -80,10 +80,23 @@ WSGI_APPLICATION = 'Marketplace.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ.get(
+                'DATABASE_URL',
+                'postgresql://mydatabase_f3vw_user:sLRo6ziBLBpFjhnl6Y3CA31rvReW41AA@dpg-d4pcj2er433s73ekjieg-a.frankfurt-postgres.render.com/mydatabase_f3vw'
+            )
+        )
+    }
 
-DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('postgresql://mydatabase_f3vw_user:sLRo6ziBLBpFjhnl6Y3CA31rvReW41AA@dpg-d4pcj2er433s73ekjieg-a.frankfurt-postgres.render.com/mydatabase_f3vw'))
-}
 
 
 
@@ -122,6 +135,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',   # دقیقاً این
+]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
