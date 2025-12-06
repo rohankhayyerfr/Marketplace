@@ -142,7 +142,7 @@ USE_TZ = True
 STATICFILES_DIRS = [
     BASE_DIR / 'static',   # دقیقاً این
 ]
-STATIC_URL = '/static/'
+STATIC_URL = 'https://marketplace-static.onrender.com/'
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
