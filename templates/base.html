@@ -55,55 +55,51 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
 
-                <a href="{% url 'store:home' %}" class="text-3xl font-black text-indigo-700 hover:text-indigo-900 transition duration-300 tracking-tighter">
-                    Lemon
+                <a href="{% url 'store:home' %}" class="flex items-center space-x-3 space-x-reverse transition duration-300">
+                    <img src="{% static 'images/logo.png' %}" alt="لوگو شرکت Lemon" class="h-10 w-auto object-contain">
+                    <span class="text-3xl font-black text-lime-700 hover:text-lime-900 transition duration-300 tracking-tighter">
+                        Lemon
+                    </span>
                 </a>
 
                 <div class="hidden md:flex items-center space-x-6 space-x-reverse h-full">
 
-                    <a href="{% url 'store:home' %}" class="text-gray-700 hover:text-indigo-600 font-medium transition duration-150 h-full flex items-center px-2">
+                    <a href="{% url 'store:home' %}" class="text-gray-700 hover:text-lime-600 font-medium transition duration-150 h-full flex items-center px-2">
                         صفحه اصلی
                     </a>
 
-                    <a href="{% url 'store:product_list' %}" class="text-gray-700 hover:text-indigo-600 font-medium transition duration-150 h-full flex items-center px-2">
+                    <a href="{% url 'store:product_list' %}" class="text-gray-700 hover:text-lime-600 font-medium transition duration-150 h-full flex items-center px-2">
                         محصولات
                     </a>
 
                     <div class="relative group h-full flex items-center">
-                        <span class="text-gray-700 hover:text-indigo-600 font-bold transition duration-150 cursor-pointer h-full flex items-center px-2 border-b-4 border-transparent group-hover:border-indigo-600">
+                        <span class="text-gray-700 hover:text-lime-600 font-bold transition duration-150 cursor-pointer h-full flex items-center px-2 border-b-4 border-transparent group-hover:border-lime-600">
                             دسته‌بندی‌ها
-                            <svg class="w-4 h-4 mr-1 text-gray-500 group-hover:text-indigo-600 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            <svg class="w-4 h-4 mr-1 text-gray-500 group-hover:text-lime-600 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </span>
 
                         <div class="absolute right-0 top-full pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 w-96 xl:w-[48rem]">
                             <div class="bg-white shadow-2xl rounded-2xl border border-gray-100 p-8 grid grid-cols-2 gap-8">
-{##}
-{#                                <div>#}
-{#                                    <p class="text-sm font-bold text-indigo-600 mb-4 border-b border-indigo-100 pb-2">دسته‌بندی‌های اصلی</p>#}
-{#                                    <ul class="space-y-3">#}
-{#                                        <li><a href="#" class="text-gray-700 hover:text-indigo-600 font-medium transition">کنسول‌های بازی (جدید)</a></li>#}
-{#                                        <li><a href="#" class="text-gray-700 hover:text-indigo-600 font-medium transition">لوازم جانبی حرفه‌ای</a></li>#}
-{#                                        <li><a href="#" class="text-gray-700 hover:text-indigo-600 font-medium transition">قطعات کامپیوتر</a></li>#}
-{#                                        <li><a href="#" class="text-gray-700 hover:text-indigo-600 font-medium transition">ساعت و گجت‌های هوشمند</a></li>#}
-{#                                    </ul>#}
-{#                                </div>#}
-{##}
-{#                                <div>#}
-{#                                    <p class="text-sm font-bold text-indigo-600 mb-4 border-b border-indigo-100 pb-2">پیشنهادات و تخفیف‌ها</p>#}
-{#                                    <a href="{% url 'store:product_list' %}?discount=true" class="block bg-indigo-50 p-4 rounded-xl hover:bg-indigo-100 transition duration-200">#}
-{#                                        <p class="text-gray-900 font-bold mb-1">تخفیف ویژه کنسول PS5</p>#}
-{#                                        <p class="text-sm text-gray-600">تا ۴۰٪ تخفیف روی مدل‌های اسلیم</p>#}
-{#                                    </a>#}
-{#                                    <a href="{% url 'store:product_list' %}" class="mt-4 block text-center text-sm font-bold text-indigo-600 hover:text-indigo-800 transition">#}
-{#                                        مشاهده همه دسته‌بندی‌ها#}
-{#                                    </a>#}
-{#                                </div>#}
-
+                                <div>
+                                    <p class="text-sm font-bold text-lime-600 mb-4 border-b border-lime-100 pb-2">دسته‌بندی‌های اصلی</p>
+                                    <ul class="space-y-3">
+                                        <li><a href="#" class="text-gray-700 hover:text-lime-600 font-medium transition">میوه‌های فصلی</a></li>
+                                        <li><a href="#" class="text-gray-700 hover:text-lime-600 font-medium transition">تره‌بار و سبزیجات</a></li>
+                                        <li><a href="#" class="text-gray-700 hover:text-lime-600 font-medium transition">خشکبار و مغزیجات</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-bold text-lime-600 mb-4 border-b border-lime-100 pb-2">پیشنهادات ویژه</p>
+                                    <a href="{% url 'store:product_list' %}?discount=true" class="block bg-lime-50 p-4 rounded-xl hover:bg-lime-100 transition duration-200">
+                                        <p class="text-gray-900 font-bold mb-1">تخفیف ویژه صادراتی</p>
+                                        <p class="text-sm text-gray-600">جدیدترین محصولات با قیمت‌های استثنایی</p>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <a href="#about" class="text-gray-700 hover:text-indigo-600 font-medium transition duration-150 h-full flex items-center px-2">
+                    <a href="#about" class="text-gray-700 hover:text-lime-600 font-medium transition duration-150 h-full flex items-center px-2">
                         درباره ما
                     </a>
 
@@ -111,7 +107,7 @@
 
                 <div class="flex items-center space-x-4 space-x-reverse">
 
-                    <button class="p-2 text-gray-600 hover:text-indigo-600 rounded-full transition duration-150 relative">
+                    <button class="p-2 text-gray-600 hover:text-lime-600 rounded-full transition duration-150 relative">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                         <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">3</span>
                     </button>
@@ -119,18 +115,18 @@
                     <div class="hidden md:flex">
                         {% if user.is_authenticated %}
                             <a href="{% url 'store:dashboard' %}"
-                               class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-indigo-700 transition duration-300 shadow-lg shadow-indigo-300/50 text-base">
+                               class="bg-lime-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-lime-700 transition duration-300 shadow-lg shadow-lime-300/50 text-base">
                                 داشبورد
                             </a>
                         {% else %}
                             <a href="{% url 'accounts:login' %}"
-                               class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-indigo-700 transition duration-300 shadow-lg shadow-indigo-300/50 text-base">
+                               class="bg-lime-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-lime-700 transition duration-300 shadow-lg shadow-lime-300/50 text-base">
                                 شروع کنید / ورود
                             </a>
                         {% endif %}
                     </div>
 
-                    <button id="mobile-menu-button" class="md:hidden text-gray-500 hover:text-indigo-600 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <button id="mobile-menu-button" class="md:hidden text-gray-500 hover:text-lime-600 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-lime-500">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                     </button>
                 </div>
@@ -140,21 +136,21 @@
 
         <div id="mobile-menu" class="hidden md:hidden bg-white shadow-xl py-1 border-t border-gray-100">
             <div class="divide-y divide-gray-100">
-                <a href="{% url 'store:home' %}" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-indigo-50 hover:text-indigo-600 transition duration-150">صفحه اصلی</a>
-                <a href="{% url 'store:product_list' %}" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-indigo-50 hover:text-indigo-600 transition duration-150">همه ی محصولات</a>
-                <a href="#" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-indigo-50 hover:text-indigo-600 transition duration-150">دسته‌بندی‌ها</a>
-                <a href="#about" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-indigo-50 hover:text-indigo-600 transition duration-150">درباره ما</a>
+                <a href="{% url 'store:home' %}" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-lime-50 hover:text-lime-600 transition duration-150">صفحه اصلی</a>
+                <a href="{% url 'store:product_list' %}" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-lime-50 hover:text-lime-600 transition duration-150">همه ی محصولات</a>
+                <a href="#" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-lime-50 hover:text-lime-600 transition duration-150">دسته‌بندی‌ها</a>
+                <a href="#about" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-lime-50 hover:text-lime-600 transition duration-150">درباره ما</a>
             </div>
 
             <div class="px-4 pt-3 pb-3 border-t border-gray-100 mt-1">
                 {% if user.is_authenticated %}
                     <a href="{% url 'store:dashboard' %}"
-                       class="block w-full text-center bg-indigo-600 text-white px-4 py-3 rounded-xl font-bold hover:bg-indigo-700 transition duration-300 shadow-lg shadow-indigo-500/50 text-base">
+                       class="block w-full text-center bg-lime-600 text-white px-4 py-3 rounded-xl font-bold hover:bg-lime-700 transition duration-300 shadow-lg shadow-lime-500/50 text-base">
                         رفتن به داشبورد
                     </a>
                 {% else %}
                     <a href="{% url 'accounts:login' %}"
-                       class="block w-full text-center bg-indigo-600 text-white px-4 py-3 rounded-xl font-bold hover:bg-indigo-700 transition duration-300 shadow-lg shadow-indigo-500/50 text-base">
+                       class="block w-full text-center bg-lime-600 text-white px-4 py-3 rounded-xl font-bold hover:bg-lime-700 transition duration-300 shadow-lg shadow-lime-500/50 text-base">
                         شروع کنید / ورود
                     </a>
                 {% endif %}
