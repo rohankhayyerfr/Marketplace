@@ -20,7 +20,6 @@ from django.contrib import staticfiles
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
@@ -31,7 +30,6 @@ SECRET_KEY = 'django-insecure-((s7*xleir6t0sel8w($msw(m3+)xge7470=z09&n2*0ldkxzq
 DEBUG = False
 
 ALLOWED_HOSTS = ['marketplace-72x6.onrender.com', '127.0.0.1']
-
 
 # Application definition
 
@@ -59,7 +57,6 @@ MIDDLEWARE = [
 
 ]
 
-
 ROOT_URLCONF = 'Marketplace.urls'
 
 TEMPLATES = [
@@ -79,7 +76,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Marketplace.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -101,9 +97,6 @@ else:
         )
     }
 
-
-
-
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -122,7 +115,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -134,23 +126,19 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',   # دقیقاً این
+    BASE_DIR / 'static',  # دقیقاً این
 ]
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # یا os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
-
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/var/media'
-
+MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
