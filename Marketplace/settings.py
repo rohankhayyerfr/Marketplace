@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["lemonpars.com", "www.lemonpars.com", "marketplace-72x6.onrender.com"]
+ALLOWED_HOSTS = ["lemonpars.com", "www.lemonpars.com", "marketplace-72x6.onrender.com",'127.0.0.1']
 
 
 # Application definition

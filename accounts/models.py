@@ -10,10 +10,13 @@ STATUS_CHOICES = (
 class SellerVerification(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=100)
+    company = models.CharField(max_length=100, null=True, blank=True)
     country = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     national_id = models.CharField(max_length=100)
     phone = models.CharField(max_length=50)
+
+
 
     id_cart_image = models.ImageField(upload_to='identity/id_card/')
     selfie_image = models.ImageField(upload_to='identity/selfie/', null=True, blank=True)

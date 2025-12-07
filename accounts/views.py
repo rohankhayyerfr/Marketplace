@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from .forms import SellerVerificationForm
 from store.forms import EditProfileForm
-
+from .models import SellerVerification
 
 
 def user_register(request):
@@ -51,30 +51,27 @@ def user_register(request):
     return render(request, "accounts/register.html")
 @login_required
 def verify_identity(request):
-    identity = getattr(request.user, 'seller_verification', None)
-
-    if identity:
-        return redirect("verification_status")
+    # این خط رکورد موجود یا جدید رو میاره
+    sv, created = SellerVerification.objects.get_or_create(user=request.user)
 
     if request.method == "POST":
-        form = SellerVerificationForm(request.POST, request.FILES)
+        # همیشه instance=sv پاس بده تا آپدیت انجام بشه نه insert
+        form = SellerVerificationForm(request.POST, request.FILES, instance=sv)
         if form.is_valid():
-            sv = form.save(commit=False)
-            sv.user = request.user
-            sv.save()
-            return redirect("verification_status")
+            form.save()
+            return redirect("accounts:verify_status")
     else:
-        form = SellerVerificationForm(instance=identity)
+        form = SellerVerificationForm(instance=sv)
 
-    # اینجا identity رو هم پاس میدیم
     return render(request, 'accounts/verfication_identity.html', {
         'form': form,
-        'identity': identity
+        'identity': sv
     })
 
+@login_required
 def verification_status(request):
     sv = getattr(request.user, "seller_verification", None)
-    return render(request, "accounts/verfication_status.html", {"verfication": sv})
+    return render(request, "accounts/verfication_status.html", {"identity": sv})
 
 def user_login(request):
     if request.method == 'POST':
