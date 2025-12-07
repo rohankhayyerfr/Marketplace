@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .forms import ProductForm
 from .models import Product, ProductVariant, Category
 from django.contrib.auth.decorators import login_required
+from accounts.views import verify_identity
 
 def home(request):
     return render(request, 'home.html')
@@ -21,7 +22,7 @@ def product_detail(request, pk):
 @login_required
 def dashboard(request):
     products = Product.objects.filter(owner=request.user)
-    identity = getattr(request.user, "seller_verification", None)
+    identity = getattr(request.user, "verify_identity", None)
 
     return render(request, 'dashboard/index.html', {'products': products, 'identity': identity})
 
