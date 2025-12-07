@@ -30,3 +30,4 @@ class SellerVerification(models.Model):
 
 
 User.add_to_class('is_seller', models.BooleanField(default=False))
+
