@@ -23,10 +23,16 @@ def product_detail(request, pk):
 @login_required
 def dashboard(request):
     products = Product.objects.filter(owner=request.user)
-    identity = getattr(request.user, "seller_verification", None)
 
-    return render(request, 'dashboard/index.html', {'products': products, 'identity': identity})
+    try:
+        identity = request.user.sellerverification
+    except SellerVerification.DoesNotExist:
+        identity = None
 
+    return render(request, 'dashboard/index.html', {
+        'products': products,
+        'identity': identity
+    })
 
 # @login_required
 # def product_create(request):
