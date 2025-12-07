@@ -29,5 +29,4 @@ class SellerVerification(models.Model):
         return f"{self.user.username} - {self.status}"
 
 
-User.add_to_class('is_seller', models.BooleanField(default=False))
 
