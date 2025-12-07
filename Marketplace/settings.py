@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-((s7*xleir6t0sel8w($msw(m3+)xge7470=z09&n2*0ldkxzq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['marketplace-72x6.onrender.com', '127.0.0.1', "www.lemonpars.com", 'lemonpars.com']
+ALLOWED_HOSTS = ["lemonpars.com", "www.lemonpars.com", "marketplace-72x6.onrender.com"]
 
 
 # Application definition
