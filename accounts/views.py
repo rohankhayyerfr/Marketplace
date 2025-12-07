@@ -3,9 +3,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
-
+from .forms import SellerVerificationForm
 from store.forms import EditProfileForm
-from store.models import SellerProfile
+
 
 
 def user_register(request):
@@ -49,23 +49,32 @@ def user_register(request):
         return redirect("store:dashboard")
 
     return render(request, "accounts/register.html")
+@login_required
+def verify_identity(request):
+    identity = getattr(request.user, 'seller_verification', None)
 
-def become_seller(request):
+    if identity:
+        return redirect("verification_status")
+
     if request.method == "POST":
-        company_name = request.POST['company_name']
-        phone = request.POST['phone']
+        form = SellerVerificationForm(request.POST, request.FILES)
+        if form.is_valid():
+            sv = form.save(commit=False)
+            sv.user = request.user
+            sv.save()
+            return redirect("verification_status")
+    else:
+        form = SellerVerificationForm(instance=identity)
 
-        SellerProfile.objects.create(
-            user=request.user,
-            company_name=company_name,
-            phone=phone,
-            is_verified=False
-        )
-        messages.success(request, "درخواست شما ارسال شد و منتظر تایید مدیریت است.")
-        return redirect('store:dashboard')
+    # اینجا identity رو هم پاس میدیم
+    return render(request, 'accounts/verfication_identity.html', {
+        'form': form,
+        'identity': identity
+    })
 
-
-    return render(request, 'accounts/become_seller.html')
+def verification_status(request):
+    sv = getattr(request.user, "seller_verification", None)
+    return render(request, "accounts/verfication_status.html", {"verfication": sv})
 
 def user_login(request):
     if request.method == 'POST':

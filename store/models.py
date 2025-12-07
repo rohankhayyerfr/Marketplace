@@ -1,12 +1,27 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-class Category(models.Model):
-    name = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True)
 
-    def __str__(self):
-        return self.name
+class Category(models.Model):
+        name = models.CharField(max_length=200)
+        slug = models.SlugField(unique=True)
+
+        # مهم‌ترین بخش: ایجاد دسته‌بندی والد
+        parent = models.ForeignKey(
+            "self",
+            blank=True,
+            null=True,
+            related_name="children",
+            on_delete=models.CASCADE
+        )
+
+        class Meta:
+            verbose_name = "Category"
+            verbose_name_plural = "Categories"
+
+        def __str__(self):
+            return self.name
+
 
 class Product(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='products')
@@ -64,14 +79,6 @@ class ProductVariant(models.Model):
 #     def __str__(self):
 #         return f"{self.product.name} - {self.name}"
 
-class SellerProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='seller_profile')
-    company_name = models.CharField(max_length=100)
-    registration_number = models.CharField(max_length=100, blank=True)
-    phone = models.CharField(max_length=128, null=True, blank=True, default=None)
-    is_verified = models.BooleanField(default=False)
-    def __str__(self):
-        return self.company_name
 
 
 

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from django.contrib import admin
-from .models import Category, Product, Order, SellerProfile, ProductGallery, ProductFeature, ProductVariant, \
+from .models import Category, Product, Order, ProductGallery, ProductFeature, ProductVariant, \
     ProductSpecification
 
 
@@ -37,12 +37,6 @@ class ProductSpecificInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('id', 'full_name', 'created_at', 'total', 'paid')
 
-
-@admin.register(SellerProfile)
-class SellerProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'company_name', 'phone', 'is_verified')
-    list_filter = ('is_verified',)
-    search_fields = ('company_name','user__username')
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
