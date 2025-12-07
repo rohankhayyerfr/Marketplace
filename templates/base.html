@@ -90,7 +90,7 @@
                     <ul class="space-y-3">
                         {% for child in cat.children.all %}
                             <li>
-                                <a href="{% url 'category_products' child.id %}" class="text-gray-700 hover:text-lime-600 font-medium transition">
+                                <a href="{% url 'store:category' child.id %}" class="text-gray-700 hover:text-lime-600 font-medium transition">
                                     {{ child.name }}
                                 </a>
                             </li>

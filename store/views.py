@@ -21,9 +21,9 @@ def product_detail(request, pk):
 @login_required
 def dashboard(request):
     products = Product.objects.filter(owner=request.user)
+    identity = getattr(request.user, "seller_verification", None)
 
-
-    return render(request, 'dashboard/index.html', {'products': products})
+    return render(request, 'dashboard/index.html', {'products': products, 'identity': identity})
 
 
 # @login_required
