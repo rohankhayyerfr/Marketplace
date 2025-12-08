@@ -41,5 +41,7 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductGalleryInline, ProductFeatureInline, ProductVariantInline, ProductSpecificInline]
-    list_display = ('name', 'price', 'inventory', 'category')
+    list_display = ('name', 'price', 'inventory', 'category', 'owner', 'status', 'created_at')
+    list_filter = ("status",)
     prepopulated_fields = {'slug': ('name',)}
+

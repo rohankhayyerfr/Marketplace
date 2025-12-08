@@ -10,7 +10,7 @@ from accounts.models import SellerVerification
 def home(request):
     return render(request, 'home.html')
 def product_list(request):
-    products = Product.objects.all()
+    products = Product.objects.filter(status="approved")
     return render(request, 'products/list.html', {'products': products})
 
 
@@ -106,6 +106,30 @@ def dashboard(request):
 #     product = get_object_or_404(Product, pk=pk, owner=request.user)
 #     product.delete()
 #     return redirect("store:dashboard")
+
+
+def product_create(request):
+    try:
+        identity = request.user.sellerverification
+        if identity.status != "approved":
+            return redirect('accounts:verify_status')
+    except SellerVerification.DoesNotExist:
+        return redirect('accounts:verify_identity')
+
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.owner = request.user
+            product.status = "pending"
+            product.save()
+            messages.success(request, 'محصول شما در دست مدیریت است به محض تایید شدن در سایت اضافه میشود')
+            return redirect('dashboard')
+
+    else:
+        messages.error(request,"somthing went wrong")
+        form = ProductForm()
+    return render(request, "store/product_create.html", {'form': form})
 
 
 
