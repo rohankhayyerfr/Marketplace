@@ -1,6 +1,11 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+STATUS_CHOICES = (
+    ('pending', 'Pending'),
+    ('approved', 'Approved'),
+    ('rejected', 'Rejected'),
+)
 
 class Category(models.Model):
         name = models.CharField(max_length=200)
@@ -32,6 +37,9 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     inventory = models.PositiveIntegerField()
     main_image = models.ImageField(upload_to='products/main/')
+
+    status = models.CharField(choices=STATUS_CHOICES, default='pending', max_length=20)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
