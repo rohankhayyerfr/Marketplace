@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils.text import slugify
+
 from .forms import ProductForm, ProductGalleryFormSet, ProductFeatureFormSet, ProductSpecificationFormSet, \
     ProductVariantFormSet
 from .models import *
@@ -24,7 +26,8 @@ def product_detail(request, pk):
 @login_required
 def dashboard(request):
     products = Product.objects.filter(owner=request.user)
-
+    approved_products = Product.objects.filter(status="approved")
+    pending_counts = Product.objects.filter(status="pending").count()
     try:
         identity = request.user.sellerverification
     except SellerVerification.DoesNotExist:
@@ -32,6 +35,8 @@ def dashboard(request):
 
     return render(request, 'dashboard/index.html', {
         'products': products,
+        'pending_counts': pending_counts,
+        'approved_products': approved_products,
         'identity': identity
     })
 
@@ -57,6 +62,7 @@ def product_create(request):
             product = product_form.save(commit=False)
             product.owner = request.user
             product.status = "pending"
+            product.slug = slugify(product.name)
             product.save()
 
             gallery_formset.instance = product
