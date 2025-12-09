@@ -1,8 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import ProductForm
-from .models import Product, ProductVariant, Category
+from .forms import ProductForm, ProductGalleryFormSet, ProductFeatureFormSet, ProductSpecificationFormSet, \
+    ProductVariantFormSet
+from .models import *
 from django.contrib.auth.decorators import login_required
 from accounts.views import verify_identity
 from accounts.models import SellerVerification
@@ -34,80 +35,6 @@ def dashboard(request):
         'identity': identity
     })
 
-# @login_required
-# def product_create(request):
-#     categories = Category.objects.all()
-#     try:
-#         seller_profile = request.user.seller_profile
-#     except SellerProfile.DoesNotExist:
-#         return redirect('store:dashboard')
-#
-#     if not seller_profile.is_verified:
-#         messages.error(request, 'شما هنوز تایید نشده اید!')
-#         return redirect('accounts:become_seller')
-#
-#     if request.method == "POST":
-#         form = ProductForm(request.POST, request.FILES)
-#
-#
-#         if form.is_valid():
-#             p = form.save(commit=False)
-#             p.owner = request.user
-#             p.save()
-#
-#
-#
-#             return redirect("store:dashboard")
-#     else:
-#         form = ProductForm()
-#
-#
-#     return render(
-#         request,
-#         'dashboard/product_form.html',
-#         {
-#             'form': form,
-#
-#             'categories': categories,
-#         }
-#     )
-#
-#
-# @login_required
-# def product_edit(request, pk):
-#     product = get_object_or_404(Product, pk=pk, owner=request.user)
-#
-#     if request.method == "POST":
-#         form = ProductForm(request.POST, request.FILES, instance=product)
-#         formset = VariantFormSet(request.POST, instance=product)
-#
-#         if form.is_valid() and formset.is_valid():
-#             form.save()
-#             formset.save()
-#             return redirect("store:dashboard")
-#
-#     else:
-#         form = ProductForm(instance=product)
-#         formset = VariantFormSet(instance=product)
-#
-#     return render(
-#         request,
-#         'dashboard/product_form.html',
-#         {
-#             'form': form,
-#             'formset': formset,
-#             'product': product
-#         }
-#     )
-#
-#
-# @login_required
-# def product_delete(request, pk):
-#     product = get_object_or_404(Product, pk=pk, owner=request.user)
-#     product.delete()
-#     return redirect("store:dashboard")
-
-
 def product_create(request):
     try:
         identity = request.user.sellerverification
@@ -117,19 +44,50 @@ def product_create(request):
         return redirect('accounts:verify_identity')
 
     if request.method == 'POST':
-        form = ProductForm(request.POST)
-        if form.is_valid():
-            product = form.save(commit=False)
+        product_form = ProductForm(request.POST, request.FILES)
+        gallery_formset = ProductGalleryFormSet(request.POST, request.FILES)
+        feature_formset = ProductFeatureFormSet(request.POST, request.FILES)
+        specification_formset = ProductSpecificationFormSet(request.POST)
+        variant_formset = ProductVariantFormSet(request.POST)
+
+        if (product_form.is_valid() and gallery_formset.is_valid() and
+            feature_formset.is_valid() and specification_formset.is_valid() and
+            variant_formset.is_valid()):
+
+            product = product_form.save(commit=False)
             product.owner = request.user
             product.status = "pending"
             product.save()
-            messages.success(request, 'محصول شما در دست مدیریت است به محض تایید شدن در سایت اضافه میشود')
-            return redirect('dashboard')
 
+            gallery_formset.instance = product
+            gallery_formset.save()
+
+            feature_formset.instance = product
+            feature_formset.save()
+
+            specification_formset.instance = product
+            specification_formset.save()
+
+            variant_formset.instance = product
+            variant_formset.save()
+
+            messages.success(request, 'محصول شما در دست مدیریت است به محض تایید شدن در سایت اضافه میشود')
+            return redirect('store:dashboard')
     else:
-        messages.error(request,"somthing went wrong")
-        form = ProductForm()
-    return render(request, "store/product_create.html", {'form': form})
+        product_form = ProductForm()
+        gallery_formset = ProductGalleryFormSet()
+        feature_formset = ProductFeatureFormSet()
+        specification_formset = ProductSpecificationFormSet()
+        variant_formset = ProductVariantFormSet()
+
+    return render(request, 'products/product_create.html', {
+        'product_form': product_form,
+        'gallery_formset': gallery_formset,
+        'feature_formset': feature_formset,
+        'specification_formset': specification_formset,
+        'variant_formset': variant_formset
+    })
+
 
 
 
@@ -141,3 +99,7 @@ def category_products(request, pk):
         'category': category,
         'products': products
     })
+
+
+def faqs(request):
+    return render(request, 'faqs.html')

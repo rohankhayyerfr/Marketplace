@@ -24,7 +24,7 @@
             <ul class="space-y-3 text-right">
                 {% if identity and identity.status == 'approved' %}
                     <li>
-                        <a href="#"
+                        <a href="{% url 'store:product_create' %}"
                            class="w-full inline-flex items-center justify-end px-4 py-3 bg-lime-600 text-white font-semibold rounded-lg hover:bg-lime-700 transition duration-300 shadow-lg">
                             <span class="text-sm ml-2">اضافه کردن محصول جدید</span>
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -124,11 +124,6 @@
                 <div class="bg-white rounded-xl shadow-lg p-6">
                     <div class="flex justify-between items-center mb-6 border-b pb-2">
                         <h2 class="text-2xl font-bold text-gray-800">محصولات ثبت شده توسط شما</h2>
-                        {% if identity and identity.status == 'approved' %}
-                            <a href="#" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-lime-600 hover:bg-lime-700 transition duration-300">
-                                افزودن محصول جدید
-                            </a>
-                        {% endif %}
                     </div>
 
                     {% if user_products %}
@@ -192,7 +187,7 @@
                             <p class="mt-1 text-sm text-gray-500">برای شروع فروش، اولین محصول خود را اضافه کنید.</p>
                             <div class="mt-6">
                                 {% if identity and identity.status == 'approved' %}
-                                <a href="#" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-lime-600 hover:bg-lime-700 transition duration-300">
+                                <a href="{% url 'store:product_create' %}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-lime-600 hover:bg-lime-700 transition duration-300">
                                     <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                     اضافه کردن محصول جدید
                                 </a>

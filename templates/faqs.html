@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8" dir="rtl">
+
+    <div class="max-w-4xl mx-auto">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-extrabold text-gray-900 mb-2">پرسش‌های متداول</h1>
+            <p class="text-gray-500 text-lg">سوالات پرتکرار همراه با پاسخ‌های شفاف</p>
+        </header>
+
+        <!-- فیلتر دسته‌ها -->
+        <nav class="mb-10">
+            <div id="faq-tabs" class="flex flex-wrap justify-center gap-3">
+                <button data-cat="all" class="tab-btn px-4 py-2 bg-lime-600 text-white rounded-full shadow">همه</button>
+                <button data-cat="account" class="tab-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-full">حساب کاربری</button>
+                <button data-cat="order" class="tab-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-full">ثبت سفارش</button>
+                <button data-cat="ship" class="tab-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-full">ارسال</button>
+                <button data-cat="return" class="tab-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-full">بازگشت کالا</button>
+            </div>
+        </nav>
+
+        <!-- بخش‌ها -->
+        <div id="faq-container" class="space-y-8">
+
+            <!-- دسته حساب کاربری -->
+            <section data-cat="account" class="faq-section">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">حساب کاربری</h2>
+
+                <div class="space-y-4">
+
+                    <div class="faq-item bg-white shadow-md rounded-xl overflow-hidden">
+                        <button class="faq-q w-full flex justify-between items-center p-4 text-right text-lg font-semibold">
+                            <span>چطور حساب کاربری ایجاد کنم؟</span>
+                            <svg class="w-5 h-5 text-lime-600 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-a hidden p-4 border-t text-gray-600 leading-relaxed">
+                            ایجاد حساب کمتر از ۱ دقیقه طول می‌کشد. فقط روی دکمه ورود/ثبت‌نام کلیک کنید.
+                        </div>
+                    </div>
+                    <div class="faq-item bg-white shadow-md rounded-xl overflow-hidden">
+                        <button class="faq-q w-full flex justify-between items-center p-4 text-right text-lg font-semibold">
+                            <span>چطور محصول در سایت بذارم؟</span>
+                            <svg class="w-5 h-5 text-lime-600 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-a hidden p-4 border-t text-gray-600 leading-relaxed">
+                            وارد داشبورد شوید و حساب شرکتی خود رو باز کنید وقتی که تایید شد میتوانید محصول بذارید تا کاربران دیگه هم محصولتون رو ببینن و از شما خرید کنند
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white shadow-md rounded-xl overflow-hidden">
+                        <button class="faq-q w-full flex justify-between items-center p-4 text-right text-lg font-semibold">
+                            <span>آیا اطلاعات من امن است؟</span>
+                            <svg class="w-5 h-5 text-lime-600 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-a hidden p-4 border-t text-gray-600 leading-relaxed">
+                            بله، با SSL و رمزنگاری قوی محافظت می‌شود.
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- دسته سفارش -->
+            <section data-cat="order" class="faq-section">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">ثبت سفارش</h2>
+
+                <div class="faq-item bg-white shadow-md rounded-xl overflow-hidden">
+                    <button class="faq-q w-full flex justify-between items-center p-4 text-lg font-semibold">
+                        <span>چطور سفارشم را پیگیری کنم؟</span>
+                        <svg class="w-5 h-5 text-lime-600 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-a hidden p-4 border-t text-gray-600">
+                        از بخش پیگیری سفارشات در حساب کاربری.
+                    </div>
+                </div>
+            </section>
+
+            <!-- دسته ارسال -->
+            <section data-cat="ship" class="faq-section">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">ارسال</h2>
+
+                <div class="faq-item bg-white shadow-md rounded-xl overflow-hidden">
+                    <button class="faq-q w-full flex justify-between items-center p-4 text-lg font-semibold">
+                        <span>هزینه و زمان ارسال چهقدر است؟</span>
+                        <svg class="w-5 h-5 text-lime-600 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-a hidden p-4 border-t text-gray-600">
+                        اپدیت میشود...
+                    </div>
+                </div>
+            </section>
+
+            <!-- دسته بازگشت -->
+            <section data-cat="return" class="faq-section">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">بازگشت کالا</h2>
+
+                <div class="faq-item bg-white shadow-md rounded-xl overflow-hidden">
+                    <button class="faq-q w-full flex justify-between items-center p-4 text-lg font-semibold">
+                        <span>مهلت بازگشت کالا چهقدر است؟</span>
+                        <svg class="w-5 h-5 text-lime-600 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-a hidden p-4 border-t text-gray-600">
+                        اپدیت میشود...
+                    </div>
+            </section>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+// آکاردئون
+document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+        const item = q.parentElement;
+        const answer = item.querySelector('.faq-a');
+        const icon = q.querySelector('svg');
+
+        const open = !answer.classList.contains('hidden');
+
+        document.querySelectorAll('.faq-a').forEach(a => a.classList.add('hidden'));
+        document.querySelectorAll('.faq-q svg').forEach(i => i.style.transform = 'rotate(0deg)');
+
+        if (!open) {
+            answer.classList.remove('hidden');
+            icon.style.transform = 'rotate(180deg)';
+        }
+    });
+});
+
+// دسته‌بندی
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const cat = btn.dataset.cat;
+
+        document.querySelectorAll('.tab-btn').forEach(b => {
+            b.classList.remove('bg-lime-600', 'text-white');
+            b.classList.add('bg-gray-200', 'text-gray-700');
+        });
+
+        btn.classList.add('bg-lime-600', 'text-white');
+        btn.classList.remove('bg-gray-200', 'text-gray-700');
+
+        document.querySelectorAll('.faq-section').forEach(sec => {
+            sec.style.display = (cat === "all" || sec.dataset.cat === cat) ? "block" : "none";
+        });
+    });
+});
+</script>
+{% endblock %}
