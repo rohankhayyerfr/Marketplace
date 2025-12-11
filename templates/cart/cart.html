@@ -113,23 +113,31 @@ function updateCart(itemId, delta) {
             "Content-Type": "application/x-www-form-urlencoded",
             "X-CSRFToken": "{{ csrf_token }}"
         },
-        body: new URLSearchParams({ item_id: itemId, delta: delta })
+        body: new URLSearchParams({
+            item_id: itemId,
+            delta: delta
+        })
     })
     .then(res => res.json())
     .then(data => {
-        if (data.success) location.reload();
+        if (data.success) {
+            location.reload();
+        }
     });
 }
 
 function removeFromCart(itemId) {
-    if (!confirm('آیا مطمئن هستید که می‌خواهید این محصول را حذف کنید؟')) return;
+    if (!confirm('آیا مطمئن هستید؟')) return;
+
     fetch("{% url 'cart:remove_item' %}", {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             "X-CSRFToken": "{{ csrf_token }}"
         },
-        body: new URLSearchParams({ item_id: itemId })
+        body: new URLSearchParams({
+            item_id: itemId
+        })
     })
     .then(res => res.json())
     .then(data => {
@@ -137,4 +145,5 @@ function removeFromCart(itemId) {
     });
 }
 </script>
+
 {% endblock %}

@@ -13,68 +13,83 @@ def get_cart(request):
     return cart
 
 def add_to_cart(request):
-    if request.method == "POST":
-        try:
-            data = json.loads(request.body)
+    if request.method != "POST":
+        return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
 
-            product_id = int(data.get('product_id'))
-            variant_id = data.get('variant_id')
-            quantity = int(data.get('quantity', 1))
+    try:
+        if not request.body:
+            return JsonResponse({'status': 'error', 'message': 'Empty request body'}, status=400)
 
-            # محصول
-            product = get_object_or_404(Product, id=product_id)
+        data = json.loads(request.body)
 
-            # واریانت
-            variant = None
-            if variant_id:
-                variant = get_object_or_404(ProductVariant, id=int(variant_id))
+        product_id = data.get('product_id')
+        variant_id = data.get('variant_id')
+        quantity = int(data.get('quantity', 1))
 
-            # گرفتن سبد خرید (بر اساس session یا user)
-            if request.user.is_authenticated:
-                cart, created = Cart.objects.get_or_create(user=request.user)
-            else:
+        if quantity < 1:
+            quantity = 1
+
+        product = get_object_or_404(Product, id=product_id)
+
+        variant = None
+        if variant_id:
+            variant = get_object_or_404(ProductVariant, id=int(variant_id))
+
+        # CART
+        if request.user.is_authenticated:
+            cart, _ = Cart.objects.get_or_create(user=request.user)
+        else:
+            session = request.session.session_key
+            if not session:
+                request.session.create()
                 session = request.session.session_key
-                if not session:
-                    request.session.create()
-                    session = request.session.session_key
-                cart, created = Cart.objects.get_or_create(session_id=session)
+            cart, _ = Cart.objects.get_or_create(session_id=session)
 
-            # اضافه کردن به cartitem
-            item, created_item = CartItem.objects.get_or_create(
+        # جلوگیری از تکراری شدن آیتم
+        item = CartItem.objects.filter(cart=cart, product=product, variant=variant).first()
+
+        if item:
+            item.quantity += quantity
+            item.save()
+        else:
+            item = CartItem.objects.create(
                 cart=cart,
                 product=product,
                 variant=variant,
-                defaults={'quantity': quantity}
+                quantity=quantity
             )
 
-            if not created_item:
-                item.quantity += quantity
-                item.save()
+        return JsonResponse({
+            'status': 'success',
+            'message': "به سبد خرید اضافه شد",
+            'item_id': item.pk,
+            'quantity': item.quantity
+        })
 
-            return JsonResponse({
-                'status': 'success',
-                'message': "به سبد خرید اضافه شد",
-                'item_id': item.id,
-                'quantity': item.quantity
-            })
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
-        except Exception as e:
-            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
-    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
 
 
 def update_cart_item(request):
-    if request.nethod == 'POST':
-        item_id = request.POST.get('item_id')
-        delta = int(request.POST.get('delta', 0))
-        item = get_object_or_404(CartItem, id=item_id)
-        item.quantity += delta
-        if item.quantity < 1:
-            item.quantity = 1
-        item.save()
-        return JsonResponse({'success': True, 'quantity': item.quantity, 'total_price': item.total_price})
-    return JsonResponse({'success': False}, status=400)
+    if request.method == "POST":
+        item_id = request.POST.get("item_id")
+        delta = int(request.POST.get("delta"))
+
+        try:
+            item = CartItem.objects.get(id=item_id)
+            item.quantity += delta
+
+            if item.quantity < 1:
+                item.quantity = 1
+
+            item.save()
+
+
+            return JsonResponse({"success": True})
+        except:
+            return JsonResponse({"success": False})
 
 def remove_cart_item(request):
     if request.method == "POST":
@@ -83,6 +98,8 @@ def remove_cart_item(request):
         item.delete()
         return JsonResponse({'success': True})
     return JsonResponse({'success': False}, status=400)
+
+
 def cart_home(request):
     if request.user.is_authenticated:
         cart = Cart.objects.filter(user=request.user).first()
@@ -94,3 +111,4 @@ def cart_home(request):
             cart = Cart.objects.filter(session_id=session).first()
 
     return render(request, 'cart/cart.html', {'cart': cart})
+

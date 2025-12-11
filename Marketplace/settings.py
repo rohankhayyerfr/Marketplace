@@ -14,8 +14,6 @@ from pathlib import Path
 import dj_database_url
 import os
 
-from django import middleware
-from django.contrib import staticfiles
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
 # SECRET_KEY = 'django-insecure-((s7*xleir6t0sel8w($msw(m3+)xge7470=z09&n2*0ldkxzq'
+
+
+
 SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False

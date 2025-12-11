@@ -29,6 +29,12 @@ class Cart(models.Model):
     def final_total(self):
         return self.sub_total - self.discount + self.shipping_fee
 
+def update_totals(self):
+    self.sub_total = sum(item.total_price for item in self.items.all())
+    self.final_total = self.sub_total + self.shipping_fee - self.discount
+    self.save()
+
+
 class CartItem(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
