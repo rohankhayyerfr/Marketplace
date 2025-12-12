@@ -54,6 +54,9 @@ def product_create(request):
         feature_formset = ProductFeatureFormSet(request.POST, request.FILES)
         specification_formset = ProductSpecificationFormSet(request.POST)
         variant_formset = ProductVariantFormSet(request.POST)
+        print("POST received")
+        print(product_form.errors)
+        print("INCOMING SLUG:", request.POST.get("slug"))
 
         if (product_form.is_valid() and gallery_formset.is_valid() and
             feature_formset.is_valid() and specification_formset.is_valid() and

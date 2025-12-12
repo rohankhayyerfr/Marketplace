@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.text import slugify
 
 STATUS_CHOICES = (
     ('pending', 'Pending'),
@@ -32,7 +33,7 @@ class Product(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='products')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(max_length=255, unique=True, allow_unicode=True)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     inventory = models.PositiveIntegerField()
@@ -40,6 +41,11 @@ class Product(models.Model):
 
     status = models.CharField(choices=STATUS_CHOICES, default='pending', max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
