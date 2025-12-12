@@ -68,6 +68,32 @@ def verify_identity(request):
         'identity': sv
     })
 
+
+@login_required
+def edit_identity(request):
+    try:
+        sv = request.user.sellerverification
+    except SellerVerification.DoesNotExist:
+        return redirect("accounts:verify_identity")
+
+    if sv.status != "approved":
+        messages.error(request, "هویت شما تایید شده است. امکان ویرایش وجود ندارد")
+        return redirect("accounts:verify_identity")
+
+
+    if request.method == "POST":
+        form = SellerVerificationForm(request.POST, request.FILES, instance=sv)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "اطلاعات شما با موفقیت ویرایش شد!")
+            return redirect("store:dashboard")
+    else:
+        form = SellerVerificationForm(instance=sv)
+
+    return render(request, "accounts/edit_verify.html", {"form": form, "identity": sv})
+
+
+
 @login_required
 def verification_status(request):
     sv = getattr(request.user, "seller_verification", None)

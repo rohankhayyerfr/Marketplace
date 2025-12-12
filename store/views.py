@@ -26,8 +26,8 @@ def product_detail(request, pk):
 @login_required
 def dashboard(request):
     products = Product.objects.filter(owner=request.user)
-    approved_products = Product.objects.filter(status="approved")
-    pending_counts = Product.objects.filter(status="pending").count()
+    approved_products = Product.objects.filter(status="approved", owner=request.user)
+    pending_counts = Product.objects.filter(status="pending", owner=request.user).count()
     try:
         identity = request.user.sellerverification
     except SellerVerification.DoesNotExist:
