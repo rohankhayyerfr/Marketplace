@@ -19,13 +19,6 @@
             </p>
         </div>
 
-        {% if messages %}
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl relative text-right" role="alert">
-                {% for message in messages %}
-                    <span class="block sm:inline">{{ message }}</span>
-                {% endfor %}
-            </div>
-        {% endif %}
 
         <form id="register-form" class="mt-8 space-y-6" action="{% url 'accounts:register' %}" method="POST">
             {% csrf_token %}

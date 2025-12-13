@@ -100,6 +100,10 @@ def product_create(request):
 @login_required
 def product_edit(request, pk):
     product = get_object_or_404(Product, pk=pk, owner=request.user)
+    if product.status == "pending":
+        messages.warning(request, "محصول در حال بررسی است و امکان ویرایش ندارد.")
+        return redirect("store:dashboard")
+
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():

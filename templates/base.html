@@ -46,72 +46,64 @@
 
     {% block extra_head %}{% endblock %}
 
-<div id="toast-message"
-     class="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-500 ease-in-out hidden"
-     dir="rtl">
-
-    <div id="toast-box"
-         class="flex items-center p-4 rounded-xl shadow-2xl space-x-4 space-x-reverse
-                bg-lime-50 border border-lime-300 ring-4 ring-lime-200/50 min-w-[300px]">
-
-        <svg id="toast-icon" class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor"
-             viewBox="0 0 24 24"></svg>
-
-        <div id="toast-text" class="text-sm font-bold text-gray-800"></div>
-
-        <button type="button" onclick="hideToast()" class="mr-2 text-gray-500 hover:text-gray-900 transition">
+<!-- Toast Container -->
+<!-- قبل از بسته شدن </body> -->
+<div id="toast-box" class="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 hidden transition-all duration-500 ease-in-out">
+    <div id="toast-content" class="flex items-center p-4 rounded-xl shadow-lg space-x-4 space-x-reverse
+         bg-lime-50 border border-lime-300 text-lime-700 min-w-[250px] max-w-sm rtl">
+        <svg id="toast-icon" class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
+        <div id="toast-text" class="text-sm font-bold text-gray-800 text-right"></div>
+        <button type="button" onclick="hideToast()"
+                class="mr-2 text-gray-500 hover:text-gray-900 transition flex items-center justify-center">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M6 18L18 6M6 6l12 12"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
         </button>
     </div>
 </div>
+
 <script>
-    const toast = document.getElementById('toast-message');
-    const toastBox = document.getElementById('toast-box');
-    const toastText = document.getElementById('toast-text');
-    const toastIcon = document.getElementById('toast-icon');
+const toastBox = document.getElementById('toast-box');
+const toastText = document.getElementById('toast-text');
+const toastIcon = document.getElementById('toast-icon');
+const toastContent = document.getElementById('toast-content');
 
-    const icons = {
-        success: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.022 12.022 0 0012 22.056 12.022 12.022 0 0020.618 6.984z"></path>`,
+const icons = {
+    success: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2a10 10 0 110 20 10 10 0 010-20z"/>`,
+    error: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>`,
+    warning: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856A2.094 2.094 0 0021 15.906V8.094A2.094 2.094 0 0019.906 6H4.094A2.094 2.094 0 002 8.094v7.812A2.094 2.094 0 004.094 19z"/>`,
+    info: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01"/>`
+};
 
-        error: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"></path>`,
+const styles = {
+    success: "bg-lime-50 border-lime-300 text-lime-700",
+    error: "bg-red-50 border-red-300 text-red-700",
+    warning: "bg-yellow-50 border-yellow-300 text-yellow-700",
+    info: "bg-blue-50 border-blue-300 text-blue-700"
+};
 
-        warning: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M12 9v2m0 4h.01m-6.938 4h13.856A2.094 2.094 0 0021 15.906V8.094A2.094 2.094 0 0019.906 6H4.094A2.094 2.094 0 002 8.094v7.812A2.094 2.094 0 004.094 19z"></path>`,
+function showToast(message, type="success") {
+    toastText.textContent = message;
+    toastIcon.innerHTML = icons[type];
+    toastContent.className = `flex items-center p-4 rounded-xl shadow-lg space-x-4 space-x-reverse min-w-[250px] max-w-sm rtl ${styles[type]}`;
+    toastBox.classList.remove("hidden");
+    toastBox.style.opacity = "1";
+    setTimeout(hideToast, 5000);
+}
 
-        info: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M13 16h-1v-4h-1m1-4h.01"></path>`
-    };
+function hideToast() {
+    toastBox.style.opacity = "0";
+    setTimeout(() => toastBox.classList.add("hidden"), 500);
+}
 
-    const styles = {
-        success: "bg-lime-50 border-lime-300 ring-lime-200/50 text-lime-700",
-        error: "bg-red-50 border-red-300 ring-red-200/50 text-red-700",
-        warning: "bg-yellow-50 border-yellow-300 ring-yellow-200/50 text-yellow-700",
-        info: "bg-blue-50 border-blue-300 ring-blue-200/50 text-blue-700"
-    };
-
-    function showToast(message, type = "success") {
-        toastText.textContent = message;
-        toastIcon.innerHTML = icons[type];
-
-        toastBox.className =
-            `flex items-center p-4 rounded-xl shadow-2xl space-x-4 space-x-reverse border ring-4 min-w-[300px] ${styles[type]}`;
-
-        toast.classList.remove('hidden');
-        toast.style.opacity = '1';
-
-        setTimeout(hideToast, 4000);
-    }
-
-    function hideToast() {
-        toast.style.opacity = '0';
-        setTimeout(() => toast.classList.add('hidden'), 500);
-    }
+// 🌟 نمایش خودکار مسیج‌های Django
+{% if messages %}
+    {% for message in messages %}
+        showToast("{{ message|escapejs }}", "{% if message.tags %}{{ message.tags }}{% else %}info{% endif %}");
+    {% endfor %}
+{% endif %}
 </script>
+
 
 </head>
 
@@ -241,15 +233,6 @@
     </nav>
 </header>
 
-    <div id="messages-container" class="fixed top-0 inset-x-0 z-50">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="p-4 mb-2 text-center text-sm font-medium {% if message.tags == 'success' %}bg-green-500 text-white{% elif message.tags == 'error' %}bg-red-600 text-white{% else %}bg-indigo-600 text-white{% endif %}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-    </div>
 
     <main>
         {% block content %}

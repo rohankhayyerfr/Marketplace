@@ -8,7 +8,8 @@ from .models import Product, ProductVariant, ProductGallery, ProductFeature, Pro
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['category', 'name', 'slug', 'description', 'price', 'inventory', 'main_image']
+        fields = ['category', 'name' , 'description', 'price', 'inventory', 'main_image']
+        exclude = ("slug", "owner", "status")
 
 ProductGalleryFormSet = inlineformset_factory(
     Product, ProductGallery,
