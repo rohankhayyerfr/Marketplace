@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.text import slugify
 
@@ -26,7 +27,7 @@ def product_detail(request, pk):
 @login_required
 def dashboard(request):
     products = Product.objects.filter(owner=request.user)
-    approved_products = Product.objects.filter(status="approved", owner=request.user)
+    approved_products = Product.objects.filter(owner=request.user)
     pending_counts = Product.objects.filter(status="pending", owner=request.user).count()
     try:
         identity = request.user.sellerverification
@@ -96,8 +97,34 @@ def product_create(request):
         'specification_formset': specification_formset,
         'variant_formset': variant_formset
     })
+@login_required
+def product_edit(request, pk):
+    product = get_object_or_404(Product, pk=pk, owner=request.user)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            edited = form.save(commit=False)
+            edited.status = "pending"
+            edited.save()
+            messages.success(request, "محصول با موفقیت ویرایش شد")
+            return redirect('store:dashboard')
 
+    else:
+        form = ProductForm(instance=product)
 
+    return render(request, "products/products_edit.html", {"form": form, "product": product})
+
+@login_required
+def product_delete(request, pk):
+
+    if request.method == 'POST':
+        product = get_object_or_404(Product, pk=pk, owner=request.user)
+        product.delete()
+        return JsonResponse({
+            'success': True,
+        })
+
+    return JsonResponse({"success": False}, status=400)
 
 
 def category_products(request, pk):
