@@ -375,26 +375,27 @@ document.addEventListener('DOMContentLoaded', () => {
             const variantId = variantInput.value;
 
             // این بخش نیازمند URL و منطق واقعی جنگو در بک‌اند شماست
-            // fetch('{% url "add_to_cart" %}', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         'X-CSRFToken': '{{ csrf_token }}'
-            //     },
-            //     body: JSON.stringify({
-            //         product_id: '{{ product.id }}',
-            //         variant_id: variantId,
-            //         quantity: quantity
-            //     })
-            // })
-            // .then(response => response.json())
-            // .then(data => {
-            //     alert('محصول به سبد خرید اضافه شد!');
-            //     console.log(data);
-            // })
-            // .catch(err => console.error(err));
+             fetch('{% url "cart:add_to_cart" %}', {
+                 method: 'POST',
+                 headers: {
+                     'Content-Type': 'application/json',
+                     'X-CSRFToken': '{{ csrf_token }}'
+                },
+                 body: JSON.stringify({
+                     product_id: '{{ product.id }}',
+                    variant_id: variantId,
+                     quantity: quantity
+                 })
+             })
+             .then(response => response.json())
+             .then(data => {
+                 {#messages.success(request, 'Successfully added to cart')#}
+                 alert('محصول به سبد خرید اضافه شد!');
+                 console.log(data);
+             })
+             .catch(err => console.error(err));
 
-            alert(`محصول با ID: {{ product.id }} و گزینه ID: ${variantId} و تعداد ${quantity} آماده ارسال به بک‌اند است.`);
+            {#alert(`محصول با ID: {{ product.id }} و گزینه ID: ${variantId} و تعداد ${quantity} آماده ارسال به بک‌اند است.`);#}
         });
     });
 

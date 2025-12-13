@@ -1,10 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}وضعیت اعتبارسنجی{% endblock %}
+
+{% block content %}
+
+    {% with status='pending' %}
+
+    <div class="max-w-xl mx-auto py-10">
+
+        {% if status == 'success' %}
+        <div class="bg-white p-8 sm:p-10 rounded-3xl shadow-2xl border-t-8 border-lime-500 text-center">
+
+            <div class="bg-lime-100 p-4 rounded-full inline-block mb-6">
+                <svg class="w-12 h-12 text-lime-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+
+            <h1 class="text-3xl font-extrabold text-lime-700 mb-4">اعتبارسنجی موفق!</h1>
+
+            <p class="text-gray-600 mb-6 leading-relaxed">
+                حساب کاربری/درخواست شما با موفقیت تأیید شد. اکنون می‌توانید از تمامی امکانات پلتفرم استفاده کنید.
+            </p>
+
+            <a href="{% url 'store:product_create' %}" class="inline-block px-8 py-3 bg-lime-600 text-white font-bold rounded-xl hover:bg-lime-700 transition duration-300 shadow-lg shadow-lime-200/50">
+                ورود به پنل
+            </a>
+        </div>
+
+        {% elif status == 'pending' %}
+        <div class="bg-white p-8 sm:p-10 rounded-3xl shadow-2xl border-t-8 border-amber-500 text-center">
+
+            <div class="bg-amber-100 p-4 rounded-full inline-block mb-6 animate-spin-slow">
+                <svg class="w-12 h-12 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+
+            <h1 class="text-3xl font-extrabold text-amber-700 mb-4">در انتظار تأیید...</h1>
+
+            <p class="text-gray-600 mb-6 leading-relaxed">
+                درخواست/مدارک شما در صف بررسی تیم پشتیبانی قرار گرفت. این فرآیند معمولاً **۲۴ تا ۴۸ ساعت** طول می‌کشد.
+            </p>
+
+            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 text-sm text-gray-700 mt-6">
+                <p class="font-bold mb-2">اطلاعات ضروری:</p>
+                <p>لطفاً تا زمان دریافت ایمیل یا پیامک تأیید، صبور باشید و از ارسال مجدد مدارک خودداری کنید.</p>
+            </div>
+
+            <a href="{% url 'store:home' %}" class="inline-block mt-8 px-6 py-3 border border-gray-300 text-gray-700 font-bold rounded-xl hover:bg-gray-100 transition">
+                بازگشت به صفحه اصلی
+            </a>
+        </div>
+
+        {% else %}
+        <div class="bg-white p-8 sm:p-10 rounded-3xl shadow-2xl border-t-8 border-red-500 text-center">
+
+            <div class="bg-red-100 p-4 rounded-full inline-block mb-6">
+                <svg class="w-12 h-12 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+
+            <h1 class="text-3xl font-extrabold text-red-700 mb-4">عملیات ناموفق / رد شد</h1>
+
+            <p class="text-gray-600 mb-6 leading-relaxed">
+                متأسفانه اعتبارسنجی شما با موفقیت انجام نشد. دلایل احتمالی شامل **نقص در مدارک ارسالی** یا **خطای سیستم** می‌باشد.
+            </p>
+
+            <div class="p-4 bg-red-50 rounded-xl border border-red-200 text-sm text-red-700 mt-6 text-right">
+                <p class="font-bold mb-2"></p>
+
+            </div>
+
+            <a href="{% url 'accounts:verify_identity' %}" class="inline-block mt-8 px-8 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition duration-300 shadow-lg shadow-red-200/50">
+                تلاش مجدد و اصلاح
+            </a>
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    {% endwith %}
+
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    // اضافه کردن یک انیمیشن چرخشی ساده برای حالت Pending
+    document.addEventListener('DOMContentLoaded', function() {
+        const pendingIcon = document.querySelector('.animate-spin-slow');
+        if (pendingIcon) {
+            // تعریف انیمیشن چرخشی آهسته (در صورت عدم پشتیبانی مرورگر)
+            // Tailwind CSS کلاس animate-spin را دارد، اما برای Pending معمولا چرخش کندتر است.
+            // در این حالت، از animate-spin خود Tailwind استفاده شده است.
+            // اگر بخواهید چرخش را آهسته‌تر کنید، می‌توانید یک keyframe سفارشی در CSS تعریف کنید:
+            /*
+            .animate-spin-slow {
+                animation: spin 3s linear infinite;
+            }
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+            */
+        }
+    });
+</script>
+{% endblock %}
