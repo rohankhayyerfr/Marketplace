@@ -124,85 +124,106 @@
 
             <div class="grid grid-cols-1 gap-8">
                 <div class="bg-white rounded-xl shadow-lg p-6">
-                    <div class="flex justify-between items-center mb-6 border-b pb-2">
-                        <h2 class="text-2xl font-bold text-gray-800">محصولات ثبت شده توسط شما</h2>
-                    </div>
+    <div class="flex justify-between items-center mb-6 border-b pb-2">
+        <h2 class="text-2xl font-bold text-gray-800">محصولات ثبت شده توسط شما</h2>
+    </div>
 
-                    {% if approved_products %}
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            تصویر
-                                        </th>
-                                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            عنوان محصول
-                                        </th>
-                                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">
-                                            قیمت
-                                        </th>
-                                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">
-                                            وضعیت
-                                        </th>
-                                        <th scope="col" class="relative px-6 py-3">
-                                            <span class="sr-only">ویرایش</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    {% for product in approved_products %}
-                                    <tr class="hover:bg-lime-50 transition duration-150">
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            {% if product.image %}
-                                                <img src="{{ product.image.url }}" alt="{{ product.title }}" class="h-10 w-10 rounded-lg object-cover">
-                                            {% else %}
-                                                <div class="h-10 w-10 bg-gray-200 rounded-lg flex items-center justify-center text-xs text-gray-500">بدون عکس</div>
-                                            {% endif %}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm font-medium text-gray-900">{{ product.title }}</div>
-                                            <div class="text-xs text-gray-500 hidden sm:block">کد: {{ product.sku }}</div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap hidden sm:table-cell">
-                                            <div class="text-sm text-gray-900">{{ product.price|floatformat:"0" }} تومان</div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap hidden md:table-cell">
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                                                {% if product.is_active %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
-                                                {% if product.is_active %}فعال{% else %}غیرفعال{% endif %}
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
-                                            <a href="{% url 'store:edit_product' product.pk %}" class="text-lime-600 hover:text-lime-900 ml-3">ویرایش</a>
-                                            <a href="{% url 'store:delete_product' product.pk %}" class="text-red-600 hover:text-red-900">حذف</a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    {% endif %}
-                        <div class="text-center py-10 bg-lime-50 rounded-lg border border-lime-200">
-                            <svg class="mx-auto h-12 w-12 text-lime-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                            <h3 class="mt-2 text-sm font-medium text-gray-900">هنوز محصولی ثبت نکرده‌اید</h3>
-                            <p class="mt-1 text-sm text-gray-500">برای شروع فروش، اولین محصول خود را اضافه کنید.</p>
-                            <div class="mt-6">
-                                {% if identity and identity.status == 'approved' %}
-                                <a href="{% url 'store:product_create' %}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-lime-600 hover:bg-lime-700 transition duration-300">
-                                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                    اضافه کردن محصول جدید
-                                </a>
-                                {% else %}
-                                <a href="{% url 'accounts:verify_identity' %}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-red-600 hover:bg-red-700 transition duration-300">
-                                    تأیید هویت برای شروع فروش
-                                </a>
-                                {% endif %}
-                            </div>
-                        </div>
+    {% if approved_products %}
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500">تصویر</th>
+                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500">عنوان محصول</th>
+                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 hidden sm:table-cell">قیمت</th>
+                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500">وضعیت</th>
+                    <th class="px-6 py-3"></th>
+                </tr>
+            </thead>
 
+            <tbody class="divide-y divide-gray-100">
+                {% for product in approved_products %}
+                <tr class="hover:bg-lime-50 transition">
+                    <td class="px-6 py-4">
+                        {% if product.main_image %}
+                            <img src="{{ product.main_image.url }}" class="h-12 w-12 rounded-lg object-cover" alt="{{ product.slug }}">
+                        {% else %}
+                            <div class="h-12 w-12 bg-gray-200 rounded-lg flex items-center justify-center text-xs">—</div>
+                        {% endif %}
+                    </td>
 
-                </div>
+                    <td class="px-6 py-4">
+                        <p class="font-semibold text-gray-900">{{ product.name }}</p>
+                        <p class="text-xs text-gray-500 mt-1">کد: {{ product.id }}</p>
+                    </td>
+
+                    <td class="px-6 py-4 hidden sm:table-cell">
+                        {{ product.price|floatformat:"0" }} تومان
+                    </td>
+
+                    <td class="px-6 py-4">
+                        {% if product.status == "pending" %}
+                            <span class="px-3 py-1 text-xs font-bold rounded-full bg-yellow-100 text-yellow-700">
+                                در انتظار بررسی
+                            </span>
+                        {% elif product.status == "approved" %}
+                            <span class="px-3 py-1 text-xs font-bold rounded-full bg-green-100 text-green-700">
+                                تایید شده
+                            </span>
+                        {% elif product.status == "rejected" %}
+                            <span class="px-3 py-1 text-xs font-bold rounded-full bg-red-100 text-red-700">
+                                رد شده
+                            </span>
+                        {% endif %}
+                    </td>
+
+                    <td class="px-6 py-4 text-left text-sm">
+                        <a href="{% url 'store:edit_product' product.pk %}" class="text-lime-600 hover:underline ml-3">ویرایش</a>
+                        <a href="{% url 'store:delete_product' product.pk %}" class="text-red-600 hover:underline">حذف</a>
+                    </td>
+                </tr>
+
+                <!-- 🌟 توضیح زیر هر محصول -->
+                <tr class="bg-gray-50">
+                    <td colspan="5" class="px-6 py-3 text-sm text-gray-600">
+                        {% if product.status == "pending" %}
+                            ⏳ این محصول در صف بررسی مدیر است.
+                        {% elif product.status == "approved" %}
+                            ✅ محصول شما تایید شده و در سایت نمایش داده می‌شود.
+                        {% elif product.status == "rejected" %}
+                            ❌ محصول رد شده. لطفاً اطلاعات را اصلاح کنید.
+                        {% endif %}
+                    </td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% else %}
+    <!-- 👇 حالت بدون محصول -->
+    <div class="text-center py-10 bg-lime-50 rounded-lg border border-lime-200">
+        <h3 class="text-lg font-bold text-gray-800">هنوز محصولی ثبت نکرده‌اید</h3>
+        <p class="text-gray-600 mt-2">برای شروع فروش، اولین محصول خود را اضافه کنید.</p>
+
+        <div class="mt-6">
+            {% if identity.status == "approved" %}
+            <a href="{% url 'store:product_create' %}"
+               class="px-6 py-3 bg-lime-600 text-white rounded-xl font-bold hover:bg-lime-700">
+                افزودن محصول جدید
+            </a>
+            {% else %}
+            <a href="{% url 'accounts:verify_identity' %}"
+               class="px-6 py-3 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700">
+                ابتدا هویت خود را تایید کنید
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
             </div>
         </div>
     </main>
