@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}داشبورد کاربری | شرکت لمون پارس{% endblock %}
+{% block title %}{% trans "داشبورد کاربری | شرکت لمون پارس" %}{% endblock %}
 
 {% block content %}
 
@@ -24,7 +24,7 @@
     class="fixed inset-y-0 right-0 w-64 bg-white shadow-2xl flex-shrink-0 border-l border-gray-200 z-30 transform translate-x-full md:relative md:translate-x-0 transition-transform duration-300 ease-in-out md:shadow-xl md:block">
     <div class="p-6 h-full overflow-y-auto">
       <h3 class="text-xl font-bold text-gray-900 mb-6 border-b pb-3 border-lime-100">
-        پنل کاربری
+        {% trans "پنل کاربری" %}
       </h3>
 
       <ul class="space-y-3 text-right">
@@ -32,7 +32,7 @@
         <li>
           <a href="{% url 'store:product_create' %}"
             class="w-full inline-flex items-center justify-end px-4 py-3 bg-lime-600 text-white font-semibold rounded-lg hover:bg-lime-700 transition duration-300 shadow-lg">
-            <span class="text-sm ml-2">اضافه کردن محصول جدید</span>
+            <span class="text-sm ml-2">{% trans "اضافه کردن محصول جدید" %}</span>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -43,7 +43,7 @@
         <li>
           <a href="{% url 'accounts:verify_identity' %}"
             class="w-full inline-flex items-center justify-end px-4 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition duration-300 shadow-lg">
-            <span class="text-sm ml-2">تأیید هویت فروشنده</span>
+            <span class="text-sm ml-2">{% trans "تأیید هویت فروشنده" %}</span>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -55,7 +55,7 @@
         <li>
           <a href="#"
             class="flex items-center justify-end px-3 py-2 text-gray-600 hover:text-lime-700 hover:bg-lime-50 rounded-lg transition duration-150">
-            <span class="text-sm ml-2">محصولات من</span>
+            <span class="text-sm ml-2">{% trans "محصولات من" %}</span>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M4 7l2-2m4 0h6m4 0l2 2m-3 4H5m14 0h-2m-2-4H7m0 0H5"></path>
@@ -66,7 +66,7 @@
         <li>
           <a href="#"
             class="flex items-center justify-end px-3 py-2 text-gray-600 hover:text-lime-700 hover:bg-lime-50 rounded-lg transition duration-150">
-            <span class="text-sm ml-2">سفارش‌ها و خریدها</span>
+            <span class="text-sm ml-2">{% trans "سفارش‌ها و خریدها" %}</span>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -78,7 +78,7 @@
         <li class="pt-4 border-t mt-4 border-gray-100">
           <a href="{% url 'accounts:edit_profile' %}"
             class="flex items-center justify-end px-3 py-2 text-gray-600 hover:text-lime-700 hover:bg-lime-50 rounded-lg transition duration-150">
-            <span class="text-sm ml-2">ویرایش پروفایل</span>
+            <span class="text-sm ml-2">{% trans "ویرایش پروفایل" %}</span>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -91,7 +91,7 @@
         <li>
           <a href="{% url 'accounts:logout' %}"
             class="flex items-center justify-end px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg transition duration-150">
-            <span class="text-sm ml-2">خروج</span>
+            <span class="text-sm ml-2">{% trans "خروج" %}</span>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -109,39 +109,39 @@
     <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
 
       <h1 class="text-3xl font-bold text-gray-900 mb-8">
-        خوش آمدید، {{ user.first_name|default:user.username }} 👋
+        {% blocktrans %}خوش آمدید، {{ user.first_name|default:user.username }} 👋{% endblocktrans %}
       </h1>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
 
         <div class="md:col-span-2 bg-white rounded-xl shadow-lg p-6">
-          <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">اطلاعات کلی حساب</h2>
+          <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">{% trans "اطلاعات کلی حساب" %}</h2>
 
           <div class="flex items-start md:items-center mb-4 pb-4 border-b border-gray-100">
 
             <div class="flex-1 text-right">
               <p class="text-lg font-bold text-gray-900">{{ user.get_full_name|default:user.username }}</p>
               <p class="text-sm text-gray-500">{{ user.email }}</p>
-              <p class="text-sm text-gray-500">تاریخ عضویت: {{ user.date_joined|date:"Y/m/d" }}</p>
+              <p class="text-sm text-gray-500">{% blocktrans %}تاریخ عضویت: {{ user.date_joined|date:"Y/m/d" }}{% endblocktrans %}</p>
             </div>
           </div>
 
           <a href="{% url 'accounts:edit_profile' %}"
             class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-lime-600 hover:bg-lime-700 transition duration-300">
-            ویرایش پروفایل
+            {% trans "ویرایش پروفایل" %}
           </a>
         </div>
 
         <div class="bg-white rounded-xl shadow-lg p-6">
-          <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">آمار سریع</h2>
+          <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">{% trans "آمار سریع" %}</h2>
           <ul class="space-y-3">
             <li class="flex justify-between items-center text-gray-600">
-              <span class="font-medium">تعداد محصولات:</span>
+              <span class="font-medium">{% trans "تعداد محصولات:" %}</span>
               <span class="font-bold text-xl text-lime-600">{{ products|length|default:0 }}</span>
             </li>
             <li class="flex justify-between items-center text-gray-600 border-t pt-3 border-gray-100">
-              <span class="font-medium">سفارش‌های در انتظار:</span>
-              <span class="font-bold text-xl text-red-600">{{ pending_counts }}</span> {# فرض بر عدم وجود داده #}
+              <span class="font-medium">{% trans "سفارش‌های در انتظار:" %}</span>
+              <span class="font-bold text-xl text-red-600">{{ pending_counts }}</span>
             </li>
           </ul>
         </div>
@@ -150,66 +150,64 @@
       <div class="grid grid-cols-1 gap-8">
         <div class="bg-white rounded-xl shadow-lg p-6">
           <div class="flex justify-between items-center mb-6 border-b pb-2">
-            <h2 class="text-2xl font-bold text-gray-800">محصولات ثبت شده توسط شما</h2>
+            <h2 class="text-2xl font-bold text-gray-800">{% trans "محصولات ثبت شده توسط شما" %}</h2>
           </div>
 
           {% if approved_products %}
-                        <!-- 📱 Mobile View -->
-              <div class="space-y-4 md:hidden">
-                {% for product in approved_products %}
-                <div id="product-row-{{ product.id }}" class="bg-white rounded-xl shadow p-4 border">
+          <!-- 📱 Mobile View -->
+          <div class="space-y-4 md:hidden">
+            {% for product in approved_products %}
+            <div id="product-row-{{ product.id }}" class="bg-white rounded-xl shadow p-4 border">
 
-                  <div class="flex items-center gap-4">
-                    {% if product.main_image %}
-                    <img src="{{ product.main_image.url }}" class="w-16 h-16 rounded-lg object-cover">
-                    {% else %}
-                    <div class="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center text-xs">—</div>
-                    {% endif %}
+              <div class="flex items-center gap-4">
+                {% if product.main_image %}
+                <img src="{{ product.main_image.url }}" class="w-16 h-16 rounded-lg object-cover">
+                {% else %}
+                <div class="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center text-xs">—</div>
+                {% endif %}
 
-                    <div class="flex-1">
-                      <p class="font-bold text-gray-900">{{ product.name }}</p>
-                      <p class="text-sm text-gray-500">{{ product.price|floatformat:"0" }} تومان</p>
+                <div class="flex-1">
+                  <p class="font-bold text-gray-900">{{ product.name }}</p>
+                  <p class="text-sm text-gray-500">{{ product.price|floatformat:"0" }} {% trans "تومان" %}</p>
 
-                      {% if product.status == "pending" %}
-                      <span class="inline-block mt-1 text-xs px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full">
-                        در انتظار بررسی
-                      </span>
-                      {% elif product.status == "approved" %}
-                      <span class="inline-block mt-1 text-xs px-2 py-1 bg-green-100 text-green-700 rounded-full">
-                        تایید شده
-                      </span>
-                      {% else %}
-                      <span class="inline-block mt-1 text-xs px-2 py-1 bg-red-100 text-red-700 rounded-full">
-                        رد شده
-                      </span>
-                      {% endif %}
-                    </div>
-                  </div>
-
-                  <div class="flex justify-end gap-4 mt-4 text-sm">
-                    <a href="#" class="text-lime-600 font-semibold">ویرایش</a>
-                    <a href="javascript:void(0)" onclick="deleteProduct({{ product.id }})"
-                      class="text-red-600 font-semibold">
-                      حذف
-                    </a>
-                  </div>
+                  {% if product.status == "pending" %}
+                  <span class="inline-block mt-1 text-xs px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full">
+                    {% trans "در انتظار بررسی" %}
+                  </span>
+                  {% elif product.status == "approved" %}
+                  <span class="inline-block mt-1 text-xs px-2 py-1 bg-green-100 text-green-700 rounded-full">
+                    {% trans "تایید شده" %}
+                  </span>
+                  {% else %}
+                  <span class="inline-block mt-1 text-xs px-2 py-1 bg-red-100 text-red-700 rounded-full">
+                    {% trans "رد شده" %}
+                  </span>
+                  {% endif %}
                 </div>
-                {% endfor %}
               </div>
-              <div class="overflow-x-auto hidden md:block">
+
+              <div class="flex justify-end gap-4 mt-4 text-sm">
+                <a href="#" class="text-lime-600 font-semibold">{% trans "ویرایش" %}</a>
+                <a href="javascript:void(0)" onclick="deleteProduct({{ product.id }})"
+                  class="text-red-600 font-semibold">
+                  {% trans "حذف" %}
+                </a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+
+          <div class="overflow-x-auto hidden md:block">
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
-                  <th class="px-6 py-3 text-right text-xs font-medium text-gray-500">تصویر</th>
-                  <th class="px-6 py-3 text-right text-xs font-medium text-gray-500">عنوان محصول</th>
-                  <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 hidden sm:table-cell">قیمت</th>
-                  <th class="px-6 py-3 text-right text-xs font-medium text-gray-500">وضعیت</th>
+                  <th class="px-6 py-3 text-right text-xs font-medium text-gray-500">{% trans "تصویر" %}</th>
+                  <th class="px-6 py-3 text-right text-xs font-medium text-gray-500">{% trans "عنوان محصول" %}</th>
+                  <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 hidden sm:table-cell">{% trans "قیمت" %}</th>
+                  <th class="px-6 py-3 text-right text-xs font-medium text-gray-500">{% trans "وضعیت" %}</th>
                   <th class="px-6 py-3"></th>
                 </tr>
               </thead>
-
-
-
 
               <tbody class="min-w-full divide-y divide-gray-200">
                 {% for product in approved_products %}
@@ -225,80 +223,56 @@
 
                   <td class="px-6 py-4">
                     <p class="font-semibold text-gray-900">{{ product.name }}</p>
-                    <p class="text-xs text-gray-500 mt-1">کد: {{ product.id }}</p>
+                    <p class="text-xs text-gray-500 mt-1">{% blocktrans %}کد: {{ product.id }}{% endblocktrans %}</p>
                   </td>
 
                   <td class="px-6 py-4 hidden sm:table-cell">
-                    {{ product.price|floatformat:"0" }} تومان
+                    {{ product.price|floatformat:"0" }} {% trans "تومان" %}
                   </td>
 
                   <td class="px-6 py-4">
                     {% if product.status == "pending" %}
                     <span class="px-3 py-1 text-xs font-bold rounded-full bg-yellow-100 text-yellow-700">
-                      در انتظار بررسی
+                      {% trans "در انتظار بررسی" %}
                     </span>
                     {% elif product.status == "approved" %}
                     <span class="px-3 py-1 text-xs font-bold rounded-full bg-green-100 text-green-700">
-                      تایید شده
+                      {% trans "تایید شده" %}
                     </span>
                     {% elif product.status == "rejected" %}
                     <span class="px-3 py-1 text-xs font-bold rounded-full bg-red-100 text-red-700">
-                      رد شده
+                      {% trans "رد شده" %}
                     </span>
                     {% endif %}
                   </td>
 
                   <td class="px-6 py-4 text-left text-sm">
-                    <a href="{% url 'store:product_edit' product.id %}" class="text-lime-600 hover:underline ml-3">ویرایش</a>
+                    <a href="{% url 'store:product_edit' product.id %}" class="text-lime-600 hover:underline ml-3">{% trans "ویرایش" %}</a>
                     <a href="javascript:void(0)" onclick="deleteProduct({{ product.id }})"
-                      class="text-red-600 hover:underline">حذف</a>
+                      class="text-red-600 hover:underline">{% trans "حذف" %}</a>
                   </td>
                 </tr>
-
-                <script>
-                  function deleteProduct(productId) {
-                    if (!confirm("آیا از حذف این محصول مطمئن هستید؟")) return;
-
-                    fetch(`/dashboard/products/${productId}/delete/`, {
-                      method: "POST",
-                      headers: {
-                        "X-CSRFToken": "{{ csrf_token }}",
-                      }
-                    })
-                      .then(res => res.json())
-                      .then(data => {
-                        if (data.success) {
-                          document.getElementById(`product-row-${productId}`).remove();
-                        }
-                      });
-                  }
-                </script>
-
-
-
-
                 {% endfor %}
               </tbody>
-
             </table>
           </div>
 
           {% else %}
           <!-- 👇 حالت بدون محصول -->
           <div class="text-center py-10 bg-lime-50 rounded-lg border border-lime-200">
-            <h3 class="text-lg font-bold text-gray-800">هنوز محصولی ثبت نکرده‌اید</h3>
-            <p class="text-gray-600 mt-2">برای شروع فروش، اولین محصول خود را اضافه کنید.</p>
+            <h3 class="text-lg font-bold text-gray-800">{% trans "هنوز محصولی ثبت نکرده‌اید" %}</h3>
+            <p class="text-gray-600 mt-2">{% trans "برای شروع فروش، اولین محصول خود را اضافه کنید." %}</p>
 
             <div class="mt-6">
               {% if identity.status == "approved" %}
               <a href="{% url 'store:product_create' %}"
                 class="px-6 py-3 bg-lime-600 text-white rounded-xl font-bold hover:bg-lime-700">
-                افزودن محصول جدید
+                {% trans "افزودن محصول جدید" %}
               </a>
               {% else %}
               <a href="{% url 'accounts:verify_identity' %}"
                 class="px-6 py-3 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700">
-                ابتدا هویت خود را تایید کنید
+                {% trans "ابتدا هویت خود را تایید کنید" %}
               </a>
               {% endif %}
             </div>
@@ -350,11 +324,27 @@
     document.querySelectorAll('#sidebar a').forEach(link => {
       link.addEventListener('click', () => {
         if (window.innerWidth < 768) { // 768px همان md در Tailwind است
-          // یک تأخیر کوتاه برای اجازه دادن به ریدایرکت
           setTimeout(toggleSidebar, 100);
         }
       });
     });
   });
+
+  function deleteProduct(productId) {
+    if (!confirm("{% trans "آیا از حذف این محصول مطمئن هستید؟" %}")) return;
+
+    fetch(`/dashboard/products/${productId}/delete/`, {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": "{{ csrf_token }}",
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        document.getElementById(`product-row-${productId}`).remove();
+      }
+    });
+  }
 </script>
 {% endblock %}

@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}تأیید هویت و اطلاعات کاربری{% endblock %}
+{% block title %}{% trans "تأیید هویت و اطلاعات کاربری" %}{% endblock %}
 
 {% block content %}
 <div class="bg-gray-50 min-h-screen py-16 lg:py-20" dir="rtl">
@@ -9,10 +10,10 @@
 
         <header class="text-center mb-12">
             <h1 class="text-4xl font-black text-gray-900 mb-3">
-                تأیید هویت و اطلاعات کاربری
+                {% trans "تأیید هویت و اطلاعات کاربری" %}
             </h1>
             <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                لطفاً اطلاعات هویتی خود را جهت تکمیل پروفایل و فعالسازی کامل حساب کاربری وارد نمایید.
+                {% trans "لطفاً اطلاعات هویتی خود را جهت تکمیل پروفایل و فعالسازی کامل حساب کاربری وارد نمایید." %}
             </p>
         </header>
 
@@ -30,13 +31,13 @@
                     {% endif %}">
                     <div class="flex items-center justify-between">
                         <p class="text-lg font-bold">
-                            وضعیت تأیید:
+                            {% trans "وضعیت تأیید:" %}
                             {% if identity.status == 'approved' %}
-                                تأیید شده
+                                {% trans "تأیید شده" %}
                             {% elif identity.status == 'rejected' %}
-                                رد شده (لطفاً مجدداً ارسال کنید)
+                                {% trans "رد شده (لطفاً مجدداً ارسال کنید)" %}
                             {% else %}
-                                در انتظار بررسی
+                                {% trans "در انتظار بررسی" %}
                             {% endif %}
                         </p>
                         <svg class="w-6 h-6 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -51,105 +52,83 @@
                     </div>
                 </div>
 
-                <h3 class="text-2xl font-bold text-gray-800 border-b border-gray-100 pb-4 mb-6">۱. اطلاعات پایه</h3>
+                <h3 class="text-2xl font-bold text-gray-800 border-b border-gray-100 pb-4 mb-6">
+                    {% trans "۱. اطلاعات پایه" %}
+                </h3>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
 
                     <div>
-                        <label for="id_full_name" class="block text-sm font-medium text-gray-700 mb-2">نام و نام خانوادگی</label>
-                        <input type="text" name="full_name" id="id_full_name" required
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "نام و نام خانوادگی" %}</label>
+                        <input type="text" name="full_name" required
                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-lime-500 focus:border-lime-500 transition"
                                value="{{ identity.full_name|default:'' }}">
                     </div>
+
                     <div>
-                        <label for="id_company" class="block text-sm font-medium text-gray-700 mb-2">نام شرکت</label>
-                        <input type="text" name="company" id="id_company" required
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "نام شرکت" %}</label>
+                        <input type="text" name="company" required
                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-lime-500 focus:border-lime-500 transition"
                                value="{{ identity.company|default:'' }}">
                     </div>
 
                     <div>
-                        <label for="id_national_id" class="block text-sm font-medium text-gray-700 mb-2">کد ملی</label>
-                        <input type="text" name="national_id" id="id_national_id" required
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "کد ملی" %}</label>
+                        <input type="text" name="national_id" required
                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-lime-500 focus:border-lime-500 transition"
                                value="{{ identity.national_id|default:'' }}">
                     </div>
 
                     <div>
-                        <label for="id_phone" class="block text-sm font-medium text-gray-700 mb-2">شماره تماس (Phone)</label>
-                        <input type="text" name="phone" id="id_phone" required
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "شماره تماس" %}</label>
+                        <input type="text" name="phone" required
                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-lime-500 focus:border-lime-500 transition"
                                value="{{ identity.phone|default:'' }}">
                     </div>
 
                     <div>
-                        <label for="id_country" class="block text-sm font-medium text-gray-700 mb-1">کشور</label>
-                        <input type="text" name="country" id="id_country" required
+                        <label class="block text-sm font-medium text-gray-700 mb-1">{% trans "کشور" %}</label>
+                        <input type="text" name="country" required
                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-lime-500 focus:border-lime-500 transition"
                                value="{{ identity.country|default:'' }}">
                     </div>
 
                     <div class="md:col-span-2">
-                        <label for="id_city" class="block text-sm font-medium text-gray-700 mb-2">شهر</label>
-                        <input type="text" name="city" id="id_city" required
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "شهر" %}</label>
+                        <input type="text" name="city" required
                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-lime-500 focus:border-lime-500 transition"
                                value="{{ identity.city|default:'' }}">
                     </div>
 
                     <div class="md:col-span-2">
-                        <label for="id_address" class="block text-sm font-medium text-gray-700 mb-2">آدرس کامل</label>
-                        <textarea name="address" id="id_address" rows="3"
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "آدرس کامل" %}</label>
+                        <textarea name="address" rows="3"
                                   class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-lime-500 focus:border-lime-500 transition">{{ identity.address|default:'' }}</textarea>
                     </div>
                 </div>
 
-                <h3 class="text-2xl font-bold text-gray-800 border-b border-gray-100 pb-4 mb-6 mt-10">۲. آپلود مدارک (جهت تأیید)</h3>
+                <h3 class="text-2xl font-bold text-gray-800 border-b border-gray-100 pb-4 mb-6 mt-10">
+                    {% trans "۲. آپلود مدارک (جهت تأیید)" %}
+                </h3>
 
-                <p class="text-sm text-red-600 bg-red-50 p-3 rounded-lg mb-6 flex items-center gap-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                    حجم فایل‌ها نباید بیشتر از ۲ مگابایت باشد. فقط فرمت‌های JPG، PNG و PDF مجاز هستند.
+                <p class="text-sm text-red-600 bg-red-50 p-3 rounded-lg mb-6">
+                    {% trans "حجم فایل‌ها نباید بیشتر از ۲ مگابایت باشد. فقط فرمت‌های JPG، PNG و PDF مجاز هستند." %}
                 </p>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-                    <div>
-                        <label for="id_id_cart_image" class="block text-base font-bold text-gray-700 mb-3">
-                            تصویر کارت ملی یا شناسنامه
-                        </label>
-                        <input type="file" name="id_cart_image" id="id_id_cart_image" accept="image/*,.pdf" {% if not identity.id_cart_image %}required{% endif %}
-                               class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-lime-50 file:text-lime-700 hover:file:bg-lime-100 cursor-pointer transition">
-
-                        {% if identity.id_cart_image %}
-                            <p class="mt-2 text-xs text-lime-600">فایل فعلی: <a href="{{ identity.id_cart_image.url }}" target="_blank" class="underline">مشاهده</a> (برای آپلود مجدد، فایل جدید انتخاب کنید)</p>
-                            <img src="{{ identity.id_cart_image.url }}" alt="تصویر کارت ملی" class="w-24 h-24 object-cover mt-3 rounded-lg border border-gray-200">
-                        {% endif %}
-                    </div>
-
-                    <div>
-                        <label for="id_selfie_image" class="block text-base font-bold text-gray-700 mb-3">
-                            تصویر سلفی با کارت ملی (اختیاری)
-                        </label>
-                        <input type="file" name="selfie_image" id="id_selfie_image" accept="image/*"
-                               class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-lime-50 file:text-lime-700 hover:file:bg-lime-100 cursor-pointer transition">
-
-                        {% if identity.selfie_image %}
-                            <p class="mt-2 text-xs text-lime-600">فایل فعلی: <a href="{{ identity.selfie_image.url }}" target="_blank" class="underline">مشاهده</a></p>
-                            <img src="{{ identity.selfie_image.url }}" alt="تصویر سلفی" class="w-24 h-24 object-cover mt-3 rounded-lg border border-gray-200">
-                        {% endif %}
-                    </div>
-                </div>
 
                 <div class="mt-12 pt-6 border-t border-gray-100">
                     <button type="submit"
                         class="w-full py-4 bg-lime-600 text-white text-xl font-bold rounded-xl hover:bg-lime-700 transition duration-300 shadow-lg shadow-lime-300/50">
-                        ثبت و ارسال اطلاعات جهت بررسی
+                        {% trans "ثبت و ارسال اطلاعات جهت بررسی" %}
                     </button>
-                    <p class="text-center text-sm text-gray-500 mt-4">
-{% if identity %}
-    تاریخ آخرین به‌روزرسانی: {{ identity.updated_at|default:identity.created_at|date:"Y/m/d H:i" }}
-{% else %}
-    هنوز اطلاعاتی ثبت نشده است.
-{% endif %}
 
+                    <p class="text-center text-sm text-gray-500 mt-4">
+                        {% if identity %}
+                            {% blocktrans with date=identity.updated_at|default:identity.created_at %}
+                                تاریخ آخرین به‌روزرسانی: {{ date }}
+                            {% endblocktrans %}
+                        {% else %}
+                            {% trans "هنوز اطلاعاتی ثبت نشده است." %}
+                        {% endif %}
                     </p>
                 </div>
 
@@ -157,16 +136,4 @@
         </div>
     </div>
 </div>
-
-<script>
-    // تنظیمات CSRF Token برای fetch/Ajax (اگر نیاز بود)
-    // function getCookie(name) { ... }
-
-    // افزودن قابلیت پیش‌نمایش تصویر قبل از آپلود (اختیاری)
-    const idCartImageInput = document.getElementById('id_id_cart_image');
-    idCartImageInput.addEventListener('change', (event) => {
-        // منطق نمایش تصویر انتخاب شده
-        // (پیچیده است و برای سادگی UI از آن صرف نظر می‌شود)
-    });
-</script>
 {% endblock %}

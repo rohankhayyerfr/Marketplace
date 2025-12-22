@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from django.contrib import admin
-from .models import Category, Product, Order, ProductGallery, ProductFeature, ProductVariant, \
+from .models import Category, Product, ProductGallery, ProductFeature, ProductVariant, \
     ProductSpecification
 
 
@@ -33,9 +33,9 @@ class ProductSpecificInline(admin.TabularInline):
     max_num = 50
 
 
-@admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'full_name', 'created_at', 'total', 'paid')
+# @admin.register(Order)
+# class OrderAdmin(admin.ModelAdmin):
+#     list_display = ('id', 'full_name', 'created_at', 'total', 'paid')
 
 
 @admin.register(Product)

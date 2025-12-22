@@ -4,8 +4,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 app_name = "store"
 
+
+
+
 urlpatterns = [
     # Public views
+
     path('', views.home, name='home'),
     path('product_list/', views.product_list, name="product_list"),
     path('product/<int:pk>/', views.product_detail, name='product_detail'),

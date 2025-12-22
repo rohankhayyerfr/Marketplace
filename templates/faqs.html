@@ -1,22 +1,23 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block content %}
 <div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8" dir="rtl">
 
     <div class="max-w-4xl mx-auto">
 
         <header class="text-center mb-12">
-            <h1 class="text-4xl font-extrabold text-gray-900 mb-2">پرسش‌های متداول</h1>
-            <p class="text-gray-500 text-lg">سوالات پرتکرار همراه با پاسخ‌های شفاف</p>
+            <h1 class="text-4xl font-extrabold text-gray-900 mb-2">{% trans "پرسش‌های متداول" %}</h1>
+            <p class="text-gray-500 text-lg">{% trans "سوالات پرتکرار همراه با پاسخ‌های شفاف" %}</p>
         </header>
 
         <!-- فیلتر دسته‌ها -->
         <nav class="mb-10">
             <div id="faq-tabs" class="flex flex-wrap justify-center gap-3">
-                <button data-cat="all" class="tab-btn px-4 py-2 bg-lime-600 text-white rounded-full shadow">همه</button>
-                <button data-cat="account" class="tab-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-full">حساب کاربری</button>
-                <button data-cat="order" class="tab-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-full">ثبت سفارش</button>
-                <button data-cat="ship" class="tab-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-full">ارسال</button>
-                <button data-cat="return" class="tab-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-full">بازگشت کالا</button>
+                <button data-cat="all" class="tab-btn px-4 py-2 bg-lime-600 text-white rounded-full shadow">{% trans "همه" %}</button>
+                <button data-cat="account" class="tab-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-full">{% trans "حساب کاربری" %}</button>
+                <button data-cat="order" class="tab-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-full">{% trans "ثبت سفارش" %}</button>
+                <button data-cat="ship" class="tab-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-full">{% trans "ارسال" %}</button>
+                <button data-cat="return" class="tab-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-full">{% trans "بازگشت کالا" %}</button>
             </div>
         </nav>
 
@@ -25,96 +26,93 @@
 
             <!-- دسته حساب کاربری -->
             <section data-cat="account" class="faq-section">
-                <h2 class="text-xl font-bold text-gray-800 mb-4">حساب کاربری</h2>
+                <h2 class="text-xl font-bold text-gray-800 mb-4">{% trans "حساب کاربری" %}</h2>
 
                 <div class="space-y-4">
-
                     <div class="faq-item bg-white shadow-md rounded-xl overflow-hidden">
                         <button class="faq-q w-full flex justify-between items-center p-4 text-right text-lg font-semibold">
-                            <span>چطور حساب کاربری ایجاد کنم؟</span>
+                            <span>{% trans "چطور حساب کاربری ایجاد کنم؟" %}</span>
                             <svg class="w-5 h-5 text-lime-600 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </button>
                         <div class="faq-a hidden p-4 border-t text-gray-600 leading-relaxed">
-                            ایجاد حساب کمتر از ۱ دقیقه طول می‌کشد. فقط روی دکمه ورود/ثبت‌نام کلیک کنید.
-                        </div>
-                    </div>
-                    <div class="faq-item bg-white shadow-md rounded-xl overflow-hidden">
-                        <button class="faq-q w-full flex justify-between items-center p-4 text-right text-lg font-semibold">
-                            <span>چطور محصول در سایت بذارم؟</span>
-                            <svg class="w-5 h-5 text-lime-600 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </button>
-                        <div class="faq-a hidden p-4 border-t text-gray-600 leading-relaxed">
-                            وارد داشبورد شوید و حساب شرکتی خود رو باز کنید وقتی که تایید شد میتوانید محصول بذارید تا کاربران دیگه هم محصولتون رو ببینن و از شما خرید کنند
+                            {% trans "ایجاد حساب کمتر از ۱ دقیقه طول می‌کشد. فقط روی دکمه ورود/ثبت‌نام کلیک کنید." %}
                         </div>
                     </div>
 
                     <div class="faq-item bg-white shadow-md rounded-xl overflow-hidden">
                         <button class="faq-q w-full flex justify-between items-center p-4 text-right text-lg font-semibold">
-                            <span>آیا اطلاعات من امن است؟</span>
+                            <span>{% trans "چطور محصول در سایت بذارم؟" %}</span>
                             <svg class="w-5 h-5 text-lime-600 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </button>
                         <div class="faq-a hidden p-4 border-t text-gray-600 leading-relaxed">
-                            بله، با SSL و رمزنگاری قوی محافظت می‌شود.
+                            {% trans "وارد داشبورد شوید و حساب شرکتی خود رو باز کنید وقتی که تایید شد میتوانید محصول بذارید تا کاربران دیگه هم محصولتون رو ببینن و از شما خرید کنند" %}
                         </div>
                     </div>
 
+                    <div class="faq-item bg-white shadow-md rounded-xl overflow-hidden">
+                        <button class="faq-q w-full flex justify-between items-center p-4 text-right text-lg font-semibold">
+                            <span>{% trans "آیا اطلاعات من امن است؟" %}</span>
+                            <svg class="w-5 h-5 text-lime-600 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-a hidden p-4 border-t text-gray-600 leading-relaxed">
+                            {% trans "بله، با SSL و رمزنگاری قوی محافظت می‌شود." %}
+                        </div>
+                    </div>
                 </div>
             </section>
 
             <!-- دسته سفارش -->
             <section data-cat="order" class="faq-section">
-                <h2 class="text-xl font-bold text-gray-800 mb-4">ثبت سفارش</h2>
-
+                <h2 class="text-xl font-bold text-gray-800 mb-4">{% trans "ثبت سفارش" %}</h2>
                 <div class="faq-item bg-white shadow-md rounded-xl overflow-hidden">
                     <button class="faq-q w-full flex justify-between items-center p-4 text-lg font-semibold">
-                        <span>چطور سفارشم را پیگیری کنم؟</span>
+                        <span>{% trans "چطور سفارشم را پیگیری کنم؟" %}</span>
                         <svg class="w-5 h-5 text-lime-600 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
                     <div class="faq-a hidden p-4 border-t text-gray-600">
-                        از بخش پیگیری سفارشات در حساب کاربری.
+                        {% trans "از بخش پیگیری سفارشات در حساب کاربری." %}
                     </div>
                 </div>
             </section>
 
             <!-- دسته ارسال -->
             <section data-cat="ship" class="faq-section">
-                <h2 class="text-xl font-bold text-gray-800 mb-4">ارسال</h2>
-
+                <h2 class="text-xl font-bold text-gray-800 mb-4">{% trans "ارسال" %}</h2>
                 <div class="faq-item bg-white shadow-md rounded-xl overflow-hidden">
                     <button class="faq-q w-full flex justify-between items-center p-4 text-lg font-semibold">
-                        <span>هزینه و زمان ارسال چهقدر است؟</span>
+                        <span>{% trans "هزینه و زمان ارسال چهقدر است؟" %}</span>
                         <svg class="w-5 h-5 text-lime-600 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
                     <div class="faq-a hidden p-4 border-t text-gray-600">
-                        اپدیت میشود...
+                        {% trans "اپدیت میشود..." %}
                     </div>
                 </div>
             </section>
 
             <!-- دسته بازگشت -->
             <section data-cat="return" class="faq-section">
-                <h2 class="text-xl font-bold text-gray-800 mb-4">بازگشت کالا</h2>
-
+                <h2 class="text-xl font-bold text-gray-800 mb-4">{% trans "بازگشت کالا" %}</h2>
                 <div class="faq-item bg-white shadow-md rounded-xl overflow-hidden">
                     <button class="faq-q w-full flex justify-between items-center p-4 text-lg font-semibold">
-                        <span>مهلت بازگشت کالا چهقدر است؟</span>
+                        <span>{% trans "مهلت بازگشت کالا چهقدر است؟" %}</span>
                         <svg class="w-5 h-5 text-lime-600 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
                     <div class="faq-a hidden p-4 border-t text-gray-600">
-                        اپدیت میشود...
+                        {% trans "اپدیت میشود..." %}
                     </div>
+                </div>
             </section>
 
         </div>

@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}سبد خرید شما | لمون پارس{% endblock %}
+{% block title %}{% trans "سبد خرید شما | لمون پارس" %}{% endblock %}
 
 {% block content %}
 <div class="bg-gray-50 min-h-screen py-10 lg:py-20 pt-24" dir="rtl">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <h1 class="text-4xl lg:text-5xl font-extrabold text-gray-900 mb-10 lg:mb-16 border-b border-gray-200 pb-4">
-            سبد خرید شما
+            {% trans "سبد خرید شما" %}
         </h1>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
@@ -31,14 +32,14 @@
                         </a>
                         <p class="text-sm text-gray-500">
                             {% if item.variant %}
-                                گارانتی: {{ item.variant.title }}
+                                {% blocktrans %}گارانتی: {{ item.variant.title }}{% endblocktrans %}
                             {% else %}
-                                موجود در انبار
+                                {% trans "موجود در انبار" %}
                             {% endif %}
                         </p>
 
                         <p class="text-base font-semibold text-gray-700">
-                            قیمت واحد: {{ item.unit_price|floatformat:0 }} ت.
+                            {% blocktrans %}قیمت واحد: {{ item.unit_price|floatformat:0 }} ت.{% endblocktrans %}
                         </p>
                     </div>
 
@@ -50,7 +51,7 @@
                         </div>
 
                         <button onclick="removeFromCart('{{ item.id }}')" class="flex items-center text-red-500 hover:text-red-700 transition text-sm">
-                            حذف
+                            {% trans "حذف" %}
                         </button>
                     </div>
 
@@ -58,15 +59,15 @@
                         <p class="text-xl lg:text-2xl font-extrabold text-indigo-700">
                             {{ item.total_price|floatformat:0 }}
                         </p>
-                        <span class="text-sm text-gray-500">تومان</span>
+                        <span class="text-sm text-gray-500">{% trans "تومان" %}</span>
                     </div>
                 </div>
                 {% endfor %}
                 {% else %}
                 <div class="bg-white rounded-3xl shadow-lg p-10 text-center border border-gray-200">
-                    <p class="text-2xl font-semibold text-gray-700">سبد خرید شما خالی است. 😥</p>
+                    <p class="text-2xl font-semibold text-gray-700">{% trans "سبد خرید شما خالی است. 😥" %}</p>
                     <a href="{% url 'store:product_list' %}" class="mt-6 inline-block bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-700 transition">
-                        مشاهده محصولات
+                        {% trans "مشاهده محصولات" %}
                     </a>
                 </div>
                 {% endif %}
@@ -74,27 +75,35 @@
 
             <div class="lg:col-span-1">
                 <div class="sticky top-24 bg-white rounded-3xl shadow-xl p-6 lg:p-8 border border-gray-200">
-                    <h2 class="text-2xl font-extrabold text-gray-900 mb-6 border-b border-gray-100 pb-4">خلاصه سفارش</h2>
+                    <h2 class="text-2xl font-extrabold text-gray-900 mb-6 border-b border-gray-100 pb-4">{% trans "خلاصه سفارش" %}</h2>
                     {% if cart %}
                     <div class="space-y-4 text-lg">
                         <div class="flex justify-between items-center text-gray-700">
-                            <span>مجموع قیمت کالاها:</span>
+                            <span>{% trans "مجموع قیمت کالاها:" %}</span>
                             <span class="font-bold" id="sub-total">{{ cart.sub_total|floatformat:0 }} ت.</span>
                         </div>
                         <div class="flex justify-between items-center text-green-600">
-                            <span>تخفیف اعمال شده:</span>
+                            <span>{% trans "تخفیف اعمال شده:" %}</span>
                             <span class="font-bold" id="discount-amount">(-) {{ cart.discount|floatformat:0 }} ت.</span>
                         </div>
                         <div class="flex justify-between items-center text-gray-700 border-t border-gray-200 pt-4">
-                            <span>هزینه ارسال:</span>
+                            <span>{% trans "هزینه ارسال:" %}</span>
                             <span class="font-bold" id="shipping-fee">
-                                {% if cart.shipping_fee > 0 %} {{ cart.shipping_fee|floatformat:0 }} ت. {% else %} رایگان {% endif %}
+                                {% if cart.shipping_fee > 0 %} {{ cart.shipping_fee|floatformat:0 }} ت. {% else %} {% trans "رایگان" %} {% endif %}
                             </span>
                         </div>
                         <div class="flex justify-between items-center text-2xl pt-4 border-t-2 border-indigo-100">
-                            <span class="font-extrabold text-gray-900">مبلغ قابل پرداخت:</span>
+                            <span class="font-extrabold text-gray-900">{% trans "مبلغ قابل پرداخت:" %}</span>
                             <span class="font-extrabold text-indigo-700" id="final-total">{{ cart.final_total|floatformat:0 }} ت.</span>
+
                         </div>
+<form action="{% url 'checkout' %}" method="get">
+    <button type="submit"
+        class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold text-lg shadow-lg hover:bg-indigo-700 transition duration-300">
+        {% trans "خرید نهایی" %}
+    </button>
+</form>
+
                     </div>
                     {% endif %}
                 </div>
@@ -127,7 +136,7 @@ function updateCart(itemId, delta) {
 }
 
 function removeFromCart(itemId) {
-    if (!confirm('آیا مطمئن هستید؟')) return;
+    if (!confirm('{% trans "آیا مطمئن هستید؟" %}')) return;
 
     fetch("{% url 'cart:remove_item' %}", {
         method: "POST",

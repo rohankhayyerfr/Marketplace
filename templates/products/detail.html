@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}{{ product.name }}{% endblock %}
+{% block title %}{% trans product.name %}{% endblock %}
 
 {% block content %}
 <div class="bg-gray-50 min-h-screen pt-16 lg:pt-20" dir="rtl">
     <div class="max-w-screen-xl mx-auto py-6 px-4 sm:px-6 lg:px-8 lg:py-10">
 
         <nav class="hidden lg:flex items-center text-sm text-gray-500 mb-8 font-medium">
-            <a href="/" class="hover:text-indigo-600 transition duration-150">صفحه اصلی</a>
+            <a href="/" class="hover:text-indigo-600 transition duration-150">{% trans "صفحه اصلی" %}</a>
             <span class="mx-3">/</span>
             <a href="{{ product.category.get_absolute_url }}" class="hover:text-indigo-600 transition duration-150">{{ product.category.name }}</a>
             <span class="mx-3">/</span>
@@ -19,34 +19,29 @@
             <div class="flex items-center justify-between">
                 <div>
                     <div id="mobile-price" class="text-2xl font-black text-indigo-700 leading-none">{{ product.price|floatformat:0 }}</div>
-                    <div class="text-sm text-gray-500 mt-1">تومان (مبلغ نهایی)</div>
+                    <div class="text-sm text-gray-500 mt-1">{% trans "تومان (مبلغ نهایی)" %}</div>
                 </div>
                 <button class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold text-lg shadow-lg add-to-cart-btn hover:bg-indigo-700 transition duration-300">
-                    افزودن به سبد خرید
+                    {% trans "افزودن به سبد خرید" %}
                 </button>
             </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
-
             <div class="lg:col-span-8 order-1 lg:order-1">
-
                 <div class="grid grid-cols-1 lg:grid-cols-7 gap-6 lg:gap-10">
-
                     <div class="lg:col-span-3">
                         <div class="lg:sticky lg:top-24 space-y-4">
-
                             <div id="mobile-gallery-wrapper" class="lg:hidden relative rounded-2xl overflow-hidden shadow-xl border border-gray-200">
                                 <div id="mobile-gallery" class="flex transition-transform duration-500 ease-in-out">
                                     {% if product.main_image %}
                                         <div class="flex-shrink-0 w-full"><img src="{{ product.main_image.url }}" alt="{{ product.name }}" class="w-full h-80 object-cover"></div>
                                     {% endif %}
                                     {% for image in product.gallery.all %}
-                                        <div class="flex-shrink-0 w-full"><img src="{{ image.image.url }}" alt="{{ product.name }} - عکس {{ forloop.counter }}" class="w-full h-80 object-cover"></div>
+                                        <div class="flex-shrink-0 w-full"><img src="{{ image.image.url }}" alt="{{ product.name }} - {% trans "عکس" %} {{ forloop.counter }}" class="w-full h-80 object-cover"></div>
                                     {% endfor %}
                                 </div>
-                                <div id="mobile-dots" class="absolute bottom-3 left-0 right-0 flex justify-center gap-2">
-                                    </div>
+                                <div id="mobile-dots" class="absolute bottom-3 left-0 right-0 flex justify-center gap-2"></div>
                             </div>
 
                             <div class="hidden lg:block relative rounded-3xl overflow-hidden shadow-xl bg-white border border-gray-200">
@@ -57,11 +52,11 @@
                             <div class="hidden lg:grid lg:grid-cols-5 gap-3">
                                 {% with all_images=product.gallery.all %}
                                     {% if product.main_image %}
-                                        <img src="{{ product.main_image.url }}" data-full="{{ product.main_image.url }}"
+                                        <img src="{{ product.main_image.url }}" data-full="{{ product.main_image.url }}" alt="{{ product.name }} خرید آنلاین"
                                              class="gallery-thumb aspect-square object-cover rounded-xl cursor-pointer border-2 border-indigo-600 shadow-md">
                                     {% endif %}
                                     {% for image in all_images %}
-                                        <img src="{{ image.image.url }}" data-full="{{ image.image.url }}"
+                                        <img src="{{ image.image.url }}" data-full="{{ image.image.url }} " alt="{{ product.name }} خرید آنلاین"
                                              class="gallery-thumb aspect-square object-cover rounded-xl cursor-pointer border-2 border-gray-300 hover:border-indigo-500 transition">
                                     {% endfor %}
                                 {% endwith %}
@@ -70,34 +65,30 @@
                     </div>
 
                     <div class="lg:col-span-4 space-y-8">
-
                         <div>
-                            <h1 class="text-3xl lg:text-4xl font-black text-gray-900 leading-tight">
-                                {{ product.name }}
-                            </h1>
+                            <h1 class="text-3xl lg:text-4xl font-black text-gray-900 leading-tight">{{ product.name }}</h1>
                             <p class="text-lg text-gray-600 mt-3 font-medium">
-                                {{ product.short_description|default:"توضیحات کوتاه محصول در اینجا قرار می‌گیرد." }}
+                                {{ product.short_description|default:_("توضیحات کوتاه محصول در اینجا قرار می‌گیرد.") }}
                             </p>
                             <div class="flex items-center gap-6 mt-6 text-gray-600">
                                 <div class="flex items-center gap-2">
                                     <div class="flex text-yellow-500 text-lg">★★★★★</div>
-                                    <span class="text-sm text-gray-500">(۳۵۴ نظر)</span>
+                                    <span class="text-sm text-gray-500">(۳۵۴ {% trans "نظر" %})</span>
                                 </div>
                                 <div class="text-sm flex items-center gap-2 font-medium text-green-600">
                                     <span class="w-2 h-2 bg-green-500 rounded-full"></span>
-                                    موجود در انبار • ارسال فوری
+                                    {% trans "موجود در انبار • ارسال فوری" %}
                                 </div>
                             </div>
                         </div>
 
                         <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                            <h3 class="text-xl font-bold text-gray-800 mb-6 border-b border-gray-100 pb-3">ویژگی‌های اصلی</h3>
+                            <h3 class="text-xl font-bold text-gray-800 mb-6 border-b border-gray-100 pb-3">{% trans "ویژگی‌های اصلی" %}</h3>
                             <div class="grid grid-cols-1 gap-x-6 gap-y-8">
                                 {% for feature in product.features.all %}
                                 <div class="flex items-start gap-4">
                                     <div class="p-3 bg-indigo-50 rounded-xl flex-shrink-0">
-                                        {# فرض می‌شود feature.icon.url آدرس آیکون است #}
-                                        <img src="{{ feature.icon.url }}" class="w-6 h-6 text-indigo-700 opacity-80">
+                                        <img src="{{ feature.icon.url }}" alt="{{ product.name }} خرید آنلاین" class="w-6 h-6 text-indigo-700 opacity-80">
                                     </div>
                                     <div>
                                         <p class="text-sm text-gray-500">{{ feature.title }}</p>
@@ -109,7 +100,7 @@
                         </div>
 
                         <div class="space-y-4">
-                            <h3 class="text-xl font-bold text-gray-800">انتخاب گزینه</h3>
+                            <h3 class="text-xl font-bold text-gray-800">{% trans "انتخاب گزینه" %}</h3>
                             <div class="space-y-3">
                                 {% for variant in product.variants.all %}
                                 <label class="variant-btn block cursor-pointer p-5 rounded-2xl border transition-all duration-200
@@ -132,10 +123,10 @@
                                         </div>
                                         {% if variant.stock > 0 %}
                                             <div class="text-2xl font-black text-indigo-700 whitespace-nowrap">
-                                                {{ variant.price|floatformat:0 }} <span class="text-sm font-normal text-gray-500 mr-1">تومان</span>
+                                                {{ variant.price|floatformat:0 }} <span class="text-sm font-normal text-gray-500 mr-1">{% trans "تومان" %}</span>
                                             </div>
                                         {% else %}
-                                            <span class="text-red-600 font-bold">ناموجود</span>
+                                            <span class="text-red-600 font-bold">{% trans "ناموجود" %}</span>
                                         {% endif %}
                                     </div>
                                 </label>
@@ -144,68 +135,52 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <div class="lg:col-span-4 order-3 lg:order-2">
                 <div class="bg-white rounded-3xl shadow-2xl border border-gray-200 p-8 sticky top-24">
-
                     <div class="text-center mb-6 border-b-2 border-indigo-100 pb-6">
-                        <h4 class="text-base text-gray-600 mb-2 font-medium">قیمت نهایی امروز:</h4>
+                        <h4 class="text-base text-gray-600 mb-2 font-medium">{% trans "قیمت نهایی امروز:" %}</h4>
                         <div id="final-price" class="text-5xl font-extrabold text-indigo-700 leading-none">
                             {% with first_variant=product.variants.all.first %}
                                 {{ first_variant.price|floatformat:0 }}
                             {% endwith %}
                         </div>
-                        <div class="text-xl text-gray-600 mt-2">تومان</div>
+                        <div class="text-xl text-gray-600 mt-2">{% trans "تومان" %}</div>
                     </div>
 
                     <div class="space-y-6">
-
                         <div class="flex items-center justify-center bg-green-50 text-green-700 px-5 py-3 rounded-xl text-center font-bold mb-8">
                             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span class="text-base">موجود در انبار • ارسال فوری</span>
+                            <span class="text-base">{% trans "موجود در انبار • ارسال فوری" %}</span>
                         </div>
 
                         <div class="flex items-center justify-between border-t border-gray-100 pt-6">
-                            <span class="text-gray-700 font-bold text-lg">تعداد:</span>
-
+                            <span class="text-gray-700 font-bold text-lg">{% trans "تعداد:" %}</span>
                             <div class="flex items-center border border-gray-300 rounded-xl overflow-hidden divide-x divide-x-reverse divide-gray-300">
-
-                                <button  type="button" onclick="changeQty(-1)" class="w-12 h-10 text-xl font-black text-gray-700 hover:bg-gray-100 transition">
-                                    -
-                                </button>
-
-                                <input type="text" id="quantity" value="1"
-                                    class="w-16 h-10 text-center font-bold text-lg text-gray-900 focus:outline-none bg-white border-0"
-                                    readonly>
-
-                                <button  type="button" onclick="changeQty(1)" class="w-12 h-10 text-xl font-black text-gray-700 hover:bg-gray-100 transition">
-                                    +
-                                </button>
+                                <button  type="button" onclick="changeQty(-1)" class="w-12 h-10 text-xl font-black text-gray-700 hover:bg-gray-100 transition">-</button>
+                                <input type="text" id="quantity" value="1" class="w-16 h-10 text-center font-bold text-lg text-gray-900 focus:outline-none bg-white border-0" readonly>
+                                <button  type="button" onclick="changeQty(1)" class="w-12 h-10 text-xl font-black text-gray-700 hover:bg-gray-100 transition">+</button>
                             </div>
                         </div>
 
                         <button class="w-full py-4 bg-indigo-600 text-white text-xl font-bold rounded-xl hover:bg-indigo-700 transition shadow-lg shadow-indigo-400/50 add-to-cart-btn mt-5">
-                            افزودن به سبد خرید
+                            {% trans "افزودن به سبد خرید" %}
                         </button>
 
                         <p class="text-center text-sm text-gray-500 border-t border-gray-100 pt-4">
-{#                            ارائه شده با گارانتی ۱۸ ماهه اصلی و ضمانت اصالت کالا#}
                         </p>
                     </div>
                 </div>
             </div>
-
         </div>
 
         <div class="mt-20 space-y-10 pb-20">
-
             <div class="bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden">
                 <div class="cursor-pointer select-none" onclick="toggleDescription()">
                     <div class="p-6 lg:p-8 border-b border-gray-100 hover:bg-gray-50 transition">
                         <div class="flex items-center justify-between">
-                            <h2 class="text-xl lg:text-2xl font-black text-gray-900">توضیحات کامل محصول</h2>
+                            <h2 class="text-xl lg:text-2xl font-black text-gray-900">{% trans "توضیحات کامل محصول" %}</h2>
                             <svg id="desc-icon" class="w-7 h-7 text-indigo-600 transition-transform duration-300 transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
@@ -226,7 +201,7 @@
                 <div class="cursor-pointer select-none" onclick="toggleSpecs()">
                     <div class="p-6 lg:p-8 border-b border-gray-100 hover:bg-gray-50 transition">
                         <div class="flex items-center justify-between">
-                            <h2 class="text-xl lg:text-2xl font-black text-gray-900">مشخصات فنی و جزئیات</h2>
+                            <h2 class="text-xl lg:text-2xl font-black text-gray-900">{% trans "مشخصات فنی و جزئیات" %}</h2>
                             <svg id="specs-icon" class="w-7 h-7 text-indigo-600 transition-transform duration-300 transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
@@ -252,22 +227,20 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
         <div class="mt-10 lg:mt-20 pb-10">
-            <h2 class="text-2xl font-black text-gray-900 mb-8">نظرات خریداران (##)</h2>
+            <h2 class="text-2xl font-black text-gray-900 mb-8">{% trans "نظرات خریداران" %} (##)</h2>
             <div class="bg-white rounded-3xl shadow-xl border border-gray-200 p-8 text-center text-gray-600">
-                <p class="text-lg">هنوز نظری ثبت نشده است. اولین نفری باشید که نظر خود را به اشتراک می‌گذارد.</p>
+                <p class="text-lg">{% trans "هنوز نظری ثبت نشده است. اولین نفری باشید که نظر خود را به اشتراک می‌گذارد." %}</p>
                 <button class="mt-6 px-6 py-3 bg-indigo-50 text-indigo-600 font-bold rounded-xl hover:bg-indigo-100 transition duration-300">
-                    ثبت نظر
+                    {% trans "ثبت نظر" %}
                 </button>
             </div>
         </div>
 
     </div>
 </div>
-
 <script>
 // --- توابع جاوااسکریپت برای تعاملات UI ---
 
@@ -439,4 +412,20 @@ window.changeQty = function(amount) {
     qtyInput.value = qty;
 }
 </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "{{ product.name }}",
+  "image": "{{ product.image.url }}",
+  "offers": {
+    "@type": "Offer",
+    "price": "{{ product.price }}",
+    "priceCurrency": "IRR",
+    "availability": "https://schema.org/InStock"
+  }
+}
+</script>
+
 {% endblock %}
+

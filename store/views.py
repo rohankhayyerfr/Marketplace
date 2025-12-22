@@ -1,9 +1,13 @@
+from glob import translate
+
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
+from django.templatetags.i18n import language
 from django.utils.text import slugify
-
+from django.utils.translation import gettext as _
+from django.utils.translation import get_language, activate, gettext
 from .forms import ProductForm, ProductGalleryFormSet, ProductFeatureFormSet, ProductSpecificationFormSet, \
     ProductVariantFormSet
 from .models import *
@@ -13,6 +17,9 @@ from accounts.models import SellerVerification
 
 def home(request):
     return render(request, 'home.html')
+
+
+
 def product_list(request):
     products = Product.objects.filter(status="approved")
     return render(request, 'products/list.html', {'products': products})
@@ -21,6 +28,7 @@ def product_list(request):
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     return render(request, 'products/detail.html', {'product': product})
+
 
 
 # Dashboard
@@ -40,7 +48,7 @@ def dashboard(request):
         'approved_products': approved_products,
         'identity': identity
     })
-
+@login_required
 def product_create(request):
     try:
         identity = request.user.sellerverification

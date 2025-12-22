@@ -1,18 +1,25 @@
+{% load i18n %}
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+{% get_current_language as LANGUAGE_CODE %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
+
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{% block title %}فروشگاه لمون پارس{% endblock %}</title>
+    <title>{% block title %}{% trans 'فروشگاه لمون پارس' %}{% endblock %}</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
-
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Vazirmatn:wght@100..900&display=swap"
+        rel="stylesheet">
 
 
     <script>
@@ -26,17 +33,17 @@
                     // پالت رنگی indigo که در کدهای قبلی استفاده کردیم
                     colors: {
                         'indigo': {
-'50': '#f7fee7',  // روشن‌ترین، ملایم‌ترین لیمویی
-    '100': '#ecfccb',
-    '200': '#d9f99d',
-    '300': '#bef264',
-    '400': '#a3e635',
-    '500': '#84cc16',  // رنگ اصلی و زنده لیمویی
-    '600': '#65a30d',
-    '700': '#4d7c0f',
-    '800': '#3f6212',
-    '900': '#365314',
-    '950': '#1a2e05',
+                            '50': '#f7fee7',  // روشن‌ترین، ملایم‌ترین لیمویی
+                            '100': '#ecfccb',
+                            '200': '#d9f99d',
+                            '300': '#bef264',
+                            '400': '#a3e635',
+                            '500': '#84cc16',  // رنگ اصلی و زنده لیمویی
+                            '600': '#65a30d',
+                            '700': '#4d7c0f',
+                            '800': '#3f6212',
+                            '900': '#365314',
+                            '950': '#1a2e05',
                         }
                     }
                 }
@@ -46,63 +53,65 @@
 
     {% block extra_head %}{% endblock %}
 
-<!-- Toast Container -->
-<!-- قبل از بسته شدن </body> -->
-<div id="toast-box" class="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 hidden transition-all duration-500 ease-in-out">
-    <div id="toast-content" class="flex items-center p-4 rounded-xl shadow-lg space-x-4 space-x-reverse
+    <!-- Toast Container -->
+    <!-- قبل از بسته شدن </body> -->
+    <div id="toast-box"
+        class="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 hidden transition-all duration-500 ease-in-out">
+        <div id="toast-content" class="flex items-center p-4 rounded-xl shadow-lg space-x-4 space-x-reverse
          bg-lime-50 border border-lime-300 text-lime-700 min-w-[250px] max-w-sm rtl">
-        <svg id="toast-icon" class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
-        <div id="toast-text" class="text-sm font-bold text-gray-800 text-right"></div>
-        <button type="button" onclick="hideToast()"
+            <svg id="toast-icon" class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24"></svg>
+            <div id="toast-text" class="text-sm font-bold text-gray-800 text-right"></div>
+            <button type="button" onclick="hideToast()"
                 class="mr-2 text-gray-500 hover:text-gray-900 transition flex items-center justify-center">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-        </button>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
     </div>
-</div>
 
-<script>
-const toastBox = document.getElementById('toast-box');
-const toastText = document.getElementById('toast-text');
-const toastIcon = document.getElementById('toast-icon');
-const toastContent = document.getElementById('toast-content');
+    <script>
+        const toastBox = document.getElementById('toast-box');
+        const toastText = document.getElementById('toast-text');
+        const toastIcon = document.getElementById('toast-icon');
+        const toastContent = document.getElementById('toast-content');
 
-const icons = {
-    success: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2a10 10 0 110 20 10 10 0 010-20z"/>`,
-    error: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>`,
-    warning: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856A2.094 2.094 0 0021 15.906V8.094A2.094 2.094 0 0019.906 6H4.094A2.094 2.094 0 002 8.094v7.812A2.094 2.094 0 004.094 19z"/>`,
-    info: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01"/>`
-};
+        const icons = {
+            success: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2a10 10 0 110 20 10 10 0 010-20z"/>`,
+            error: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>`,
+            warning: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856A2.094 2.094 0 0021 15.906V8.094A2.094 2.094 0 0019.906 6H4.094A2.094 2.094 0 002 8.094v7.812A2.094 2.094 0 004.094 19z"/>`,
+            info: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01"/>`
+        };
 
-const styles = {
-    success: "bg-lime-50 border-lime-300 text-lime-700",
-    error: "bg-red-50 border-red-300 text-red-700",
-    warning: "bg-yellow-50 border-yellow-300 text-yellow-700",
-    info: "bg-blue-50 border-blue-300 text-blue-700"
-};
+        const styles = {
+            success: "bg-lime-50 border-lime-300 text-lime-700",
+            error: "bg-red-50 border-red-300 text-red-700",
+            warning: "bg-yellow-50 border-yellow-300 text-yellow-700",
+            info: "bg-blue-50 border-blue-300 text-blue-700"
+        };
 
-function showToast(message, type="success") {
-    toastText.textContent = message;
-    toastIcon.innerHTML = icons[type];
-    toastContent.className = `flex items-center p-4 rounded-xl shadow-lg space-x-4 space-x-reverse min-w-[250px] max-w-sm rtl ${styles[type]}`;
-    toastBox.classList.remove("hidden");
-    toastBox.style.opacity = "1";
-    setTimeout(hideToast, 5000);
-}
+        function showToast(message, type = "success") {
+            toastText.textContent = message;
+            toastIcon.innerHTML = icons[type];
+            toastContent.className = `flex items-center p-4 rounded-xl shadow-lg space-x-4 space-x-reverse min-w-[250px] max-w-sm rtl ${styles[type]}`;
+            toastBox.classList.remove("hidden");
+            toastBox.style.opacity = "1";
+            setTimeout(hideToast, 5000);
+        }
 
-function hideToast() {
-    toastBox.style.opacity = "0";
-    setTimeout(() => toastBox.classList.add("hidden"), 500);
-}
+        function hideToast() {
+            toastBox.style.opacity = "0";
+            setTimeout(() => toastBox.classList.add("hidden"), 500);
+        }
 
-// 🌟 نمایش خودکار مسیج‌های Django
-{% if messages %}
-    {% for message in messages %}
+        // 🌟 نمایش خودکار مسیج‌های Django
+        {% if messages %}
+        {% for message in messages %}
         showToast("{{ message|escapejs }}", "{% if message.tags %}{{ message.tags }}{% else %}info{% endif %}");
-    {% endfor %}
-{% endif %}
-</script>
+        {% endfor %}
+        {% endif %}
+    </script>
 
 
 </head>
@@ -112,6 +121,12 @@ function hideToast() {
 
 
     <header>
+    <form action="{% url 'set_language' %}" method="post" id="lang-form" class="hidden">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ request.path }}">
+        <input name="language" type="hidden" id="lang-input">
+    </form>
+
     <nav class="bg-white shadow-xl sticky w-full z-30 top-0 border-b border-gray-100" dir="rtl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
@@ -119,88 +134,115 @@ function hideToast() {
                 <a href="{% url 'store:home' %}" class="flex items-center space-x-3 space-x-reverse transition duration-300">
                     <img src="{% static 'images/logo.png' %}" alt="لوگو شرکت Lemon" class="h-10 w-auto object-contain">
                     <span class="text-3xl font-black text-lime-700 hover:text-lime-900 transition duration-300 tracking-tighter">
-                        لمون پارس
+                        {% trans "لمون پارس" %}
                     </span>
                 </a>
 
                 <div class="hidden md:flex items-center space-x-6 space-x-reverse h-full">
 
                     <a href="{% url 'store:home' %}" class="text-gray-700 hover:text-lime-600 font-medium transition duration-150 h-full flex items-center px-2">
-                        صفحه اصلی
+                        {% trans "صفحه اصلی" %}
                     </a>
 
                     <a href="{% url 'store:product_list' %}" class="text-gray-700 hover:text-lime-600 font-medium transition duration-150 h-full flex items-center px-2">
-                        محصولات
+                        {% trans "محصولات" %}
                     </a>
+
                     <a href="{% url 'store:faqs' %}" class="text-gray-700 hover:text-lime-600 font-medium transition duration-150 h-full flex items-center px-2">
-                        سوالات متدول
+                        {% trans "سوالات متداول" %}
                     </a>
 
                     <div class="relative group h-full flex items-center">
                         <span class="text-gray-700 hover:text-lime-600 font-bold transition duration-150 cursor-pointer h-full flex items-center px-2 border-b-4 border-transparent group-hover:border-lime-600">
-                            دسته‌بندی‌ها
-                            <svg class="w-4 h-4 mr-1 text-gray-500 group-hover:text-lime-600 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            {% trans "دسته‌بندی‌ها" %}
+                            <svg class="w-4 h-4 mr-1 text-gray-500 group-hover:text-lime-600 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
                         </span>
 
                         <div class="absolute right-0 top-full pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 w-96 xl:w-[48rem]">
                             <div class="bg-white shadow-2xl rounded-2xl border border-gray-100 p-8 grid grid-cols-2 gap-8">
                                 <div>
-{% for cat in main_categories %}
-                <div>
-                    <p class="text-sm font-bold text-lime-600 mb-4 border-b border-lime-100 pb-2">
-                        {{ cat.name }}
-                    </p>
-
-                    <ul class="space-y-3">
-                        {% for child in cat.children.all %}
-                            <li>
-                                <a href="{% url 'store:category' child.id %}" class="text-gray-700 hover:text-lime-600 font-medium transition">
-                                    {{ child.name }}
-                                </a>
-                            </li>
-                        {% empty %}
-                            <li class="text-gray-400 text-sm">بدون زیرمجموعه</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endfor %}
+                                    {% for cat in main_categories %}
+                                    <div>
+                                        <p class="text-sm font-bold text-lime-600 mb-4 border-b border-lime-100 pb-2">
+                                            {{ cat.name }}
+                                        </p>
+                                        <ul class="space-y-3">
+                                            {% for child in cat.children.all %}
+                                            <li>
+                                                <a href="{% url 'store:category' child.id %}" class="text-gray-700 hover:text-lime-600 font-medium transition">
+                                                    {{ child.name }}
+                                                </a>
+                                            </li>
+                                            {% empty %}
+                                            <li class="text-gray-400 text-sm">{% trans "بدون زیرمجموعه" %}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <a href="#about" class="text-gray-700 hover:text-lime-600 font-medium transition duration-150 h-full flex items-center px-2">
-                        درباره ما
+                        {% trans "درباره ما" %}
                     </a>
 
                 </div>
 
                 <div class="flex items-center space-x-4 space-x-reverse">
 
+                    {% get_current_language as LANGUAGE_CODE %}
+                    <div class="hidden md:block relative group ml-2">
+                        <button class="flex items-center text-gray-600 hover:text-lime-600 transition font-bold text-sm bg-gray-50 px-3 py-2 rounded-lg border border-gray-200 hover:border-lime-300">
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.204 8.596l9 9M13 21l9-9"></path></svg>
+                            {{ LANGUAGE_CODE|upper }}
+                            <svg class="w-3 h-3 mr-1 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+
+                        <div class="absolute left-0 top-full mt-2 w-32 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                            <div class="py-1">
+                                <button onclick="setLanguage('fa')" class="w-full text-right px-4 py-2 text-sm text-gray-700 hover:bg-lime-50 hover:text-lime-700 transition flex items-center justify-between">
+                                    <span>🇺🇸</span>
+                                    {% if LANGUAGE_CODE == 'fa' %}<span class="text-lime-600">✓</span>{% endif %}
+                                </button>
+                                <button onclick="setLanguage('en')" class="w-full text-right px-4 py-2 text-sm text-gray-700 hover:bg-lime-50 hover:text-lime-700 transition flex items-center justify-between">
+                                    <span>🇺🇸</span>
+                                    {% if LANGUAGE_CODE == 'en' %}<span class="text-lime-600">✓</span>{% endif %}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <a href="{% url 'cart:cart_home' %}">
-                    <button class="p-2 text-gray-600 hover:text-lime-600 rounded-full transition duration-150 relative">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                        {% if cart_count > 0 %}
-                        <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">{{ cart_count }}</span>
-                        {% endif %}
-                    </button></a>
+                        <button class="p-2 text-gray-600 hover:text-lime-600 rounded-full transition duration-150 relative">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                            {% if cart_count > 0 %}
+                            <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">{{ cart_count }}</span>
+                            {% endif %}
+                        </button>
+                    </a>
 
                     <div class="hidden md:flex">
                         {% if user.is_authenticated %}
-                            <a href="{% url 'store:dashboard' %}"
-                               class="bg-lime-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-lime-700 transition duration-300 shadow-lg shadow-lime-300/50 text-base">
-                                داشبورد
-                            </a>
+                        <a href="{% url 'store:dashboard' %}" class="bg-lime-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-lime-700 transition duration-300 shadow-lg shadow-lime-300/50 text-base">
+                            {% trans "داشبورد" %}
+                        </a>
                         {% else %}
-                            <a href="{% url 'accounts:login' %}"
-                               class="bg-lime-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-lime-700 transition duration-300 shadow-lg shadow-lime-300/50 text-base">
-                                شروع کنید / ورود
-                            </a>
+                        <a href="{% url 'accounts:login' %}" class="bg-lime-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-lime-700 transition duration-300 shadow-lg shadow-lime-300/50 text-base">
+                            {% trans "شروع کنید / ورود" %}
+                        </a>
                         {% endif %}
                     </div>
 
                     <button id="mobile-menu-button" class="md:hidden text-gray-500 hover:text-lime-600 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-lime-500">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
                     </button>
                 </div>
 
@@ -209,24 +251,37 @@ function hideToast() {
 
         <div id="mobile-menu" class="hidden md:hidden bg-white shadow-xl py-1 border-t border-gray-100">
             <div class="divide-y divide-gray-100">
-                <a href="{% url 'store:home' %}" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-lime-50 hover:text-lime-600 transition duration-150">صفحه اصلی</a>
-                <a href="{% url 'store:product_list' %}" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-lime-50 hover:text-lime-600 transition duration-150">همه ی محصولات</a>
-                <a href="{% url 'store:faqs' %}" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-lime-50 hover:text-lime-600 transition duration-150">سوالات متداول</a>
-                <a href="#" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-lime-50 hover:text-lime-600 transition duration-150">دسته‌بندی‌ها</a>
-                <a href="#about" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-lime-50 hover:text-lime-600 transition duration-150">درباره ما</a>
+                <a href="{% url 'store:home' %}" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-lime-50 hover:text-lime-600 transition duration-150">{% trans "صفحه اصلی" %}</a>
+                <a href="{% url 'store:product_list' %}" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-lime-50 hover:text-lime-600 transition duration-150">{% trans "صفحه اصلی" %}</a>
+                <a href="{% url 'store:faqs' %}" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-lime-50 hover:text-lime-600 transition duration-150">{% trans "سوالات متداول" %}</a>
+                <a href="#" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-lime-50 hover:text-lime-600 transition duration-150">{% trans "دسته‌بندی‌ها" %}</a>
+                <a href="#about" class="block px-4 py-3 text-base text-gray-700 font-medium hover:bg-lime-50 hover:text-lime-600 transition duration-150">{% trans "درباره ما" %}</a>
             </div>
 
-            <div class="px-4 pt-3 pb-3 border-t border-gray-100 mt-1">
+            <div class="px-4 py-3 flex items-center justify-between bg-gray-50 border-t border-b border-gray-100">
+                <span class="text-gray-600 text-sm font-bold flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.204 8.596l9 9M13 21l9-9"></path></svg>
+                    زبان / Language
+                </span>
+                <div class="flex bg-white rounded-lg border border-gray-200 p-1">
+                    <button onclick="setLanguage('fa')" class="px-3 py-1 rounded text-sm font-bold transition {% if LANGUAGE_CODE == 'fa' %}bg-lime-500 text-white shadow-md{% else %}text-gray-500 hover:bg-gray-100{% endif %}">
+                        FA
+                    </button>
+                    <button onclick="setLanguage('en')" class="px-3 py-1 rounded text-sm font-bold transition {% if LANGUAGE_CODE == 'en' %}bg-lime-500 text-white shadow-md{% else %}text-gray-500 hover:bg-gray-100{% endif %}">
+                        EN
+                    </button>
+                </div>
+            </div>
+
+            <div class="px-4 pt-3 pb-3 mt-1">
                 {% if user.is_authenticated %}
-                    <a href="{% url 'store:dashboard' %}"
-                       class="block w-full text-center bg-lime-600 text-white px-4 py-3 rounded-xl font-bold hover:bg-lime-700 transition duration-300 shadow-lg shadow-lime-500/50 text-base">
-                        رفتن به داشبورد
-                    </a>
+                <a href="{% url 'store:dashboard' %}" class="block w-full text-center bg-lime-600 text-white px-4 py-3 rounded-xl font-bold hover:bg-lime-700 transition duration-300 shadow-lg shadow-lime-500/50 text-base">
+                    {% trans "رفتن به داشبورد" %}
+                </a>
                 {% else %}
-                    <a href="{% url 'accounts:login' %}"
-                       class="block w-full text-center bg-lime-600 text-white px-4 py-3 rounded-xl font-bold hover:bg-lime-700 transition duration-300 shadow-lg shadow-lime-500/50 text-base">
-                        شروع کنید / ورود
-                    </a>
+                <a href="{% url 'accounts:login' %}" class="block w-full text-center bg-lime-600 text-white px-4 py-3 rounded-xl font-bold hover:bg-lime-700 transition duration-300 shadow-lg shadow-lime-500/50 text-base">
+                    {% trans "شروع کنید / ورود" %}
+                </a>
                 {% endif %}
             </div>
         </div>
@@ -236,127 +291,189 @@ function hideToast() {
 
     <main>
         {% block content %}
-            {% if messages %}
-    <script>
-        {% for message in messages %}
+        {% if messages %}
+        <script>
+            {% for message in messages %}
             showToast("{{ message }}", "{{ message.tags }}");
-        {% endfor %}
-    </script>
-{% endif %}
-            {% endblock %}
+            {% endfor %}
+        </script>
+        {% endif %}
+        {% endblock %}
     </main>
     <footer class="bg-gray-900 pt-16 pb-8" dir="rtl">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div class="flex flex-col lg:flex-row justify-between items-center bg-indigo-700 p-8 rounded-2xl shadow-2xl transform translate-y-6 lg:translate-y-10 mb-10 lg:mb-20">
-            <div class="text-white text-center lg:text-right mb-6 lg:mb-0">
-                <h3 class="text-3xl font-extrabold mb-1">
-                    همین حالا عضو خانواده لمون پارس شوید!
-                </h3>
-                <p class="text-indigo-200 text-lg">
-                    با عضویت در خبرنامه، از تخفیف‌ها و محصولات جدید زودتر از همه باخبر شوید.
-                </p>
-            </div>
+            <div
+                class="flex flex-col lg:flex-row justify-between items-center bg-indigo-700 p-8 rounded-2xl shadow-2xl transform translate-y-6 lg:translate-y-10 mb-10 lg:mb-20">
+                <div class="text-white text-center lg:text-right mb-6 lg:mb-0">
+                    <h3 class="text-3xl font-extrabold mb-1">
+                        {% trans "همین حالا عضو خانواده لمون پارس شوید!" %}
+                    </h3>
+                    <p class="text-indigo-200 text-lg">
+                        {% trans "با عضویت در خبرنامه، از تخفیف‌ها و محصولات جدید زودتر از همه باخبر شوید." %}
+                    </p>
+                </div>
 
-            <form class="flex w-full lg:w-96">
-                <input type="email" placeholder="ایمیل خود را وارد کنید..."
-                       class="w-full px-4 py-3 rounded-r-xl border-none focus:ring-0 focus:outline-none text-gray-800" required>
-                <button type="submit"
+                <form class="flex w-full lg:w-96">
+                    <input type="email" placeholder="{% trans 'ایمیل خود را وارد کنید...' %}"
+                        class="w-full px-4 py-3 rounded-r-xl border-none focus:ring-0 focus:outline-none text-gray-800"
+                        required>
+                    <button type="submit"
                         class="bg-indigo-900 text-white px-6 py-3 rounded-l-xl font-bold hover:bg-indigo-800 transition duration-300 whitespace-nowrap shadow-md">
-                    عضویت
-                </button>
-            </form>
-        </div>
+                        {% trans "عضویت" %}
+                    </button>
+                </form>
+            </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 border-b border-gray-700 pb-12">
-z`
-            <div>
-                <a href="{% url 'store:home' %}" class="text-3xl font-black text-white tracking-tighter block mb-4">
-                    شرکت لمون
-                </a>
-                <p class="text-gray-400 text-sm mb-6">
-                    پیشرو در ارائه‌ی محصولات دیجیتال و فناوری‌های روز دنیا با گارانتی معتبر و پشتیبانی قوی.
-                </p>
-                <div class="flex space-x-3 space-x-reverse">
-                    <a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-150">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.013 4.85.07c1.47.07 2.112.302 2.652.502.54.2 1.05.47 1.54.77.49.3 1.03.65 1.5.94.47.3.93.57 1.34.86.41.29.83.58 1.25.9a1 1 0 011.08.38 1 1 0 01.38 1.08c-.29.42-.58.84-.9 1.25-.3.47-.65 1.03-.94 1.5-.3.49-.57 1-.77 1.54-.2.54-.43 1.18-.5 2.65-.05 1.27-.07 1.65-.07 4.85s.01 3.58.07 4.85c.07 1.47.3 2.11.5 2.65.2.54.47 1.05.77 1.54.3.49.65 1.03.94 1.5.3.47.57.93.86 1.34.29.41.58.83.9 1.25a1 1 0 01.38 1.08 1 1 0 01-1.08.38c-.42-.29-.84-.58-1.25-.9-.47-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86z"></path></svg>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 border-b border-gray-700 pb-12">
+                z`
+                <div>
+                    <a href="{% url 'store:home' %}" class="text-3xl font-black text-white tracking-tighter block mb-4">
+                        {% trans "شرکت لمون" %}
                     </a>
+                    <p class="text-gray-400 text-sm mb-6">
+                        {% trans "پیشرو در ارائه‌ی محصولات دیجیتال و فناوری‌های روز دنیا با گارانتی معتبر و پشتیبانی قوی." %}
+                    </p>
+                    <div class="flex space-x-3 space-x-reverse">
+                        <a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-150">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.013 4.85.07c1.47.07 2.112.302 2.652.502.54.2 1.05.47 1.54.77.49.3 1.03.65 1.5.94.47.3.93.57 1.34.86.41.29.83.58 1.25.9a1 1 0 011.08.38 1 1 0 01.38 1.08c-.29.42-.58.84-.9 1.25-.3.47-.65 1.03-.94 1.5-.3.49-.57 1-.77 1.54-.2.54-.43 1.18-.5 2.65-.05 1.27-.07 1.65-.07 4.85s.01 3.58.07 4.85c.07 1.47.3 2.11.5 2.65.2.54.47 1.05.77 1.54.3.49.65 1.03.94 1.5.3.47.57.93.86 1.34.29.41.58.83.9 1.25a1 1 0 01.38 1.08 1 1 0 01-1.08.38c-.42-.29-.84-.58-1.25-.9-.47-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86-.49-.3-.93-.57-1.34-.86z">
+                                </path>
+                            </svg>
+                        </a>
                     </div>
-            </div>
+                </div>
 
-            <div>
-                <h4 class="text-lg font-bold text-white mb-4 border-b border-gray-700 pb-2">محصولات و خدمات</h4>
-                <ul class="space-y-3">
-                    <li><a href="{% url 'store:product_list' %}" class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">همه محصولات</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">دسته‌بندی‌های اصلی</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">پیشنهادات ویژه</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">فروش سازمانی</a></li>
-                </ul>
-            </div>
+<div>
+    <h4 class="text-lg font-bold text-white mb-4 border-b border-gray-700 pb-2">
+        {% trans "محصولات و خدمات" %}
+    </h4>
 
-            <div>
-                <h4 class="text-lg font-bold text-white mb-4 border-b border-gray-700 pb-2">راهنمای مشتریان</h4>
-                <ul class="space-y-3">
-                    <li><a href="{% url 'store:faqs' %}" class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">سوالات متداول (FAQ)</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">شیوه های ارسال</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">قوانین و مقررات</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">رهگیری سفارش</a></li>
-                </ul>
-            </div>
+    <ul class="space-y-3">
+        <li>
+            <a href="{% url 'store:product_list' %}"
+               class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">
+                {% trans "همه محصولات" %}
+            </a>
+        </li>
 
-            <div>
-                <h4 class="text-lg font-bold text-white mb-4 border-b border-gray-700 pb-2">تماس با ما</h4>
-                <ul class="space-y-3 text-sm">
-                    <li class="flex items-center space-x-2 space-x-reverse text-gray-400">
-                        <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498A1 1 0 0121 17.72V21a2 2 0 01-2 2h-1c-8.837 0-16-7.163-16-16v-1a2 2 0 012-2h1z"></path></svg>
-                        <span>۰۲۱ - ۸۸۸ ۸۸۸۸</span>
-                    </li>
-                    <li class="flex items-center space-x-2 space-x-reverse text-gray-400">
-                        <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.842 5.234a1 1 0 001.264 0L21 8m-2-3a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5z"></path></svg>
-                        <span>info@novin-co.com</span>
-                    </li>
-                    <li class="text-gray-400 leading-relaxed pt-3">
-                        تهران، خیابان ولیعصر، برج نوین، پلاک ۱۰۰
-                    </li>
-                </ul>
-            </div>
+        <li>
+            <a href="#"
+               class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">
+                {% trans "دسته‌بندی‌های اصلی" %}
+            </a>
+        </li>
 
+        <li>
+            <a href="#"
+               class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">
+                {% trans "پیشنهادات ویژه" %}
+            </a>
+        </li>
+
+        <li>
+            <a href="#"
+               class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">
+                {% trans "فروش سازمانی" %}
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+<div>
+    <h4 class="text-lg font-bold text-white mb-4 border-b border-gray-700 pb-2">{% trans "راهنمای مشتریان" %}</h4>
+    <ul class="space-y-3">
+        <li><a href="{% url 'store:faqs' %}"
+                class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">{% trans "سوالات متداول (FAQ)" %}</a></li>
+        <li><a href="#"
+                class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">{% trans "شیوه های ارسال" %}</a></li>
+        <li><a href="#"
+                class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">{% trans "قوانین و مقررات" %}</a></li>
+        <li><a href="#"
+                class="text-gray-400 hover:text-indigo-400 transition duration-150 text-sm">{% trans "رهگیری سفارش" %}</a></li>
+    </ul>
+</div>
+
+
+<div>
+    <h4 class="text-lg font-bold text-white mb-4 border-b border-gray-700 pb-2">
+        {% trans "تماس با ما" %}
+    </h4>
+
+    <ul class="space-y-3 text-sm">
+        <li class="flex items-center space-x-2 space-x-reverse text-gray-400">
+            <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498A1 1 0 0121 17.72V21a2 2 0 01-2 2h-1c-8.837 0-16-7.163-16-16v-1a2 2 0 012-2h1z"></path>
+            </svg>
+            <span>+359 88 225 8688</span>
+        </li>
+
+        <li class="flex items-center space-x-2 space-x-reverse text-gray-400">
+            <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 8l7.842 5.234a1 1 0 001.264 0L21 8m-2-3a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5z" />
+            </svg>
+            <span>info@lemonpars.com</span>
+        </li>
+
+        <li class="text-gray-400 leading-relaxed pt-3">
+            {% trans "بلغارستان، صوفیه، بلوار اوچا کوپل، پلاک 1-525" %}
+        </li>
+    </ul>
+</div>
+
+<div class="mt-8 pt-4 flex flex-col md:flex-row justify-between items-center text-center">
+
+    <p class="text-sm text-gray-500 order-2 md:order-1 mt-4 md:mt-0">
+        &copy; {% trans "۱۴۰۳ - تمامی حقوق مادی و معنوی متعلق به شرکت لمون می‌باشد." %}
+    </p>
+
+    <div class="flex space-x-4 space-x-reverse order-1 md:order-2">
+        <div
+            class="w-16 h-16 bg-gray-800 rounded-lg flex items-center justify-center text-xs text-gray-400 border border-gray-700">
+            {% trans "نماد ۱" %}
         </div>
-
-        <div class="mt-8 pt-4 flex flex-col md:flex-row justify-between items-center text-center">
-
-            <p class="text-sm text-gray-500 order-2 md:order-1 mt-4 md:mt-0">
-                &copy; ۱۴۰۳ - تمامی حقوق مادی و معنوی متعلق به شرکت لمون می‌باشد.
-            </p>
-
-            <div class="flex space-x-4 space-x-reverse order-1 md:order-2">
-                <div class="w-16 h-16 bg-gray-800 rounded-lg flex items-center justify-center text-xs text-gray-400 border border-gray-700">نماد ۱</div>
-                <div class="w-16 h-16 bg-gray-800 rounded-lg flex items-center justify-center text-xs text-gray-400 border border-gray-700">نماد ۲</div>
-            </div>
+        <div
+            class="w-16 h-16 bg-gray-800 rounded-lg flex items-center justify-center text-xs text-gray-400 border border-gray-700">
+            {% trans "نماد ۲" %}
         </div>
-
     </div>
-</footer>
+</div>
+            </div>
+        </div>
+    </footer>
 
 
     <script>
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const menuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
 
-        // بررسی می‌کنیم که هر دو عنصر در صفحه وجود داشته باشند
-        if (menuButton && mobileMenu) {
-            menuButton.addEventListener('click', () => {
-                // کلاس 'hidden' را جابه‌جا (Toggle) می‌کند
-                mobileMenu.classList.toggle('hidden');
-            });
-        }
-    });
-</script>
+            // بررسی می‌کنیم که هر دو عنصر در صفحه وجود داشته باشند
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', () => {
+                    // کلاس 'hidden' را جابه‌جا (Toggle) می‌کند
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        });
+
+            function setLanguage(lang) {
+        const form = document.getElementById('lang-form');
+        const input = document.getElementById('lang-input');
+
+        input.value = lang;
+        form.submit();
+    }
+    </script>
 
 
     {% block extra_js %}{% endblock %}
 
 </body>
+
 </html>

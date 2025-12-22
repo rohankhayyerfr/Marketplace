@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}ورود به حساب کاربری | شرکت لمون پارس{% endblock %}
+{% block title %}{% trans "ورود به حساب کاربری | شرکت لمون پارس" %}{% endblock %}
 
 {% block content %}
 <div class="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
@@ -11,14 +12,19 @@
             <svg class="mx-auto h-12 w-auto text-indigo-600" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-6h-2v6zm0-8h2V7h-2v2z"></path>
             </svg>
+
             <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
-                ورود به حساب کاربری
+                {% trans "ورود به حساب کاربری" %}
             </h2>
+
             <p class="mt-2 text-sm text-gray-600">
-                اگر حساب ندارید، <a href="{% url 'accounts:register' %}" class="font-medium text-indigo-600 hover:text-indigo-500 transition duration-150">ثبت نام کنید</a>
+                {% trans "اگر حساب ندارید،" %}
+                <a href="{% url 'accounts:register' %}"
+                   class="font-medium text-indigo-600 hover:text-indigo-500 transition duration-150">
+                    {% trans "ثبت نام کنید" %}
+                </a>
             </p>
         </div>
-
 
         <form class="mt-8 space-y-6" action="{% url 'accounts:login' %}" method="POST" dir="rtl">
             {% csrf_token %}
@@ -26,39 +32,45 @@
             <div class="rounded-md shadow-sm space-y-4">
 
                 <div>
-                    <label for="id_username" class="sr-only">نام کاربری یا ایمیل</label>
+                    <label for="id_username" class="sr-only">
+                        {% trans "نام کاربری یا ایمیل" %}
+                    </label>
                     <input id="id_username" name="username" type="text" required
                            class="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm text-right"
-                           placeholder="نام کاربری یا ایمیل" autofocus>
+                           placeholder="{% trans 'نام کاربری یا ایمیل' %}" autofocus>
                 </div>
 
                 <div>
-                    <label for="id_password" class="sr-only">رمز عبور</label>
+                    <label for="id_password" class="sr-only">
+                        {% trans "رمز عبور" %}
+                    </label>
                     <input id="id_password" name="password" type="password" autocomplete="current-password" required
                            class="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm text-right"
-                           placeholder="رمز عبور">
+                           placeholder="{% trans 'رمز عبور' %}">
                 </div>
             </div>
 
             <div class="flex items-center justify-between text-sm">
 
                 <div class="flex items-center">
-                    <input id="remember-me" name="remember_me" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded mr-2">
+                    <input id="remember-me" name="remember_me" type="checkbox"
+                           class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded mr-2">
                     <label for="remember-me" class="mr-2 text-gray-900 select-none">
-                        مرا به خاطر بسپار
+                        {% trans "مرا به خاطر بسپار" %}
                     </label>
                 </div>
 
                 <div class="text-indigo-600 hover:text-indigo-500 transition duration-150">
                     <a href="#" class="font-medium">
-                        رمز عبور را فراموش کردم؟
+                        {% trans "رمز عبور را فراموش کردم؟" %}
                     </a>
                 </div>
             </div>
 
             <div>
-                <button type="submit" class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-lg font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300 shadow-lg transform hover:scale-[1.01]">
-                    ورود
+                <button type="submit"
+                        class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-lg font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300 shadow-lg transform hover:scale-[1.01]">
+                    {% trans "ورود" %}
                 </button>
             </div>
 
@@ -68,17 +80,20 @@
                 </div>
                 <div class="relative flex justify-center text-sm">
                     <span class="px-2 bg-white text-gray-500">
-                        یا
+                        {% trans "یا" %}
                     </span>
                 </div>
             </div>
 
             <div>
-                <button type="button" class="group relative w-full flex justify-center py-3 px-4 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 transition duration-300 shadow-md">
-                    <svg class="w-5 h-5 ml-2" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.611 5.48-6.175 9.426-11.303 9.426-6.793 0-12.3-5.507-12.3-12.3s5.507-12.3 12.3-12.3c3.125 0 5.922 1.258 8.077 3.298l5.808-5.787C38.07 9.53 31.83 6 24 6c-9.941 0-18 8.059-18 18s8.059 18 18 18c9.192 0 17.067-6.86 17.846-16H43.611z"/>
+                <button type="button"
+                        class="group relative w-full flex justify-center py-3 px-4 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 transition duration-300 shadow-md">
+                    <svg class="w-5 h-5 ml-2" viewBox="0 0 48 48" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#FFC107"
+                              d="M43.611 20.083H42V20H24v8h11.303c-1.611 5.48-6.175 9.426-11.303 9.426-6.793 0-12.3-5.507-12.3-12.3s5.507-12.3 12.3-12.3c3.125 0 5.922 1.258 8.077 3.298l5.808-5.787C38.07 9.53 31.83 6 24 6c-9.941 0-18 8.059-18 18s8.059 18 18 18c9.192 0 17.067-6.86 17.846-16H43.611z"></path>
                     </svg>
-                    ورود با گوگل
+                    {% trans "ورود با گوگل" %}
                 </button>
             </div>
 
