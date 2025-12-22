@@ -135,6 +135,7 @@ LANGUAGE_CODE = 'fa'
 LANGUAGES = [
     ('fa', _('Persian')),
     ('en', _('English')),
+    ('ar', _('Arabic')),
 
 ]
 LANGUAGE_COOKIE_NAME = 'django_language'
