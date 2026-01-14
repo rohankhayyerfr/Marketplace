@@ -2,10 +2,9 @@ from django.urls import path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+
+
 app_name = "store"
-
-
-
 
 urlpatterns = [
     # Public views
@@ -20,8 +19,10 @@ urlpatterns = [
     path("dashboard/products/<int:pk>/edit/", views.product_edit, name="product_edit"),
 
     path("dashboard/products/<int:pk>/delete/", views.product_delete, name="delete_product"),
-
+    #other pages
     path('faqs/', views.faqs, name="faqs"),
+    path('about/', views.about, name='about'),
+    path('contact/', views.contact, name='contact'),
 ]
 
 

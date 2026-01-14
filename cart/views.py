@@ -4,6 +4,8 @@ from django.http import JsonResponse
 from store.models import Product, ProductVariant
 from .models import Cart, CartItem
 import json
+
+
 def get_cart(request):
     session = request.session.session_key
     if not session:
